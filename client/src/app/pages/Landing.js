@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
+import Hero from "../components/Hero";
 
-class Landing extends Component {
-  render() {
-    return (
-    <div>
-      <h1>Landing Page</h1>
-    </div>
-    );
-  }
-}
+const Landing = () => (
+  <Fragment>
+    <Hero />
+  </Fragment>
+
+)
 export default Landing;

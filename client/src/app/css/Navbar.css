@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    max-width: inherit;
+    margin: 0px;
+    margin-right: 70px;
+    background-color: white;
+}
+
+.Navbar {
+    color: white !important;
+    background-color: white !important;
+}
+
+.logo {
+    background-image: url(../assets/2021-Logo.jpg);
+    position: relative;
+    width: 300px;
+    height: 100px;
+    margin-right: 30px;
+}
