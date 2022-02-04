@@ -28,3 +28,5 @@ client/node_modules
 /clientnpm-debug.log*
 /clientyarn-debug.log*
 /clientyarn-error.log*
+server/package-lock.json
+server/package.json
