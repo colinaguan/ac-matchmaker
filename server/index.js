@@ -32,6 +32,16 @@ app.get("/api/users", (req, res) => {
         console.log("HERE");
 });
 
+app.post("/api/userCreation", (req, res) => {
+    newUUID = uuid.v4();
+    user_model.createUser(req.body, newUUID)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+  })
 
 // example api endpoint
 // app.get('/api/getList', (req,res) => {
