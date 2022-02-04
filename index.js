@@ -20,6 +20,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+
 app.get("/api/users", (req, res) => {
     user_model
         .getUsers()
