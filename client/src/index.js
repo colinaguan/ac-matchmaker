@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './app/css/index.css';
 import App from './app/App';
 import { render } from 'react-dom';

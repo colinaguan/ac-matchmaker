@@ -22,13 +22,13 @@ function getUsers() {
 }
 
 // Query to retrieve specific user from the user table in ACMatchMaker postgreSQL DB
-// retrieves user whos userID = id
-function getUser(id) {
+// retrieves user whos useremail = email
+function getUser(email) {
     const query =  {
         text: `SELECT * 
                FROM users
-               WHERE userid = $1`,
-        values: [id]
+               WHERE useremail = $1`,
+        values: [email]
     }
 
     return new Promise((resolve, reject) => {
