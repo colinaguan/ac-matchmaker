@@ -1,0 +1,69 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+DROP TABLE IF EXISTS users CASCADE;
+CREATE TABLE users(userId UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+				   userEmail TEXT UNIQUE NOT NULL,
+				   userPassword TEXT NOT NULL,
+				   userType TEXT
+				   --userData JSONB--
+				  );
+
+DROP TABLE IF EXISTS preferences CASCADE;
+CREATE TABLE preferences(preferenceId UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+						preferenceName TEXT
+						);
+
+DROP TABLE IF EXISTS eventType CASCADE;
+CREATE TABLE eventType(eventTypeId UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4(),
+					   eventTypeDescription TEXT,
+					   requiredField JSONB
+					  );
+
+
+DROP TABLE IF EXISTS profile CASCADE;
+CREATE TABLE profile(profileId UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4(),
+					userId UUID REFERENCES users ON DELETE CASCADE,
+					userPreference JSONB,
+					graduationYear TEXT,
+					major TEXT,
+					experience JSONB,
+					volunteeringExperience JSONB,
+					about TEXT,
+					userLocation TEXT,
+					availability JSONB,
+					profilePicture TEXT,
+					userProfile JSONB
+					);
+					
+DROP TABLE IF EXISTS events CASCADE;
+CREATE TABLE events(eventId UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4(),
+				   	userSponsors JSONB,
+					remote BOOLEAN,
+					eventLocation TEXT,
+					eventZoomLink TEXT,
+					organization TEXT,
+					description TEXT,
+					eventType JSONB,
+					userParticipants JSONB,
+					preferences JSONB,
+					eventData JSONB,
+					-- Dates will be as JSONB because I don't really understand postgresql's date format l0l --
+					startDate JSONB,
+					endDate JSONB
+				   );
+				   
+DROP TABLE IF EXISTS feedback CASCADE;
+CREATE TABLE feedback(feedbackId UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4(),
+					  feedbackForId UUID,
+					  feedbackFromId UUID,
+					  feedbackDescription TEXT
+					 );
+
+--TEST Insert
+--NOTE: 'bf' algorithm salt only supports up to 72 characters for password --
+INSERT INTO users(userEmail, userPassword) values ('ranchymail@gmail.com',
+												   crypt('ThereIsNoCowLevel', gen_salt('bf', 8))
+												  );												  
+SELECT * FROM users WHERE userEmail = lower('ranchymail@gmail.com') AND
+                          userPassword = crypt('ThereIsNoCowLevel', userPassword);
