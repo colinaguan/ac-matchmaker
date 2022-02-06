@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../css/Landing.css';
+
 
 const Landing = () => {
   const [users, setUsers] = useState(undefined);
@@ -13,80 +15,7 @@ const Landing = () => {
       setUsers(JSON.parse(data));
     });
   }
-
-  /*useEffect(() => {
-    const newAccountInfo = {
-      useremail: "danieltest12@gmail.com",
-      userpassword: "password",
-      usertype: "Sponsor",
-      userdata: { not: "null"}
-    }
-
-    fetch(`/api/userCreation`, {
-      method: 'POST',
-      body: JSON.stringify(newAccountInfo),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
-    })
-    .then((json) => {
-      toast.success('Account Created', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          });
-
-    })
-    .catch((err) => {
-      alert('Error logging in, please try again');
-    });
-  }, [])
-*/
-  useEffect(() => {
-    const accountLoginInfo = {
-      useremail: "danieltest11@gmail.com",
-      userpassword: "password"
-    }
-
-    fetch(`/api/login`, {
-      method: 'POST',
-      body: JSON.stringify(accountLoginInfo),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
-    })
-    .then((json) => {
-      toast.success('Login Success', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          });
-
-    })
-    .catch((err) => {
-      alert('Error logging in, please try again');
-    });
-  }, [])
+ 
 
   useEffect(() => {
     getUsers()
@@ -94,11 +23,13 @@ const Landing = () => {
 
 
   return (
-    <ul>
-      {users && users.map(((item, index) => (
-        <li>{item.userid}: {item.useremail} - {item.usertype}</li>
-      )))}
-    </ul>
+    <div className='Landing'>
+      <ul>
+        {users && users.map(((item, index) => (
+          <li>{item.userid}: {item.useremail} - {item.usertype}</li>
+        )))}
+      </ul>
+    </div>
   );
 }
 export default Landing;

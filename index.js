@@ -27,6 +27,11 @@ app.use(function(req, res, next) {
 });
 
 
+//   User CRUD operations
+//
+//
+
+
 app.get('/api/users', (req, res) => {
   userModel
       .getUsers()
@@ -57,7 +62,6 @@ app.post('/api/login', (req, res) => {
       });
 });
 
-
 app.post('/api/userCreation', (req, res) => {
   const myPlaintextPassword = req.body.userpassword;
   const hash = bcrypt.hashSync(myPlaintextPassword, salt);
@@ -73,16 +77,28 @@ app.post('/api/userCreation', (req, res) => {
       });
 });
 
-// Profile API Endpoints
+//  Profile CRUD operations
+//
+//
 app.post('/api/profileCreation', profileApi.profilePost);
 
 
-// example api endpoint
-// app.get('/api/getList', (req,res) => {
-//     var list = ['item1', 'item2', 'item3'];
-//     res.json(list);
-//     console.log('Sent list of items');
-// });
+//  Event CRUD operations
+//
+//
+
+//  Preferences CRUD operations
+//
+//
+
+//  Feedback CRUD operations
+//
+//
+
+//  Event type CRUD operations
+//
+//
+
 
 // redirects any other paths to the client
 app.use(express.static(path.join(__dirname, 'client', 'build')));
