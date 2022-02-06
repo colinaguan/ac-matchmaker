@@ -2,7 +2,8 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const userModel = require('./models/user_model');
-// const profileModel = require('./models/profile_model');
+
+// Profile API
 const profileApi = require('./models/profile_api');
 const uuid = require('uuid');
 require('dotenv').config();

@@ -22,5 +22,5 @@ exports.createProfile= async (userid) => {
   const {rows} = await pool.query(query);
   console.log(rows[0].profileid);
   // const id = await pool.query(query).rows[0];
-  return 'ProfileCreated';
+  return rows[0].profileid;
 };
