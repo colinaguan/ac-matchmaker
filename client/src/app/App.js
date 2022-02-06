@@ -1,23 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './css/App.css';
 
+import NavBar from './components/NavBar';
 import Landing from './pages/Landing';
 import GetStarted from './pages/GetStarted';
 import Login from './pages/Login';
+import MyProfile from './pages/MyProfile';
+import Browse from './pages/Browse';
+import { ToastContainer } from 'react-toastify';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Switch>
-          <Route exact path='/' component={Landing}/>
-          <Route exact path='/login' component={Login}/>
-          <Route expact path='/getstarted' component={GetStarted}/>
-        </Switch>
-      </div>
-    );
-  }
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  return (
+    <div>
+      <ToastContainer />
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <Switch>
+        <Route exact path='/' component={Landing}/>
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/getstarted' component={GetStarted}/>
+        <Route exact path='/myprofile' component={MyProfile}/>
+        <Route exact path='/browse' component={Browse}/>
+      </Switch>
+    </div>
+  );
+
 }
 
 export default App;
