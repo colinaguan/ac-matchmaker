@@ -49,6 +49,17 @@ const Login = () => {
       return res.json();
     })
     .then((json) => {
+      
+      // JUST FOR TESTING PROFILE CREATION REMOVE THIS LATER
+      /*
+      fetch(`/api/profileCreation`, {
+        method: 'POST',
+        body: JSON.stringify({'userid':'82f2d80c-a9ff-49c9-a0d7-7b8edfcfb24c'}),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      */
       toast.success('Login Success', {
           position: "top-right",
           autoClose: 5000,
