@@ -12,6 +12,7 @@
 
 # testing
 /client/coverage
+/coverage
 
 # production
 /client/build
