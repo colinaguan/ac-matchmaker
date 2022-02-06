@@ -9,7 +9,7 @@ const pool = new Pool();
  *      Returns the created profile id
  * @param {*} profileInfo
  */
-export async function createProfile(profileInfo) {
+exports.createProfile= async (profileInfo) => {
   const query = {
     text: `INSERT INTO profile 
             (userid)
@@ -18,5 +18,8 @@ export async function createProfile(profileInfo) {
     values: [profileInfo.userid],
   };
 
-  console.log(await pool.query(query));
-}
+  // Returns the newly created profile object's id
+  // console.log(await pool.query(query));
+  const id = await pool.query(query).rows[0];
+  return id;
+};

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const userModel = require('./models/user_model');
 // const profileModel = require('./models/profile_model');
+const profileApi = require('./models/profile_api');
 const uuid = require('uuid');
 require('dotenv').config();
 
@@ -72,6 +73,10 @@ app.post('/api/userCreation', (req, res) => {
       });
 });
 
+// Profile API Endpoints
+app.post('/api/profileCreation', profileApi.profilePost);
+
+
 // example api endpoint
 // app.get('/api/getList', (req,res) => {
 //     var list = ['item1', 'item2', 'item3'];
@@ -91,3 +96,12 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 console.log('App is listening on port ' + port);
+
+// DEBUG
+/*
+profileModel.createProfile(
+    {
+      'userid': `82f2d80c-a9ff-49c9-a0d7-7b8edfcfb24c`,
+    },
+);
+*/
