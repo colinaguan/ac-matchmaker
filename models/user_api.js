@@ -6,7 +6,13 @@ const uuid = require('uuid');
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
-
+/**
+ * POSTs a user object
+ * sends the row count of deleted records back
+ * row count should always be 1 when success, 0 when fail.
+ * @param {*} req
+ * @param {*} res
+ */
 exports.userPost = async (req, res) => {
   const plaintextPassword = req.body.userpassword;
   const hash = bcrypt.hashSync(plaintextPassword, salt);
@@ -21,6 +27,13 @@ exports.userGet = async (req, res) => {
   const users = await userModel.getUsers();
   res.status(200).send(users);
 };
+
+exports.userDelete = async (req, res) => {
+  const deletedUsers = await userModel.userDelete(req.body.userid);
+  console.log(deletedUsers);
+  res.status(200).send(deletedUsers);
+};
+
 
 exports.userVerifyPost = async (req, res) => {
   const user = await userModel.getUser(req.body.useremail);

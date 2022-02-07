@@ -24,3 +24,32 @@ exports.createProfile= async (userid) => {
   // const id = await pool.query(query).rows[0];
   return rows[0].profileid;
 };
+
+
+/**
+ * updateProfile
+ *      updates a profile in the database
+ *      Returns the updated profile's profile id
+ * @param {*} userProfile
+ */
+exports.updateProfile= async (userProfile) => {
+  const query = {
+    text: `UPDATE profile
+          SET userpreference=($1), graduationyear=($2), major=($3),
+           experience=($4), volunteeringexperience=($5), about=($6),
+           userlocation=($7), availability=($8),profilepicture=($9)
+          WHERE userid=($10)
+          RETURNING profileid`,
+    values: [userProfile.userpreference, userProfile.graduationyear,
+      userProfile.major, userProfile.experience,
+      userProfile.volunteeringexperience,
+      userProfile.about, userProfile.userlocation,
+      userProfile.availability, userProfile.profilepicture,
+      userProfile.userid],
+  };
+
+  // Returns the newly created profile object's id
+  const {rows} = await pool.query(query);
+  console.log(rows[0].profileid);
+  return rows[0].profileid;
+};

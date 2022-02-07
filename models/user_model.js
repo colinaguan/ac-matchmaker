@@ -18,7 +18,7 @@ exports.getUsers = async () => {
 
 /**
  * Query to retrieve specific user from the user table in
- *  ACMatchMaker postgreSQL DB
+ * ACMatchMaker postgreSQL DB
  * retrieves user whos useremail = email
  * @param {*} email
  */
@@ -31,6 +31,24 @@ exports.getUser = async (email) => {
   };
   const {rows} = await pool.query(query);
   return rows;
+};
+
+/**
+ * Query to delete a specific user from the user table in
+ * ACMatchMaker postgreSQL DB
+ * retrieves user whos userid = id
+ * @param {*} id
+ */
+exports.userDelete = async (id) => {
+  const query = {
+    text: `DELETE 
+               FROM users
+               WHERE userid = $1`,
+    values: [id],
+  };
+  const deletedRows = await pool.query(query);
+  console.log(deletedRows);
+  return deletedRows;
 };
 
 /**

@@ -42,6 +42,41 @@ const GetStarted = () => {
   
   */
 
+  /* Used to test user deletion 
+
+  useEffect (() => {
+    
+    const accountCredentials = {
+      userid: '0aada2cd-616c-4193-ab7e-f04f3c175b57',
+    }
+    fetch(`/api/userDeletion`, {
+      method: 'DELETE',
+      body: JSON.stringify(accountCredentials),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      toast.success('Account deleted', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+
+    })
+  }, [])
+*/
+
   return (
   <div className='GetStarted'>
     <h1>Get Started</h1>

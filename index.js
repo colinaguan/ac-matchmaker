@@ -33,14 +33,17 @@ app.get('/api/users', userApi.userGet);
 
 app.post('/api/login', userApi.userVerifyPost);
 
+app.delete('/api/userDeletion', userApi.userDelete);
+
 app.post('/api/userCreation', userApi.userPost);
+
 
 //  Profile CRUD operations
 //
 //
 app.post('/api/profileCreation', profileApi.profilePost);
 
-
+app.post('/api/updateProfile', profileApi.profileUpdate);
 //  Event CRUD operations
 //
 //
