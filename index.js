@@ -1,18 +1,16 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const path = require('path');
-const userModel = require('./models/user_model');
+
+// User API
+const userApi = require('./models/user_api');
 
 // Profile API
 const profileApi = require('./models/profile_api');
-const uuid = require('uuid');
+
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-
-const saltRounds = 10;
-const salt = bcrypt.genSaltSync(saltRounds);
 
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -31,52 +29,11 @@ app.use(function(req, res, next) {
 //   User CRUD operations
 //
 //
+app.get('/api/users', userApi.userGet);
 
+app.post('/api/login', userApi.userVerifyPost);
 
-app.get('/api/users', (req, res) => {
-  userModel
-      .getUsers()
-      .then((response) => {
-        res.status(200).send(response);
-      })
-      .catch((error) => {
-        res.status(500).send(error);
-      });
-});
-
-app.post('/api/login', (req, res) => {
-  userModel
-      .getUser(req.body.useremail)
-      .then((response) => {
-        const crypt = (bcrypt.compare(req.password,
-            response.userpassword, function(err, isValid) {
-              if (err) return 'error';
-              return true;
-            }));
-        if (crypt != 'error') {
-          delete response[0].userpassword;
-          res.status(200).send(response);
-        }
-      })
-      .catch((error) => {
-        res.status(500).send(error);
-      });
-});
-
-app.post('/api/userCreation', (req, res) => {
-  const myPlaintextPassword = req.body.userpassword;
-  const hash = bcrypt.hashSync(myPlaintextPassword, salt);
-  req.body.userpassword = hash;
-  newUUID = uuid.v4();
-
-  userModel.createUser(req.body, newUUID)
-      .then((response) => {
-        res.status(200).send(response);
-      })
-      .catch((error) => {
-        res.status(500).send(error);
-      });
-});
+app.post('/api/userCreation', userApi.userPost);
 
 //  Profile CRUD operations
 //

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import '../css/GetStarted.css';
 
 const GetStarted = () => {
-
-  const newAccountCredentials = {
-    useremail: "danieltest12@gmail.com",
-    userpassword: "password",
-    usertype: ""
-  }
-
-  const createAccount = () => {
+  useEffect (() => {
+    
+    const newAccountCredentials = {
+      useremail: "danieltest27@gmail.com",
+      userpassword: "password",
+      usertype: "Volunteer"
+    }
     fetch(`/api/userCreation`, {
       method: 'POST',
       body: JSON.stringify(newAccountCredentials),
@@ -36,10 +35,7 @@ const GetStarted = () => {
           });
 
     })
-    .catch((err) => {
-      alert('Error creating account, please try again');
-    });
-  }
+  }, [])
 
   return (
   <div className='GetStarted'>
