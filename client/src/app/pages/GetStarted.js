@@ -3,6 +3,9 @@ import { toast } from 'react-toastify';
 import '../css/GetStarted.css';
 
 const GetStarted = () => {
+  /* used to test the user creation
+  
+
   useEffect (() => {
     
     const newAccountCredentials = {
@@ -36,6 +39,8 @@ const GetStarted = () => {
 
     })
   }, [])
+  
+  */
 
   return (
   <div className='GetStarted'>
