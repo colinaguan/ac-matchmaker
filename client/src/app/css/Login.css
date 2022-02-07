@@ -1,10 +1,14 @@
 
 .LoginPage {
-    background-image: url("../assets/UCSC_campus.jpg");
+    background: url("../assets/UCSC_background.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     height: 100vh;
 }
 
-.link2 {
+.LoginPage__link {
     display: flex;
     text-align: center;
     justify-content: center;
@@ -34,6 +38,11 @@
     margin-bottom: 20px;
 }
 
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #dbd8d8 inset !important;
+    box-shadow:0 0 0 30px #dbd8d8 inset !important;
+}
+
 .LoginPage__input {
     position: relative;
     display: flex;
@@ -44,8 +53,7 @@
     outline: none;
     font-size: 25px;
     width: auto;
-    color: #dbd8d8;
-    background-color: #dbd8d8;
+    background-color:  transparent;
     margin-bottom: 10px;
 }
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './css/App.css';
 
 import NavBar from './components/NavBar';
@@ -8,7 +10,7 @@ import GetStarted from './pages/GetStarted';
 import Login from './pages/Login';
 import MyProfile from './pages/MyProfile';
 import Browse from './pages/Browse';
-import { ToastContainer } from 'react-toastify';
+
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);

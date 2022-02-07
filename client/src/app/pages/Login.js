@@ -91,7 +91,7 @@ const Login = () => {
               </label>
               <button className="LoginPage__submitButton" onClick={login} >Submit</button>
               <button className="LoginPage__submitButton">
-                <Link className='link2' to="/">
+                <Link className='LoginPage__link' to="/">
                   <MenuItem>Back</MenuItem>
                 </Link>
               </button>
@@ -102,7 +102,6 @@ const Login = () => {
       {redirect && <Redirect push to="/browse" />}
     </div>
   );
-  //loggedIn !== undefined && console.log(loggedIn);
 }
 
 export default Login;
