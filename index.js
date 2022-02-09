@@ -43,7 +43,7 @@ app.post('/api/userCreation', userApi.userPost);
 //
 app.post('/api/profileCreation', profileApi.profilePost);
 
-app.post('/api/updateProfile', profileApi.profileUpdate);
+app.put('/api/updateProfile', profileApi.profileUpdate);
 //  Event CRUD operations
 //
 //
