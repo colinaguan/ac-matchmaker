@@ -77,10 +77,18 @@ const NavBar = ({loggedIn, setLoggedIn}) => {
     >
     {!loggedIn && 
         <div>
-            <Link className='link' to="/login">
+            <Link className='link' to="/login"
+              state={{
+                signUp: false
+              }}
+            >
                 <MenuItem>Log In</MenuItem>
             </Link>
-            <Link className='link' to="/signup">
+            <Link className='link' to="/login"
+              state={{
+                signUp: true
+              }}
+            >
                 <MenuItem>Sign up</MenuItem>
             </Link>
         </div>

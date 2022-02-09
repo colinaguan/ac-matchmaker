@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './css/App.css';
@@ -19,13 +19,13 @@ const App = () => {
     <div>
       <ToastContainer />
       <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-      <Switch>
-        <Route exact path='/' component={Landing}/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/getstarted' component={GetStarted}/>
-        <Route exact path='/myprofile' component={MyProfile}/>
-        <Route exact path='/browse' component={Browse}/>
-      </Switch>
+        <Routes>
+          <Route path='/' element={<Landing />}/>
+          <Route path='/login' element={<Login />}/>
+          <Route path='/getstarted' element={<GetStarted />}/>
+          <Route path='/myprofile' element={<MyProfile />}/>
+          <Route path='/browse' element={<Browse />}/>
+        </Routes>
     </div>
   );
 

@@ -8,26 +8,37 @@ const salt = bcrypt.genSaltSync(saltRounds);
 
 /**
  * POSTs a user object
- * sends the row count of deleted records back
- * row count should always be 1 when success, 0 when fail.
  * @param {*} req
  * @param {*} res
  */
 exports.userPost = async (req, res) => {
+  console.log(req.body);
   const plaintextPassword = req.body.userpassword;
   const hash = bcrypt.hashSync(plaintextPassword, salt);
   req.body.userpassword = hash;
   newUUID = uuid.v4();
 
   const newUser = await userModel.createUser(req.body, newUUID);
-  res.status(200).send(newUser[0].userid);
+  res.status(200).send(newUser);
 };
 
+
+/**
+ * GETs user objects
+ * @param {*} req
+ * @param {*} res
+ */
 exports.userGet = async (req, res) => {
   const users = await userModel.getUsers();
   res.status(200).send(users);
 };
 
+
+/**
+ * DELETEs user objects
+ * @param {*} req
+ * @param {*} res
+ */
 exports.userDelete = async (req, res) => {
   const deletedUsers = await userModel.userDelete(req.body.userid);
   console.log(deletedUsers);
@@ -35,6 +46,11 @@ exports.userDelete = async (req, res) => {
 };
 
 
+/**
+ * GETs user object and verifies login credentials before returning user object
+ * @param {*} req
+ * @param {*} res
+ */
 exports.userVerifyPost = async (req, res) => {
   const user = await userModel.getUser(req.body.useremail);
   // eslint-disable-next-line max-len
