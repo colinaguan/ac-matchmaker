@@ -1,11 +1,17 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import '../stylesheets/Landing.css';
+import { AuthContext } from '../util/AuthContext';
+
+
 
 /**
  * creates landing page
  * @return {HTML} Landing page
  */
 export default function Landing() {
+  const context = useContext(AuthContext);
+  console.log(context)
   return (
     <div className='Landing'>
       <div className='title'>

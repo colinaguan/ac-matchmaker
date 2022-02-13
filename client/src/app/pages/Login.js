@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Stack} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,6 +9,8 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import {toast} from 'react-toastify';
 import '../stylesheets/Login.css';
+import {AuthContext} from '../util/AuthContext';
+
 
 /**
  * creates login page
@@ -19,6 +21,10 @@ export default function Login() {
   const location = useLocation();
   const [signUp, setSignUp] = useState(location.state.signUp);
 
+  const {authenticated, setAuthenticated, user, setUser} = useContext(AuthContext);
+  const context = useContext(AuthContext)
+  console.log((context))
+  
   const [accountLoginCredentials, setAccountLoginCredentials] = useState({
     useremail: '',
     userpassword: '',
@@ -49,7 +55,7 @@ export default function Login() {
 
   const handleEnterNewAccount = (e) => {
     if (e.key === 'Enter') {
-      login();
+      createUser()
     }
   };
 
@@ -60,6 +66,40 @@ export default function Login() {
   useEffect(() => {
     setSignUp(location.state.signUp);
   }, [location.key, location.state]);
+
+  const login = () => {
+    fetch(`/api/login`, {
+      method: 'POST',
+      body: JSON.stringify(accountLoginCredentials),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          } 
+          return res.json()
+        })
+        .then((json) => {
+          toast.success('Login Success', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          context.setUser(json)
+          context.setAuthenticated(true)
+          navigate(`/`);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error logging in, please try again');
+        });
+  };
 
   const createUser = () => {
     fetch(`/api/userCreation`, {
@@ -89,36 +129,6 @@ export default function Login() {
         });
   };
 
-  const login = () => {
-    fetch(`/api/login`, {
-      method: 'POST',
-      body: JSON.stringify(accountLoginCredentials),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json();
-        })
-        .then((json) => {
-          toast.success('Login Success', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          navigate(`/`);
-        })
-        .catch((err) => {
-          alert('Error logging in, please try again');
-        });
-  };
 
   return (
     <div className="LoginPage">

@@ -3,6 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './stylesheets/App.css';
+import {AuthContext} from './util/AuthContext';
 
 import NavBar from './components/NavBar';
 import Landing from './pages/Landing';
@@ -17,9 +18,13 @@ import Browse from './pages/Browse';
  */
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
 
   return (
-    <div>
+    <AuthContext.Provider
+      value={{user, setUser, authenticated, setAuthenticated}}
+    >
       <ToastContainer />
       <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <Routes>
@@ -29,6 +34,6 @@ export default function App() {
         <Route path='/myprofile' element={<MyProfile />}/>
         <Route path='/browse' element={<Browse />}/>
       </Routes>
-    </div>
+    </AuthContext.Provider>
   );
 }
