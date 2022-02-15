@@ -173,9 +173,9 @@ export default function NavBar() {
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
         <Toolbar>
-        <Link className='link' to="/">
-           <img className='logo' src={logo} alt="ucsc_logo"></img> 
-        </Link>
+          <Link className='link' to="/">
+            <img className='logo' src={logo} alt="ucsc_logo"></img>
+          </Link>
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             {/* browse button */}
