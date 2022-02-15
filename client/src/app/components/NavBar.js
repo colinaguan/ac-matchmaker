@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Tooltip from '@mui/material/Tooltip';
 import {Link} from 'react-router-dom';
+import {AuthContext} from '../util/AuthContext';
 
 import logo from '../assets/ucsc.svg';
 import '../stylesheets/NavBar.css';
@@ -22,7 +24,8 @@ import '../stylesheets/NavBar.css';
  * creates navbar
  * @return {HTML} navbar component
  */
-export default function NavBar({loggedIn, setLoggedIn}) {
+export default function NavBar() {
+  const {authenticated} = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -74,7 +77,7 @@ export default function NavBar({loggedIn, setLoggedIn}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {!loggedIn &&
+      {!authenticated &&
         <div>
           <Link className='link' to="/login"
             state={{signUp: false}}
@@ -88,7 +91,7 @@ export default function NavBar({loggedIn, setLoggedIn}) {
           </Link>
         </div>
       }
-      {loggedIn &&
+      {authenticated &&
         <div>
           <Link className='link' to="/myprofile">
             <MenuItem onClick={handleProfileOpen}>My Profile</MenuItem>
@@ -170,7 +173,9 @@ export default function NavBar({loggedIn, setLoggedIn}) {
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
         <Toolbar>
-          <img className='logo' src={logo}></img>
+        <Link className='link' to="/">
+           <img className='logo' src={logo} alt="ucsc_logo"></img> 
+        </Link>
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             {/* browse button */}

@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
+import {AuthContext} from './util/AuthContext';
 import 'react-toastify/dist/ReactToastify.css';
 import './stylesheets/App.css';
-import {AuthContext} from './util/AuthContext';
-
 import NavBar from './components/NavBar';
 import Landing from './pages/Landing';
 import GetStarted from './pages/GetStarted';
@@ -17,16 +16,16 @@ import Browse from './pages/Browse';
  * @return {HTML} App component
  */
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   return (
-    <AuthContext.Provider
-      value={{user, setUser, authenticated, setAuthenticated}}
-    >
+    <AuthContext.Provider value={{user,
+      setUser,
+      authenticated,
+      setAuthenticated}}>
       <ToastContainer />
-      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <NavBar/>
       <Routes>
         <Route path='/' element={<Landing />}/>
         <Route path='/login' element={<Login />}/>

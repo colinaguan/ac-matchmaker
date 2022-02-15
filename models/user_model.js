@@ -60,7 +60,8 @@ exports.createUser = async (userInfo, newUUID) => {
   const query = {
     text: `INSERT INTO users 
              (userid, useremail, userpassword, usertype) 
-             VALUES (($1), ($2), ($3), ($4))`,
+             VALUES (($1), ($2), ($3), ($4))
+             RETURNING userid`,
     values: [newUUID, userInfo.useremail, userInfo.userpassword,
       userInfo.usertype],
   };

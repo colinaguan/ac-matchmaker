@@ -1,4 +1,4 @@
-import React, {createContext} from "react";
+import {createContext} from 'react';
 
 const AuthContext = createContext({
   authenticated: false,
@@ -7,7 +7,5 @@ const AuthContext = createContext({
   setUser: () => {},
 });
 
+export {AuthContext};
 
-
-
-export {AuthContext}

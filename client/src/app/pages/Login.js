@@ -21,10 +21,12 @@ export default function Login() {
   const location = useLocation();
   const [signUp, setSignUp] = useState(location.state.signUp);
 
-  const {authenticated, setAuthenticated, user, setUser} = useContext(AuthContext);
-  const context = useContext(AuthContext)
-  console.log((context))
-  
+  const {setUser,
+    setAuthenticated} = useContext(AuthContext);
+
+  const context = useContext(AuthContext);
+  console.log(context);
+
   const [accountLoginCredentials, setAccountLoginCredentials] = useState({
     useremail: '',
     userpassword: '',
@@ -55,7 +57,7 @@ export default function Login() {
 
   const handleEnterNewAccount = (e) => {
     if (e.key === 'Enter') {
-      createUser()
+      createUser();
     }
   };
 
@@ -78,8 +80,8 @@ export default function Login() {
         .then((res) => {
           if (!res.ok) {
             throw res;
-          } 
-          return res.json()
+          }
+          return res.json();
         })
         .then((json) => {
           toast.success('Login Success', {
@@ -91,8 +93,8 @@ export default function Login() {
             draggable: true,
             progress: undefined,
           });
-          context.setUser(json)
-          context.setAuthenticated(true)
+          setUser(json);
+          setAuthenticated(true);
           navigate(`/`);
         })
         .catch((err) => {
@@ -116,6 +118,14 @@ export default function Login() {
           return res.json();
         })
         .then((json) => {
+          console.log(json.rows[0].userid);
+          fetch(`/api/profileCreation`, {
+            method: 'POST',
+            body: JSON.stringify({userid: json.rows[0].userid}),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
           toast.success('Account created', {
             position: 'top-right',
             autoClose: 5000,
@@ -217,11 +227,6 @@ export default function Login() {
                 value="sponsor"
                 control={<Radio />}
                 label="Sponsor"
-              />
-              <FormControlLabel
-                value="admin"
-                control={<Radio />}
-                label="Admin"
               />
             </RadioGroup>
           </FormControl>
