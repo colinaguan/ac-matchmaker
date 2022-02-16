@@ -84,9 +84,6 @@ exports.userVerifyPost = async (req, res) => {
     
     res.cookie('accessToken', accessToken, { httpOnly: true });
     res.status(201).json({
-      userid: user[0].userid,
-      useremail: user[0].useremail,
-      usertype: user[0].usertype, 
       accessToken: accessToken, 
     });
   }
