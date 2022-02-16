@@ -21,8 +21,7 @@ export default function Login() {
   const location = useLocation();
   const [signUp, setSignUp] = useState(location.state.signUp);
 
-  const {setUser,
-    setAuthenticated} = useContext(AuthContext);
+  const {setUser, setAuthenticated} = useContext(AuthContext);
 
   const context = useContext(AuthContext);
   console.log(context);
@@ -37,7 +36,6 @@ export default function Login() {
     userpassword: '',
     usertype: '',
   });
-
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -85,6 +83,7 @@ export default function Login() {
         })
         .then((json) => {
           console.log(json);
+          console.log(json.accessToken);
           toast.success('Login Success', {
             position: 'top-right',
             autoClose: 5000,
@@ -95,6 +94,7 @@ export default function Login() {
             progress: undefined,
           });
           setUser(json);
+
           setAuthenticated(true);
           navigate(`/`);
         })

@@ -67,21 +67,27 @@ exports.userVerifyPost = async (req, res) => {
 
     // Signing a JWT Token, returned as a response
     const accessToken = jwt.sign(
-      { 
-        email: user[0].useremail,
+      {
+        userid: user[0].userid,
+        useremail: user[0].useremail,
+        usertype: user[0].usertype,
       },
       secrets.accessToken,
       {
         expiresIn: '60m',
         algorithm: 'HS256',
       });
-
-    //res.status(200).send(user[0]);
+    /**
+     *  This is the old login response
+     *  //res.status(200).send(user[0]);
+     */
+    
+    res.cookie('accessToken', accessToken, { httpOnly: true });
     res.status(201).json({
       userid: user[0].userid,
       useremail: user[0].useremail,
-      usertype: user[0].usertype,
-      accessToken: accessToken,
+      usertype: user[0].usertype, 
+      accessToken: accessToken, 
     });
   }
 };
