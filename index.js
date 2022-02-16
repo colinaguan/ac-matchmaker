@@ -76,6 +76,7 @@ console.log('App is listening on port ' + port);
 
 // DEBUG
 /*
+const profileModel = require('./models/profile_model');
 profileModel.createProfile(
     {
       'userid': `82f2d80c-a9ff-49c9-a0d7-7b8edfcfb24c`,

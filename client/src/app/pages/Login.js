@@ -84,6 +84,7 @@ export default function Login() {
           return res.json();
         })
         .then((json) => {
+          console.log(json);
           toast.success('Login Success', {
             position: 'top-right',
             autoClose: 5000,

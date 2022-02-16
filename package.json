@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon ./index.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
@@ -14,10 +15,12 @@
     "aws-sdk": "^2.1074.0",
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "node-pg": "^1.0.1",
     "pg": "^8.7.3"
   },
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "react-scripts": "^5.0.0"
   }
 }
