@@ -10,7 +10,8 @@ import FormLabel from '@mui/material/FormLabel';
 import {toast} from 'react-toastify';
 import '../stylesheets/Login.css';
 import {AuthContext} from '../util/AuthContext';
-
+// React JWT Library
+import {decodeToken} from 'react-jwt';
 
 /**
  * creates login page
@@ -21,8 +22,7 @@ export default function Login() {
   const location = useLocation();
   const [signUp, setSignUp] = useState(location.state.signUp);
 
-  const {setUser,
-    setAuthenticated} = useContext(AuthContext);
+  const {setUser, setAuthenticated} = useContext(AuthContext);
 
   const context = useContext(AuthContext);
   console.log(context);
@@ -37,7 +37,6 @@ export default function Login() {
     userpassword: '',
     usertype: '',
   });
-
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -84,6 +83,9 @@ export default function Login() {
           return res.json();
         })
         .then((json) => {
+          // JWT Debug Stuff
+          // console.log(json);
+          // console.log(json.accessToken);
           toast.success('Login Success', {
             position: 'top-right',
             autoClose: 5000,
@@ -93,7 +95,8 @@ export default function Login() {
             draggable: true,
             progress: undefined,
           });
-          setUser(json);
+          setUser(decodeToken(json.accessToken));
+
           setAuthenticated(true);
           navigate(`/`);
         })

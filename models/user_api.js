@@ -2,6 +2,10 @@ const userModel = require('./user_model.js');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 
+// JWT Requires
+const jwt = require('jsonwebtoken');
+// The Json file is for development purposes only
+const secrets = require('./secrets.json');
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
@@ -54,12 +58,33 @@ exports.userDelete = async (req, res) => {
 exports.userVerifyPost = async (req, res) => {
   const user = await userModel.getUser(req.body.useremail);
   // eslint-disable-next-line max-len
-  const crypt = (bcrypt.compare(req.password, user[0].userpassword, function(err) {
+  const crypt = (bcrypt.compare(req.password, user[0].userpassword, function (err) {
     if (err) return 'error';
     return true;
   }));
   if (crypt != 'error') {
     delete user[0].userpassword;
-    res.status(200).send(user[0]);
+
+    // Signing a JWT Token, returned as a response
+    const accessToken = jwt.sign(
+      {
+        userid: user[0].userid,
+        useremail: user[0].useremail,
+        usertype: user[0].usertype,
+      },
+      secrets.accessToken,
+      {
+        expiresIn: '60m',
+        algorithm: 'HS256',
+      });
+    /**
+     *  This is the old login response
+     *  //res.status(200).send(user[0]);
+     */
+    
+    res.cookie('accessToken', accessToken, { httpOnly: true });
+    res.status(201).json({
+      accessToken: accessToken, 
+    });
   }
 };
