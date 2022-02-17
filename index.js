@@ -90,7 +90,7 @@ app.put('/api/updateProfile', profileApi.profileUpdate);
 // AUTH test 
 //
 //
-
+// just returns the JWT token upon authentication success
 app.get('/api/dummy', authApi.check, authApi.dummy);
 
 

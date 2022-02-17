@@ -9,9 +9,10 @@ exports.check = (req, res, next) => {
         // console.log(token);
         // console.log(secrets.accessToken);
         jwt.verify(authHeader, secrets.accessToken, (err, user) => {
+            // Role Check Here
+            // Decode payload
             if (err) {
-                // console.log(err);
-                console.log("JWT not recognized, access denied: " + authHeader );
+                console.log(err);
                 return res.sendStatus(403);
             }
             next();
