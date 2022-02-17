@@ -4,7 +4,7 @@ const uuid = require('uuid');
 
 // JWT Requires
 const jwt = require('jsonwebtoken');
-// There needs to be a secrets.json file, do not upload it onto github
+// The Json file is for development purposes only
 const secrets = require('./secrets.json');
 
 const saltRounds = 10;
