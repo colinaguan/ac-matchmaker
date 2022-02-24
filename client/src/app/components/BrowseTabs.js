@@ -34,8 +34,8 @@ export default function BrowseTabs(props) {
   );
   /**
    * renders component
+   * @param {*} props
    * @return {HTML} tab component
-   * @param {object} props
    */
   function TabPanel(props) {
     const {children, value, index}=props;
