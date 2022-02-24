@@ -24,7 +24,7 @@ import '../stylesheets/FilterDrawer.css';
  * returns drawer with filters for opportunities
  * @return {HTML} filter drawer component
  */
-export default function FilterOpportunityDrawer() {
+export default function FilterPeopleDrawer() {
   const drawerWidth = 240;
 
   const [open, setOpen] = React.useState(true);
@@ -48,7 +48,7 @@ export default function FilterOpportunityDrawer() {
         <List
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-                Filters for Opportunities
+               Filters for People
             </ListSubheader>
           }
         >
