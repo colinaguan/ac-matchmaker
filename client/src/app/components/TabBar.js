@@ -15,17 +15,41 @@ export default function TabBar() {
   };
   return (
     <div>
-      <Tabs value={value}
-        onChange={handleTabs}
-        sx={{'&& .Mui-selected': {color: '#000000'}}}
-        centered>
-        <Tab label="Profile"/>
-        <Tab label="Opportunities"/>
-        <Tab label="Calendar"/>
-      </Tabs>
-      <TabPanel value={value} index = {0}>{<Profile/>}</TabPanel>
-      <TabPanel value={value} index = {1}>{<Opportunities/>}</TabPanel>
-      <TabPanel value={value} index = {2}>{<Calendar/>}</TabPanel>
+      <div className='tab-container'>
+        <Tabs
+          value={value}
+          onChange={handleTabs}
+          indicatorColor='primary'
+          sx={{
+            '&& .Mui-selected': {
+              color: '#000000',
+            },
+            '.MuiTabs-indicator': {
+              height: '3.5px',
+            },
+          }}
+          centered
+        >
+          <Tab
+            sx={TabStyles}
+            label='Profile'
+            disableRipple
+          />
+          <Tab
+            sx={TabStyles}
+            label='Opportunities'
+            disableRipple
+          />
+          <Tab
+            sx={TabStyles}
+            label='Calendar'
+            disableRipple
+          />
+        </Tabs>
+      </div>
+      <TabPanel value={value} index={0}>{<Profile/>}</TabPanel>
+      <TabPanel value={value} index={1}>{<Opportunities/>}</TabPanel>
+      <TabPanel value={value} index={2}>{<Calendar/>}</TabPanel>
     </div>
   );
 }
