@@ -18,6 +18,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
+import AddressForm from './AddressForm';
 import '../stylesheets/OpportunityCreation.css';
 import useAuth from '../util/AuthContext';
 
@@ -48,7 +49,7 @@ export default function OpportunityCreation({toggle}) {
     eventbanner: 'https://www.sorenkaplan.com/wp-content/uploads/2017/07/Testing.jpg',
     organizationtype: null,
     opportunitytype: '',
-    roles: null,
+    roles: [],
     starttime: null,
     endtime: null,
 
@@ -296,7 +297,7 @@ export default function OpportunityCreation({toggle}) {
           <div className='opportunity-creation__remote'>
             <TextField
               value={newOpportunity.remote}
-              defaultValue={null}
+              defaultValue=''
               name='remote'
               select
               label='Remote or In-Person'
@@ -567,6 +568,8 @@ export default function OpportunityCreation({toggle}) {
               </div>
             </LocalizationProvider>
 
+
+            <AddressForm />
 
             <div className='opportunity-creation__creation-buttons'>
               <Button onClick={toggle}
