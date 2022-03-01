@@ -9,10 +9,23 @@ import Calendar from './Calendar';
  */
 export default function TabBar() {
   const [value, setValue]=React.useState(0);
+
   const handleTabs=(e, val)=>{
     // console.log(val);
     setValue(val);
   };
+
+  const TabStyles = {
+    marginInline: '1em',
+    height: height ? height : '5rem',
+    textTransform: 'none',
+    fontFamily: 'Montserrat',
+    fontWeight: '600',
+    fontSize: '0.85rem',
+    letterSpacing: '-0.015em',
+    color: 'rgba(108, 110, 114, 0.8)',
+  };
+
   return (
     <div>
       <div className='tab-container'>
