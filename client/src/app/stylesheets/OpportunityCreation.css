@@ -17,7 +17,7 @@
 .opportunity-creation__details-section {
   display: flex;
   position: absolute;
-  height: 800px;
+  height: 870px;
   width: 21.5vw;
   top: 0%;
   bottom: 465px;
@@ -52,8 +52,8 @@
 }
 
 .opportunity-creation__creation-buttons {
-  position: relative;
-  right: 510px;
+  position: absolute;
+  right: 120px;
   top: 650px;
 }
 

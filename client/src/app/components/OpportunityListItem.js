@@ -175,7 +175,17 @@ export default function OpportunityListItem({data}) {
                     <LocationOnIcon sx={IconStyles} />
                   </div>
                   <div className='opportunity-card-right-location-text'>
-                    {data.remote ? data.eventzoomlink : data.eventlocation}
+                    {data.remote && data.remote == 'true' ?
+                    data.eventzoomlink : data.remote &&
+                    data.remote == 'false' &&
+                    data.eventlocation &&
+                    data.eventlocation.address && data.eventlocation.city &&
+                    data.eventlocation.state && data.eventlocation.zip ?
+                    data.eventlocation.address + ' ' + data.eventlocation.city +
+                    ', ' + data.eventlocation.state + ' ' +
+                    data.eventlocation.zip :
+                    data.remote && data.remote == 'false' &&
+                    data.eventlocation && data.eventlocation.address}
                   </div>
                 </div>
                 <div className='opportunity-card-right-date'>

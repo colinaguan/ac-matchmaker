@@ -8,7 +8,7 @@ import {Grid} from '@mui/material';
  * AddressForm Component
  * @return {html} Address Form
  */
-export default function AddressForm() {
+export default function AddressForm({newOpportunity, setNewOpportunity}) {
   const [address, setAddress] = useState(null);
   const [city, setCity] = useState(null);
   const [state, setState] = useState(null);
@@ -16,18 +16,30 @@ export default function AddressForm() {
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value);
+    setNewOpportunity({...newOpportunity, ['eventlocation']: {
+      ...(newOpportunity.eventlocation ?? {}),
+      address: e.target.value}});
   };
 
   const handleCityChange = (e) => {
     setCity(e.target.value);
+    setNewOpportunity({...newOpportunity, ['eventlocation']: {
+      ...(newOpportunity.eventlocation ?? {}),
+      city: e.target.value}});
   };
 
   const handleStateChange = (e) => {
     setState(e.target.value);
+    setNewOpportunity({...newOpportunity, ['eventlocation']: {
+      ...(newOpportunity.eventlocation ?? {}),
+      state: e.target.value}});
   };
 
   const handleZipChange = (e) => {
     setZip(e.target.value);
+    setNewOpportunity({...newOpportunity, ['eventlocation']: {
+      ...(newOpportunity.eventlocation ?? {}),
+      zip: e.target.value}});
   };
 
   return (

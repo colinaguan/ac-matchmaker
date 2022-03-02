@@ -35,8 +35,8 @@ export default function OpportunityCreation({toggle}) {
     eventname: '',
     usersponsors: {'creator': userProfile.profileid},
     remote: null,
-    eventlocation: '',
-    eventzoomlink: 'https://zoom.com/link',
+    eventlocation: {},
+    eventzoomlink: '',
     organization: null,
     description: null,
     userparticipants: [userProfile.profileid],
@@ -209,13 +209,13 @@ export default function OpportunityCreation({toggle}) {
         sx={{
           display: 'flex',
           position: 'fixed',
-          top: '10vh',
-          right: '17vw',
+          top: '3vh',
+          right: '16vw',
           alignContent: 'center',
           justifyContent: 'center',
           marginBottom: '3rem',
           width: '70vw',
-          minHeight: '800px',
+          minHeight: '870px',
           height: 'auto',
           maxHeight: '700px',
           zIndex: '10',
@@ -317,7 +317,7 @@ export default function OpportunityCreation({toggle}) {
               <MenuItem value={false}>
                 In-Person
               </MenuItem>
-              <MenuItem value={null} placeholder='Hybrid'>
+              <MenuItem value='Hybrid'>
                 Hybrid
               </MenuItem>
             </TextField>
@@ -569,8 +569,79 @@ export default function OpportunityCreation({toggle}) {
             </LocalizationProvider>
 
 
-            <AddressForm />
+            {newOpportunity.remote === false &&
+              <AddressForm
+                newOpportunity={newOpportunity}
+                setNewOpportunity={setNewOpportunity} />}
 
+            {newOpportunity.remote === true &&
+              <div>
+                <TextField
+                  name='eventzoomlink'
+                  label='Enter Remote Meeting Link'
+                  value={newOpportunity.eventzoomlink}
+                  onChange={handleChange}
+                  sx={{display: 'flex',
+                    position: 'relative',
+                    right: '305px',
+                    width: '305px',
+                    top: '230px',
+                    height: 'auto',
+                    backgroundColor: 'rgb(255, 255, 255)',
+                  }}
+                />
+              </div>}
+
+
+            {newOpportunity.remote == 'Hybrid' &&
+            <div>
+              <AddressForm
+                newOpportunity={newOpportunity}
+                setNewOpportunity={setNewOpportunity}/>
+              <TextField
+                name='eventzoomlink'
+                label='Enter Remote Meeting Link'
+                value={newOpportunity.eventzoomlink}
+                onChange={handleChange}
+                sx={{display: 'flex',
+                  position: 'relative',
+                  right: '305px',
+                  width: '305px',
+                  top: '240px',
+                  height: 'auto',
+                  backgroundColor: 'rgb(255, 255, 255)',
+                }}
+              />
+            </div>}
+
+            <div>
+              <TextField
+                value=''
+                defaultValue=''
+                name='subject'
+                select
+                label='Event subject'
+                onChange={handleChange}
+                sx={{backgroundColor: 'rgb(255, 255, 255)',
+                  display: 'flex',
+                  position: 'relative',
+                  left: '440px',
+                  bottom: '16px',
+                  width: '325px',
+                  marginBottom: '10px',
+                }}
+              >
+                <MenuItem value='computer science'>
+                  Computer Science
+                </MenuItem>
+                <MenuItem value='computer engineering'>
+                  Computer Engineering
+                </MenuItem>
+                <MenuItem value='art'>
+                  Art
+                </MenuItem>
+              </TextField>
+            </div>
             <div className='opportunity-creation__creation-buttons'>
               <Button onClick={toggle}
                 sx={{
