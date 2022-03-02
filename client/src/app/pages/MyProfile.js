@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import TabBar from '../components/TabBar';
 import Profile from '../components/Profile';
@@ -13,7 +13,16 @@ import useAuth from '../util/AuthContext';
  */
 export default function MyProfile() {
   const navigate = useNavigate();
+  const location = useLocation();
   const {user, setUser} = useAuth();
+  const [tab, setTab] = React.useState(0);
+
+  React.useEffect(() => {
+    if (location.state != null) {
+      console.log(location.state);
+      setTab(location.state.tab);
+    }
+  }, [location.key, location.state]);
 
   const handleDeactivateAccount = () => {
     fetch(`/api/userDeactivation`, {
@@ -60,7 +69,7 @@ export default function MyProfile() {
 
   return (
     <div className='MyProfile'>
-      <TabBar data={data} />
+      <TabBar data={data} state={tab ? tab : 0} />
       {user.active &&
         <button onClick={handleDeactivateAccount}>
           Deactivate Account

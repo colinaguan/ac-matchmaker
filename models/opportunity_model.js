@@ -81,6 +81,24 @@ const pool = new Pool();
 };
 
 /**
+ * getOpportunity
+ * gets opportunity data based on opportunity id provided
+ * Returns the specified opportunity
+ * @param {*} opportunityid
+ */
+ exports.getOpportunity = async (opportunityid) => {
+  const query = {
+    text: `SELECT * FROM events 
+           WHERE eventid = ($1)
+           AND active = true`,
+    values: [opportunityid],
+  };
+
+  const {rows} = await pool.query(query);
+  return rows;
+};
+
+/**
  * getPastOpportunities
  * deletes opportunity data based on opportunity id provided
  * Returns the user's past opportunities @param {*} opportunityInfo

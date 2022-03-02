@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {ListItem, IconButton, Menu, MenuItem} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -26,6 +27,7 @@ const IconStyles = {
 export default function OpportunityListItem({data}) {
   const [opportunityCreator, setOpportunityCreator] = useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -71,7 +73,6 @@ export default function OpportunityListItem({data}) {
         })
         .then((json) => {
           console.log(json);
-          navigate(`/`);
         })
         .catch((error) => {
           console.log(error);
@@ -81,8 +82,8 @@ export default function OpportunityListItem({data}) {
     getOpportunityCreator();
   }, []);
 
-  const handleClick = () => {
-    console.log('');
+  const handleClick = (e) => {
+    navigate(`/Opportunity/${data.eventid}`);
   };
 
   const formatDate = (date) => {
@@ -105,7 +106,7 @@ export default function OpportunityListItem({data}) {
 
   return (
     <ListItem
-      onClick={handleClick()}
+      onClick={handleClick}
       sx={{
         display: 'flex',
         cursor: 'pointer',
