@@ -1,0 +1,42 @@
+.opportunity-name {
+  color: #fdc700;
+  display: inline-block;
+  margin-left: 30px;
+  width: 70%;
+}
+
+.opportunity-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.opportunity-need-volunteers {
+  display: inline-block;
+  position: relative;
+  top: 30px;
+  margin-left: 20px;
+  width: 20%;
+  overflow: wrap;
+}
+
+.opportunity-host {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.opportunity-creator-avatar {
+  position: relative;
+  height: 30px;
+  width: 30px;
+  left: 30px;
+}
+
+.opportunity-creator {
+  display: flex;
+  position: relative;
+  font-weight: 600;
+  bottom: 18px;
+  left: 85px;
+  font-size: 14pt;
+  color: var(--text-grey-primary);
+}
