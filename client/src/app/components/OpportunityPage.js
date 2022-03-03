@@ -48,7 +48,7 @@ export default function OpportunityPage() {
     <div>
       {opportunity && <TabBar data={tabs} state={0}/>}
       <IconButton sx={{display: 'flex', position: 'relative', bottom: '950px',
-        marginLeft: '200px'}}>
+        left: '100px'}}>
         <Link className='link' to="/myprofile"
           state={{tab: 1}}
         >

@@ -94,7 +94,7 @@ export default function OpportunityListItem({data}) {
     };
 
     const timeOptions = {
-      hour: '2-digit',
+      hour: 'numeric',
       minute: '2-digit',
     };
 

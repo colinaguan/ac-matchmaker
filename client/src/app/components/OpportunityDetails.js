@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
 import {Grid} from '@mui/material';
 import {Button} from '@mui/material';
+import {Card} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import {Link} from 'react-router-dom';
 import useAuth from '../util/AuthContext';
@@ -48,7 +49,7 @@ export default function OpportunityDetails({data}) {
     };
 
     const timeOptions = {
-      hour: '2-digit',
+      hour: 'numeric',
       minute: '2-digit',
     };
 
@@ -87,8 +88,9 @@ export default function OpportunityDetails({data}) {
                     sx={{
                       display: 'flex',
                       position: 'relative',
-                      width: '150px',
-                      top: '20px',
+                      width: '100px',
+                      top: '10px',
+                      marginLeft: '30px',
                       height: '50px',
                       backgroundColor: '#fdc700',
                     }}>
@@ -126,31 +128,62 @@ export default function OpportunityDetails({data}) {
                   </div>
               }
             </div>
-
-            <h2>{data[0].opportunitytype}</h2>
-            <h2>{data[0].description}</h2>
-            <h2>{data[0].startdate &&
-              formatDate(data[0].startdate).date}
-            </h2>
-            <h2>{data[0].enddate &&
-              ` - ${formatDate(data[0].enddate).date}`}
-            </h2>
-            <h2>{data[0].remote && data[0].remote == 'true' ?
-                    data[0].eventzoomlink : data[0].remote &&
-                    data[0].remote == 'false' &&
-                    data[0].eventlocation &&
-                    data[0].eventlocation.address &&
-                    data[0].eventlocation.city &&
-                    data[0].eventlocation.state &&
-                    data[0].eventlocation.zip ?
-                    data[0].eventlocation.address +
-                    ' ' + data[0].eventlocation.city +
-                    ', ' + data[0].eventlocation.state + ' ' +
-                    data[0].eventlocation.zip :
-                    data[0].remote && data[0].remote == 'false' &&
-                    data[0].eventlocation && data[0].eventlocation.address}
-            </h2>
-            <h2>{data[0].remote}</h2>
+            <Card
+              sx={{
+                display: 'flex',
+                minHeight: '310px',
+                position: 'relative',
+                top: '7%',
+                marginLeft: '7.5%',
+                marginBottom: '100px',
+                width: '85%',
+                boxShadow: '0',
+                borderRadius: '10px',
+                outline: '0.5px solid #d1d1d1',
+              }}
+            >
+              <div className='opportunity-card-left'>
+                <img
+                  className='opportunity-card-left-cover'
+                  src={data[0].eventbanner}
+                />
+              </div>
+              <div className='opportunity-card-right'>
+                <p>{data[0].description}</p>
+              </div>
+            </Card>
+            <div className='opportunity-details-header'>Details:</div>
+            <div className='opportunity-details'>
+              <div>Opportunity Type:  {data[0].opportunitytype}</div>
+              <div>Date:  {data[0].startdate &&
+                formatDate(data[0].startdate).date}
+              {data[0].enddate &&
+                ` - ${formatDate(data[0].enddate).date}`}
+              </div>
+              <div>
+                {data[0].remote && data[0].remote == 'true' ?
+                `Remote Opportunity Link:  ` +
+                data[0].eventzoomlink : data[0].remote &&
+                data[0].remote == 'false' &&
+                data[0].eventlocation &&
+                data[0].eventlocation.address &&
+                data[0].eventlocation.city &&
+                data[0].eventlocation.state &&
+                data[0].eventlocation.zip ?
+                `Location:  ` +
+                data[0].eventlocation.address +
+                ' ' + data[0].eventlocation.city +
+                ', ' + data[0].eventlocation.state + ' ' +
+                data[0].eventlocation.zip :
+                data[0].remote && data[0].remote == 'false' &&
+                data[0].eventlocation && `Location:  ` +
+                data[0].eventlocation.address}
+              </div>
+              <div>
+                {data[0].starttime && `Time:  ` +
+                formatDate(data[0].starttime).time}
+              </div>
+            </div>
             <h2>{data[0].roles}</h2>
           </Paper>
         </Grid>
