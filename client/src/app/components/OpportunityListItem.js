@@ -144,15 +144,17 @@ export default function OpportunityListItem({data}) {
               <div className='opportunity-card-right-host'>
                 {opportunityCreator !== null &&
                   <>
-                    <div className='opportunity-card-right-host-avatar'>
-                      <Avatar
-                        src={opportunityCreator.profilepicture}
-                        sx={{
-                          width: '100%',
-                          height: '100%',
-                        }}
-                      />
-                    </div>
+                    {data.organization == 'user sponsor' ||
+                        data.organization == null &&
+                        <div className='opportunity-card-right-host-avatar'>
+                          <Avatar
+                            src={opportunityCreator.profilepicture}
+                            sx={{
+                              width: '100%',
+                              height: '100%',
+                            }}
+                          />
+                        </div>}
                     <div className='opportunity-card-right-host-name'>
                       {
                         data.organization &&
