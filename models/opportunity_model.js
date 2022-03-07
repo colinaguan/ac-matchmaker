@@ -95,7 +95,7 @@ const pool = new Pool();
   };
 
   const {rows} = await pool.query(query);
-  return rows;
+  return rows[0];
 };
 
 /**

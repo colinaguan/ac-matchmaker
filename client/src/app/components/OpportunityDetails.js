@@ -20,7 +20,7 @@ export default function OpportunityDetails({data}) {
   const {userProfile} = useAuth();
 
   const getOpportunityCreator = () => {
-    fetch(`/api/getProfileName/${data[0].usersponsors.creator}`)
+    fetch(`/api/getProfileName/${data.usersponsors.creator}`)
         .then((res) => {
           if (!res.ok) {
             throw res;
@@ -80,7 +80,7 @@ export default function OpportunityDetails({data}) {
             }}
           >
             <div className='opportunity-header'>
-              <h1 className='opportunity-name'>{data[0].eventname}</h1>
+              <h1 className='opportunity-name'>{data.eventname}</h1>
               <h3 className='opportunity-need-volunteers'>
                 Need volunteers?
                 <Link to='/browse'>
@@ -113,11 +113,11 @@ export default function OpportunityDetails({data}) {
                     </div>
                     <div className='opportunity-creator'>
                       {
-                        data[0].organization &&
-                        data[0].organization != 'user sponsor' ?
-                        `Hosted by ${data[0].organization}` :
-                        data[0].organization == 'user sponsor' ||
-                        data[0].organization == null &&
+                        data.organization &&
+                        data.organization != 'user sponsor' ?
+                        `Hosted by ${data.organization}` :
+                        data.organization == 'user sponsor' ||
+                        data.organization == null &&
                         opportunityCreator.profileid == userProfile.profileid ?
                         `Hosted by You` :
                         `Hosted by 
@@ -145,46 +145,46 @@ export default function OpportunityDetails({data}) {
               <div className='opportunity-card-left'>
                 <img
                   className='opportunity-card-left-cover'
-                  src={data[0].eventbanner}
+                  src={data.eventbanner}
                 />
               </div>
               <div className='opportunity-card-right'>
-                <p>{data[0].description}</p>
+                <p>{data.description}</p>
               </div>
             </Card>
             <div className='opportunity-details-header'>Details:</div>
             <div className='opportunity-details'>
-              <div>Opportunity Type:  {data[0].opportunitytype}</div>
-              <div>Date:  {data[0].startdate &&
-                formatDate(data[0].startdate).date}
-              {data[0].enddate &&
-                ` - ${formatDate(data[0].enddate).date}`}
+              <div>Opportunity Type:  {data.opportunitytype}</div>
+              <div>Date:  {data.startdate &&
+                formatDate(data.startdate).date}
+              {data.enddate &&
+                ` - ${formatDate(data.enddate).date}`}
               </div>
               <div>
-                {data[0].remote && data[0].remote == 'true' ?
+                {data.remote && data.remote == 'true' ?
                 `Remote Opportunity Link:  ` +
-                data[0].eventzoomlink : data[0].remote &&
-                data[0].remote == 'false' &&
-                data[0].eventlocation &&
-                data[0].eventlocation.address &&
-                data[0].eventlocation.city &&
-                data[0].eventlocation.state &&
-                data[0].eventlocation.zip ?
+                data.eventzoomlink : data.remote &&
+                data.remote == 'false' &&
+                data.eventlocation &&
+                data.eventlocation.address &&
+                data.eventlocation.city &&
+                data.eventlocation.state &&
+                data.eventlocation.zip ?
                 `Location:  ` +
-                data[0].eventlocation.address +
-                ' ' + data[0].eventlocation.city +
-                ', ' + data[0].eventlocation.state + ' ' +
-                data[0].eventlocation.zip :
-                data[0].remote && data[0].remote == 'false' &&
-                data[0].eventlocation && `Location:  ` +
-                data[0].eventlocation.address}
+                data.eventlocation.address +
+                ' ' + data.eventlocation.city +
+                ', ' + data.eventlocation.state + ' ' +
+                data.eventlocation.zip :
+                data.remote && data.remote == 'false' &&
+                data.eventlocation && `Location:  ` +
+                data.eventlocation.address}
               </div>
               <div>
-                {data[0].starttime && `Time:  ` +
-                formatDate(data[0].starttime).time}
+                {data.starttime && `Time:  ` +
+                formatDate(data.starttime).time}
               </div>
             </div>
-            <h2>{data[0].roles}</h2>
+            <h2>{data.roles}</h2>
           </Paper>
         </Grid>
       </Grid>

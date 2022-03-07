@@ -1,33 +1,55 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
+import {useState, useEffect} from 'react';
 import {Grid} from '@mui/material';
+import OpportunityRequestsCreatorView from './OpportunityRequestsCreatorView';
+import OpportunityRequestsVolunteerView
+  from './OpportunityRequestsVolunteerView';
+import useAuth from '../util/AuthContext';
+
 /**
  * OpportunityRequests component
  * @return {html} Opportunity request page
  */
 export default function OpportunityRequests({data}) {
+  const [opportunityCreator, setOpportunityCreator] = useState(null);
+  const {userProfile} = useAuth();
+
+  const getOpportunityCreator = () => {
+    fetch(`/api/getProfileName/${data.usersponsors.creator}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setOpportunityCreator(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity creators profile');
+        });
+  };
+
+  useEffect(() => {
+    getOpportunityCreator();
+  }, []);
+
   return (
     <div>
       <Grid container>
         <Grid item xs={12} md={12} lg={12} xl={12}
           sx={{display: 'flex',
-            justifyContent: 'center'}}>
-          <Paper
-            className='opportunity-requests'
-            elevation={3}
-            sx={{
-              display: 'flex',
-              marginBottom: '3rem',
-              marginTop: '3rem',
-              justifyContent: 'center',
-              width: '60vw',
-              height: 'auto',
-              boxShadow: '0px 0px 50px -14px rgba(0, 0, 0, 0.1)',
-              borderRadius: '10px',
-            }}
-          >
-            <h1>Opportunity Page id: {data[0].eventid}</h1>
-          </Paper>
+            justifyContent: 'center',
+            flexDirection: 'column'}}>
+          {opportunityCreator &&
+          opportunityCreator.profileid == userProfile.profileid &&
+          <OpportunityRequestsCreatorView data={data}/>}
+
+          {opportunityCreator &&
+          opportunityCreator.profileid != userProfile.profileid &&
+          <OpportunityRequestsVolunteerView data={data}/>}
         </Grid>
       </Grid>
 

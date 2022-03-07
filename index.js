@@ -100,6 +100,14 @@ app.get('/api/getOpportunity/:opportunityid', opportunityApi.getOpportunity);
 //
 app.get('/api/getPendingOpportunities/:profileid', requestApi.getPendingOpportunities);
 
+app.get('/api/getPendingRequest/:profileid/:eventid', requestApi.getPendingRequest);
+
+app.get('/api/getPendingRequestsReceived/:eventid', requestApi.getPendingRequestsReceived);
+
+app.get('/api/getPendingRequestsSent/:eventid', requestApi.getPendingRequestsSent);
+
+app.post('/api/postRequest', requestApi.postRequest);
+
 // OrganizationType CRUD operations
 //
 //
