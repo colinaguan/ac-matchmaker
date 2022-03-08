@@ -3,7 +3,10 @@ import '../stylesheets/Browse.css';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import BrowseFilterDrawer from '../components/BrowseFilterDrawer';
-import BrowseTabs from '../components/BrowseTabs';
+// import BrowseTabs from '../components/BrowseTabs';
+import TabBar from '../components/TabBar';
+import BrowseOpportunities from '../components/BrowseOpportunities';
+import BrowsePeople from '../components/BrowsePeople';
 
 // import useAuth from '../util/AuthContext';
 
@@ -14,19 +17,24 @@ import BrowseTabs from '../components/BrowseTabs';
 export default function Browse() {
   // states for tab view
   const oppInd = 0;
-  const peopleInd = 1;
-  const [value, setValue] = React.useState(0);
+  const [tab, setTab] = React.useState(oppInd);
 
   // states for opportunity filters
   const [locationFilter, setLocationFilter] = React.useState([]);
   const [oppTypeFilter, setOppTypeFilter] = React.useState([]);
   const [orgTypeFilter, setOrgTypeFilter] = React.useState([]);
 
+  // tab data
+  const data = [
+    {name: 'Opportunities', component: <BrowseOpportunities />},
+    {name: 'Calendar', component: <BrowsePeople />},
+  ];
+
   return (
     <div className='Browse'>
       <Box sx={{display: 'flex'}}>
         <BrowseFilterDrawer
-          filterType={value == oppInd ? 'Opportunities': 'People'}
+          filterType={tab == oppInd ? 'Opportunities': 'People'}
           locationFilter={locationFilter}
           setLocationFilter={setLocationFilter}
           oppTypeFilter={oppTypeFilter}
@@ -35,11 +43,10 @@ export default function Browse() {
           setOrgTypeFilter={setOrgTypeFilter}
         />
         <Box component="main" sx={{flexGrow: 1, p: 3}}>
-          <BrowseTabs
-            value={value}
-            setValue={setValue}
-            oppInd={oppInd}
-            peopleInd={peopleInd}
+          <TabBar
+            data={data}
+            tab={tab}
+            setTab={setTab}
           />
           <Typography paragraph>
             {locationFilter}
