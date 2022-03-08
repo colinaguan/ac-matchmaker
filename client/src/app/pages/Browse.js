@@ -1,109 +1,57 @@
 import * as React from 'react';
-import {List} from '@mui/material';
-import PeopleCard from '../components/PeopleCard';
 import '../stylesheets/Browse.css';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import BrowseFilterDrawer from '../components/BrowseFilterDrawer';
+import BrowseTabs from '../components/BrowseTabs';
 
-import useAuth from '../util/AuthContext';
+// import useAuth from '../util/AuthContext';
 
 /**
  * returns Browsing page
  * @return {HTML} Browse component
  */
 export default function Browse() {
-  // testing context
-  const auth = useAuth();
-  console.log(auth);
+  // states for tab view
+  const oppInd = 0;
+  const peopleInd = 1;
+  const [value, setValue] = React.useState(0);
+
+  // states for opportunity filters
+  const [locationFilter, setLocationFilter] = React.useState([]);
+  const [oppTypeFilter, setOppTypeFilter] = React.useState([]);
+  const [orgTypeFilter, setOrgTypeFilter] = React.useState([]);
 
   return (
     <div className='Browse'>
-      <h1>Browse</h1>
-      <List
-        sx={{
-          display: 'grid',
-          gap: '2em',
-          paddingBlock: '3em',
-          width: '785px',
-          margin: 'auto',
-          borderRadius: '10px',
-        }}
-      >
-        {exampleData && exampleData.map((person, index) => (
-          <PeopleCard
-            key={`people-list-item-${index}`}
-            data={person}
+      <Box sx={{display: 'flex'}}>
+        <BrowseFilterDrawer
+          filterType={value == oppInd ? 'Opportunities': 'People'}
+          locationFilter={locationFilter}
+          setLocationFilter={setLocationFilter}
+          oppTypeFilter={oppTypeFilter}
+          setOppTypeFilter={setOppTypeFilter}
+          orgTypeFilter={orgTypeFilter}
+          setOrgTypeFilter={setOrgTypeFilter}
+        />
+        <Box component="main" sx={{flexGrow: 1, p: 3}}>
+          <BrowseTabs
+            value={value}
+            setValue={setValue}
+            oppInd={oppInd}
+            peopleInd={peopleInd}
           />
-        ))}
-      </List>
+          <Typography paragraph>
+            {locationFilter}
+          </Typography>
+          <Typography paragraph>
+            {oppTypeFilter}
+          </Typography>
+          <Typography paragraph>
+            {orgTypeFilter}
+          </Typography>
+        </Box>
+      </Box>
     </div>
   );
 }
-
-const exampleData = [
-  {
-    name: 'Frederick Douglass',
-    major: 'Bachelor of Arts, Arts and Crafts',
-    events: '6',
-    recommendations: '4',
-    availability: '3',
-    work: [
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-    ],
-    volunteer: [
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-    ],
-  },
-  {
-    name: 'Frederick Douglass',
-    major: 'Bachelor of Arts, Arts and Crafts',
-    events: '6',
-    recommendations: '4',
-    availability: '3',
-    work: [
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-    ],
-    volunteer: [
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-      {
-        organization: 'Amazon',
-        position: 'Data Engineer',
-        years: '2020-2021',
-      },
-    ],
-  },
-];
