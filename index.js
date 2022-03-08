@@ -85,6 +85,8 @@ app.get('/api/getProfileName/:profileid', profileApi.profileGetName)
 //  Opportunity CRUD operations
 //
 //
+app.get('/api/getOpportunities', opportunityApi.getOpportunities);
+
 app.get('/api/getJoinedOpportunities/:profileid', opportunityApi.getJoinedOpportunities);
 
 app.get('/api/getCreatedOpportunities/:profileid', opportunityApi.getCreatedOpportunities);
