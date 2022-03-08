@@ -10,7 +10,8 @@ const pool = new Pool();
 exports.getUsers = async () => {
   const query = {
     text: `SELECT * 
-          FROM users`,
+            FROM users
+            WHERE active=true`,
   };
   const {rows} = await pool.query(query);
   return rows[0];

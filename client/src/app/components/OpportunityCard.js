@@ -17,13 +17,13 @@ const IconStyles = {
 };
 
 /**
- * OpportunityListItem
+ * OpportunityCard
  * Opportunity ListItem Component
  * display events with pertinent information clearly visible
  * @param {*} data
- * @return {HTML} OpportunityListItem component
+ * @return {HTML} OpportunityCard component
  */
-export default function OpportunityListItem({data}) {
+export default function OpportunityCard({data}) {
   const [opportunityCreator, setOpportunityCreator] = useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -40,6 +40,7 @@ export default function OpportunityListItem({data}) {
   };
 
   const menuId = 'opportunity-menu';
+  console.log(data);
 
   const getOpportunityCreator = () => {
     fetch(`/api/getProfileName/${data.usersponsors.creator}`)
@@ -157,7 +158,10 @@ export default function OpportunityListItem({data}) {
                     <LocationOnIcon sx={IconStyles} />
                   </div>
                   <div className='opportunity-card-right-location-text'>
-                    {data.remote ? data.eventzoomlink : data.eventlocation}
+                    {
+                      data.locationtype ?
+                      data.eventzoomlink : data.eventlocation
+                    }
                   </div>
                 </div>
                 <div className='opportunity-card-right-date'>

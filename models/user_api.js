@@ -40,7 +40,7 @@ exports.userPost = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-exports.userGet = async (req, res) => {
+exports.userGet = async (_, res) => {
   const users = await userModel.getUsers();
   res.status(200).send(users);
 };
