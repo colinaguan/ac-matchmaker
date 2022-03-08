@@ -20,6 +20,9 @@ export function AuthProvider(props) {
   const [pastOpportunities,
     setPastOpportunities] = useState(null);
 
+  // Socket.io State
+  const [socket, setSocket] = useState(null);
+
   return (
     <AuthContext.Provider
       value={{user,
@@ -36,6 +39,9 @@ export function AuthProvider(props) {
         setPendingOpportunities,
         pastOpportunities,
         setPastOpportunities,
+        // Socket.io state
+        socket,
+        setSocket,
       }}>
       {props.children}
     </AuthContext.Provider>

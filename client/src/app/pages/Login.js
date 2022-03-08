@@ -6,6 +6,9 @@ import '../stylesheets/Login.css';
 
 import useAuth from '../util/AuthContext';
 
+// Socket.io Import
+import {io} from 'socket.io-client';
+
 /**
  * creates login page
  * @return {HTML} login page
@@ -17,6 +20,8 @@ export default function Login() {
 
 
   const {user, setUser, setLoggedIn, userProfile, setUserProfile} = useAuth();
+  // Socket.io useAuth()
+  const {setSocket} = useAuth();
   console.log('current user: ', user);
   console.log('current user profile: ', userProfile);
 
@@ -137,6 +142,13 @@ export default function Login() {
           });
           setLoggedIn(true);
           setUser(json);
+
+          // Creating a new socket connection and store within useAuth
+          console.log(json);
+          const newSocket = io();
+          newSocket.emit('newOnlineUser', json.userid );
+          setSocket(newSocket);
+
           navigate(`/`);
         })
         .catch((err) => {
