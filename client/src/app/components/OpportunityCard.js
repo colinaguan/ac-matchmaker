@@ -25,7 +25,8 @@ const IconStyles = {
  */
 export default function OpportunityCard({data}) {
   const [opportunityCreator, setOpportunityCreator] = useState(null);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [creatorName, setCreatorName] = useState('');
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -40,7 +41,6 @@ export default function OpportunityCard({data}) {
   };
 
   const menuId = 'opportunity-menu';
-  console.log(data);
 
   const getOpportunityCreator = () => {
     fetch(`/api/getProfileName/${data.usersponsors.creator}`)
@@ -51,8 +51,12 @@ export default function OpportunityCard({data}) {
           return res.json();
         })
         .then((json) => {
-          // console.log(json);
+          const creator =
+            `${json.firstname} ${json.lastname[0]}`;
+          console.log(data);
+          console.log(creator);
           setOpportunityCreator(json);
+          setCreatorName(creator);
         })
         .catch((err) => {
           console.log(err);
@@ -137,16 +141,13 @@ export default function OpportunityCard({data}) {
                     </div>
                     <div className='opportunity-card-right-host-name'>
                       {
-                        data.organization &&
-                        data.organization != 'user sponsor' ?
-                        `Hosted by ${data.organization}` :
-                        data.organization == 'user sponsor' ||
-                        data.organization == null &&
+                        // check if you created opp
                         opportunityCreator.profileid == userProfile.profileid ?
                         `Hosted by You` :
-                        `Hosted by 
-                        ${opportunityCreator.firstname} 
-                        ${opportunityCreator.lastname[0]}.`
+                        // check if user sponsored opp
+                        data.organization ?
+                        `Hosted by ${data.organization}` :
+                        `Hosted by ${creatorName}`
                       }
                     </div>
                   </>
