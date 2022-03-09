@@ -20,6 +20,21 @@ const pool = new Pool();
 };
 
 /**
+ * getOpportunity
+ * gets opportunity
+ * @param {*} opportunityid
+ */
+ exports.getOpportunity = async (opportunityid) => {
+  const query = {
+    text: `SELECT * FROM events
+           WHERE events.eventid = $1`,
+    values: [opportunityid],
+  };
+  const {rows} = await pool.query(query);
+  return rows[0];
+};
+
+/**
  * getJoinedOpportunities
  * gets opportunity data based on user profileid provided
  * Returns the specified user's joined opportunities

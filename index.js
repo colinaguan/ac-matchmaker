@@ -89,6 +89,8 @@ app.get('/api/getProfileName/:profileid', profileApi.profileGetName)
 //
 app.get('/api/getOpportunities', opportunityApi.getOpportunities);
 
+app.get('/api/getOpportunity/:opportunityid', opportunityApi.getOpportunity);
+
 app.get('/api/getJoinedOpportunities/:profileid', opportunityApi.getJoinedOpportunities);
 
 app.get('/api/getCreatedOpportunities/:profileid', opportunityApi.getCreatedOpportunities);
@@ -100,6 +102,8 @@ app.post('/api/postOpportunity', opportunityApi.postOpportunity);
 // Request CRUD operations
 //
 //
+app.get('/api/getRequests/:profileid', requestApi.getRequests);
+
 app.get('/api/getPendingOpportunities/:profileid', requestApi.getPendingOpportunities);
 
 // OrganizationType CRUD operations

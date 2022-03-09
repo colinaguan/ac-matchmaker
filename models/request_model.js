@@ -4,6 +4,23 @@ const Pool = require('pg').Pool;
 const pool = new Pool();
 
 /**
+ * getRequests
+ * gets request data associated with profile id provided
+ * @param {*} profileid
+ */
+ exports.getRequests= async (profileid) => {
+  const query = {
+    text: `SELECT *
+           FROM requests
+           WHERE requests.requeststatus = 'pending' AND requests.requester = $1 OR requests.requestee = $1`,
+    values: [profileid],
+  };
+  const {rows} = await pool.query(query);
+  console.log(rows);
+  return rows;
+};
+
+/**
  * getPendingOpportunities
  * gets request data associated with profile id provided
  * Returns the specified profiles requests sent to or from the user that are still active

@@ -13,6 +13,19 @@ const uuid = require('uuid');
 };
 
 /**
+ * GETs all opportunities
+ * retrieves all active opportunities.
+ * @param {*} req
+ * @param {*} res
+ */
+ exports.getOpportunity = async (req, res) => {
+  console.log(req.params.opportunityid);
+  const opportunity = await opportunityModel.getOpportunity(req.params.opportunityid);
+  console.log(opportunity);
+  res.status(201).send(opportunity);
+};
+
+/**
  * GETs joined opportunities
  * retrieves the specified user's joined opportunities.
  * @param {*} req
