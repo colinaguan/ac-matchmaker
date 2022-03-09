@@ -46,57 +46,13 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const { user } = require('pg/lib/defaults');
 const io = new Server(server);
 
-// an array that holds a list of online users.
-let onlineUsers = [];
-
-/**
- * Maps the userId and their respective socketId and stores it inside
- * Array of online Users
- * @param {*} userId 
- * @param {*} socketId 
- */
-const addOnlineUser = (userId, socketId) =>{
-  if (onlineUsers.some( (user) => user.userId === userId) === false){
-    onlineUsers.push({ userId, socketId});
-    // Debug 
-    console.log(onlineUsers);
-  };
-};
-
-const removeOnlineUser = (socketId) =>{
-  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
-}
- 
-const getUser = (userId) =>{
-  return onlineUsers.find((user) => user.userId === userId);
-}
-
-
 io.on('connection', (socket) => {
-  // Any sort of connection to the website 
-  console.log('connection');
-  
+  console.log('a user connected');
 
-  socket.on('ping', () =>{
-    console.log('Still connected!: ' + socket.id);
-  });
-
-  // Add a event listener for when a user is authenticated.
-  // If user is authenticated, it will be added on the online user array.
-  socket.on('newOnlineUser', (userId) =>{
-    addOnlineUser(userId, socket.id);
-    console.log('A new User has connected: ' +  userId);
-    console.log(onlineUsers);
-  });
-
-  //This event occurs when the user's browser is closed
   socket.on('disconnect', () =>{
-    console.log('connection disconnected');
-    removeOnlineUser(socket.id);
-    console.log(onlineUsers);
+    console.log('Someone has left');
   });
 
 });

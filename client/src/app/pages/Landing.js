@@ -1,9 +1,6 @@
 import * as React from 'react';
 import '../stylesheets/Landing.css';
 
-// importing useAuth to test the socket connection
-import useAuth from '../util/AuthContext';
-
 /**
  * creates landing page
  * @return {HTML} Landing page
@@ -18,14 +15,6 @@ export default function Landing() {
     });
   };
 
-  const {socket} = useAuth();
-
-  const printSocket = () =>{
-    console.log(socket);
-    socket.emit('ping');
-  };
-
-
   return (
     <div className='Landing'>
       <div className='title'>
@@ -36,12 +25,6 @@ export default function Landing() {
           onClick={authTest}
         >
           Test Auth
-        </button>
-        <button
-          className="LoginPage__submitButton"
-          onClick={printSocket}
-        >
-          Test Socket.io
         </button>
       </div>
     </div>
