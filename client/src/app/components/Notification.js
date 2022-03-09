@@ -6,7 +6,6 @@ import NotificationItem from './NotificationItem';
 const notifications =
 [
   {
-    'requestid': 1,
     'requester': 'Rachel Wong',
     'requeststatus': 'Pending',
     'requestdatetime': '3 days ago',
@@ -15,7 +14,6 @@ const notifications =
     'requestopportunity': 'Gracehack-speaker',
   },
   {
-    'requestid': 2,
     'requester': 'SWE team',
     'requeststatus': 'Pending',
     'requestdatetime': '4 days ago',
