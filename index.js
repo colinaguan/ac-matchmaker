@@ -39,31 +39,11 @@ const opportunityTypeApi = require('./models/opportunityType_api');
 require('dotenv').config();
 
 const app = express();
-/**
- *  SOCKET.IO SET UP CODE
- *  
- */
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
-
-  socket.on('disconnect', () =>{
-    console.log('Someone has left');
-  });
-
-});
-
-/** */
-
 app.use(express.json());
 
 /** This is for setting up the cookie parser and express jwt
  */
-app.use(cookieParser());
+ app.use(cookieParser());
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -163,9 +143,10 @@ app.get('*', function (req, res) {
 
 const port = process.env.PORT || 3001;
 
-server.listen(port, () => {
-  console.log('App is listening on port ' + port);
-})
+app.listen(port);
+
+console.log('App is listening on port ' + port);
+
 // DEBUG
 /*
 profileModel.createProfile(

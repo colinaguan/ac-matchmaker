@@ -1,5 +1,4 @@
 import React from 'react';
-import {useEffect} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,28 +14,10 @@ import Browse from './pages/Browse';
 import {AuthProvider} from './util/AuthContext';
 
 /**
- * Socket.io-client is used for converting react into real time application
- */
-import {io} from 'socket.io-client';
-
-/**
  * returns basic routes and navbar of app
  * @return {HTML} App component
  */
 export default function App() {
-  /**
-  * Some code to connect to the Socket.io server
-  */
-  useEffect(() => {
-    // Seems to be connecting to the proxy from package.json
-    const socket = io();
-    console.log(socket);
-    /**
-     * SOCKET.IO INFORMATION ------
-     * socket.id - Used to differentiate connections
-     */
-  }, []);
-
   return (
     <AuthProvider>
       <ToastContainer />
