@@ -62,7 +62,7 @@ app.use(function (req, res, next) {
 //   User CRUD operations
 //
 //
-app.get('/api/users', userApi.userGet);
+app.get('/api/users', userApi.getActiveUsers);
 
 app.post('/api/login', userApi.userVerifyPost);
 
@@ -74,6 +74,8 @@ app.post('/api/userCreation', userApi.userPost);
 //  Profile CRUD operations
 //
 //
+app.get('/api/getActiveProfiles', profileApi.getActiveProfiles);
+
 app.post('/api/profileCreation', profileApi.profilePost);
 
 app.get('/api/getProfile/:userid', profileApi.getProfile);
