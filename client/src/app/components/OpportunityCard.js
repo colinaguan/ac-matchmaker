@@ -53,8 +53,6 @@ export default function OpportunityCard({data}) {
         .then((json) => {
           const creator =
             `${json.firstname} ${json.lastname[0]}`;
-          console.log(data);
-          console.log(creator);
           setOpportunityCreator(json);
           setCreatorName(creator);
         })
@@ -71,7 +69,6 @@ export default function OpportunityCard({data}) {
   const handleClick = () => {
     // console.log('');
   };
-  console.log(data);
 
   const formatDate = (date) => {
     const dateOptions = {

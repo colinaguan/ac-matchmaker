@@ -20,8 +20,14 @@ export default function BrowseOpportunities(props) {
   useEffect(() => {
     getOpportunities();
     applyFilters();
-    setLoading(false);
   }, []);
+
+  // update display opps
+  useEffect(() => {
+    if (displayOpps && displayOpps.length > 0) {
+      setLoading(false);
+    }
+  }, [displayOpps]);
 
   // update displayed opportunities when filters are updated
   useEffect(() => {
