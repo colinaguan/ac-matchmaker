@@ -56,7 +56,6 @@ export default function BrowseFilterDrawer(props) {
         })
         .then((json) => {
           const tempOppTypes = json.map((elem) => (elem.name));
-          console.log(tempOppTypes);
           setOppTypes(tempOppTypes);
         })
         .catch((err) => {
@@ -75,7 +74,6 @@ export default function BrowseFilterDrawer(props) {
         })
         .then((json) => {
           const tempOrgTypes = json.map((elem) => (elem.name));
-          console.log(tempOrgTypes);
           setOrgTypes(tempOrgTypes);
         })
         .catch((err) => {
@@ -96,7 +94,6 @@ export default function BrowseFilterDrawer(props) {
     } else {
       newOppFilterLocation.splice(currentIndex, 1);
     }
-    console.log(newOppFilterLocation);
     setLocationFilter(newOppFilterLocation);
   };
 
@@ -110,7 +107,6 @@ export default function BrowseFilterDrawer(props) {
     } else {
       newOppFilterType.splice(currentIndex, 1);
     }
-    console.log(newOppFilterType);
     setOppTypeFilter(newOppFilterType);
   };
 
@@ -124,7 +120,6 @@ export default function BrowseFilterDrawer(props) {
     } else {
       newOrgTypeFilter.splice(currentIndex, 1);
     }
-    console.log(newOrgTypeFilter);
     setOrgTypeFilter(newOrgTypeFilter);
   };
 
