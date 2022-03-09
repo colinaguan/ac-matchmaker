@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useParams} from 'react-router-dom';
-import OpportunityRequests from './OpportunityRequests';
-import OpportunityDetails from './OpportunityDetails';
-import TabBar from './TabBar';
 import {IconButton} from '@mui/material';
 import {Link} from 'react-router-dom';
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+import OpportunityRequests from './OpportunityRequests';
+import OpportunityDetails from './OpportunityDetails';
+import TabBar from './TabBar';
 
 /**
  * OpportunityPage component
@@ -47,7 +47,7 @@ export default function OpportunityPage() {
   return (
     <div>
       {opportunity && <TabBar data={tabs} state={0}/>}
-      <IconButton sx={{display: 'flex', position: 'relative', bottom: '950px',
+      <IconButton sx={{display: 'flex', position: 'absolute', bottom: '600px',
         left: '100px'}}>
         <Link className='link' to="/myprofile"
           state={{tab: 1}}

@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import {Button} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import {MenuItem} from '@mui/material';
 import useAuth from '../util/AuthContext';
 import '../stylesheets/OpportunityRequests.css';
 
@@ -15,9 +16,11 @@ export default function OpportunityRequestsVolunteerView({data}) {
   const {userProfile} = useAuth();
   const [pendingRequest, setPendingRequest] = useState(null);
   const [request, setRequest] = useState({
-    requestee: data.eventid,
+    requestee: data.usersponsors.creator,
     requester: userProfile.profileid,
-    requestmessage: '',
+    requestmessage: null,
+    opportunityid: data.eventid,
+    role: null,
   });
 
   const handleChange = (e) => {
@@ -45,6 +48,29 @@ export default function OpportunityRequestsVolunteerView({data}) {
         .then((json) => {
           console.log(json);
           getPendingRequest();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
+
+  const cancelRequest = () => {
+    fetch(`/api/cancelRequest`, {
+      method: 'POST',
+      body: JSON.stringify(pendingRequest),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          console.log(res);
+          return res;
+        })
+        .then((json) => {
+          setPendingRequest(null);
         })
         .catch((error) => {
           console.log(error);
@@ -114,10 +140,13 @@ export default function OpportunityRequestsVolunteerView({data}) {
           </div>
           <div className='request-details'>
             <div className='request-message'>
-              Request Message: {pendingRequest.requestmessage}
+              Message: {pendingRequest.requestmessage}
             </div>
             <div className='request-status'>
-              Request Status: {pendingRequest.requeststatus}
+              Status: {pendingRequest.requeststatus}
+            </div>
+            <div className='request-role'>
+              Requested Role: {pendingRequest.role}
             </div>
             <div className='request-date'>
               Date Requested:  {pendingRequest.requestdatetime &&
@@ -125,6 +154,11 @@ export default function OpportunityRequestsVolunteerView({data}) {
               formatDate(pendingRequest.requestdatetime).time}
             </div>
           </div>
+          <Button sx={{padding: '2rem',
+            marginTop: '1rem'}}
+          onClick={cancelRequest}>
+            Cancel Request
+          </Button>
         </>
       </Paper>}
       {pendingRequest === null && <Paper
@@ -160,6 +194,24 @@ export default function OpportunityRequestsVolunteerView({data}) {
               height: 'auto',
             }}
           />
+          {data.roles && <TextField select
+            name='role'
+            label='Role'
+            value={request.role}
+            onChange={handleChange}
+            sx={{display: 'flex',
+              marginX: 'auto',
+              width: '40%',
+              marginTop: '2rem',
+              height: 'auto',
+            }}
+          >
+            {data.roles.map((role, index) => (
+              <MenuItem value={role} key={index}>
+                {role}
+              </MenuItem>
+            ))}
+          </TextField>}
           <Button sx={{padding: '2rem',
             marginTop: '1rem'}}
           onClick={createRequest}>

@@ -73,14 +73,17 @@ export default function OpportunityDetails({data}) {
               marginBottom: '3rem',
               flexDirection: 'column',
               marginTop: '3rem',
+              paddingBottom: '3rem',
               width: '60vw',
-              height: '900px',
+              height: 'auto',
               boxShadow: '0px 0px 50px -14px rgba(0, 0, 0, 0.1)',
               borderRadius: '10px',
             }}
           >
             <div className='opportunity-header'>
               <h1 className='opportunity-name'>{data.eventname}</h1>
+              {opportunityCreator &&
+              opportunityCreator.profileid == userProfile.profileid &&
               <h3 className='opportunity-need-volunteers'>
                 Need volunteers?
                 <Link to='/browse'>
@@ -97,7 +100,7 @@ export default function OpportunityDetails({data}) {
                     Browse
                   </Button>
                 </Link>
-              </h3>
+              </h3>}
             </div>
             <div>
               {opportunityCreator !== null &&
@@ -154,37 +157,51 @@ export default function OpportunityDetails({data}) {
             </Card>
             <div className='opportunity-details-header'>Details:</div>
             <div className='opportunity-details'>
-              <div>Opportunity Type:  {data.opportunitytype}</div>
-              <div>Date:  {data.startdate &&
+              <div className='opportunity-detail'>
+                Opportunity Type:  {data.opportunitytype}
+              </div>
+              {data.locationtype &&
+              <div className='opportunity-detail'>
+                In-person or Remote: {data.locationtype[0].toUpperCase() +
+                data.locationtype.substring(1)}
+              </div>}
+              {data.locationtype && (data.locationtype == 'remote' ||
+                data.locationtype == 'hybrid') &&
+              <div className='opportunity-detail'>
+                Remote Opportunity Link: {data.eventzoomlink}
+              </div>}
+
+              {data.locationtype &&
+                (data.locationtype == 'in-person' ||
+                data.locationtype == 'hybrid') &&
+              <div className='opportunity-detail'>
+                Location: {data.eventlocation.address + ' ' +
+                data.eventlocation.city + ', ' + data.eventlocation.state +
+                ' ' + data.eventlocation.zip}
+              </div>}
+              <div className='opportunity-detail'>
+                Date:  {data.startdate &&
                 formatDate(data.startdate).date}
-              {data.enddate &&
+                {data.enddate &&
                 ` - ${formatDate(data.enddate).date}`}
               </div>
-              <div>
-                {data.remote && data.remote == 'true' ?
-                `Remote Opportunity Link:  ` +
-                data.eventzoomlink : data.remote &&
-                data.remote == 'false' &&
-                data.eventlocation &&
-                data.eventlocation.address &&
-                data.eventlocation.city &&
-                data.eventlocation.state &&
-                data.eventlocation.zip ?
-                `Location:  ` +
-                data.eventlocation.address +
-                ' ' + data.eventlocation.city +
-                ', ' + data.eventlocation.state + ' ' +
-                data.eventlocation.zip :
-                data.remote && data.remote == 'false' &&
-                data.eventlocation && `Location:  ` +
-                data.eventlocation.address}
-              </div>
-              <div>
-                {data.starttime && `Time:  ` +
+              <div className='opportunity-detail'>
+                {data.starttime && `Start Time:  ` +
                 formatDate(data.starttime).time}
               </div>
+              <div className='opportunity-detail'>
+                {data.endtime && `End Time:  ` +
+                formatDate(data.endtime).time}
+              </div>
             </div>
-            <h2>{data.roles}</h2>
+            <div>
+              {data.roles && data.roles.length > 0 &&
+              <div className='roles-header'>
+                Available Roles:
+              </div>}
+              {data.roles && data.roles.map((role, index) => (
+                <div className='opportunity-role' key={index}>{role}</div>
+              ))}</div>
           </Paper>
         </Grid>
       </Grid>

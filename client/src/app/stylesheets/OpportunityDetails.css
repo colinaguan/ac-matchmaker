@@ -66,14 +66,34 @@
 }
 
 .opportunity-details-header {
-  padding-left: 4rem;
-  margin-bottom: 10px;
+  margin-left: 2rem;
+  padding-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .opportunity-details {
-  margin-left: 2rem;
+  margin-left: 4rem;
   margin-right: 2rem;
+}
+
+.opportunity-detail {
+  margin-bottom: 5px;
+}
+.roles-header {
+  margin-left: 2rem;
   padding-left: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-primary);
+  margin-right: 2rem;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.opportunity-role {
+  margin-left: 4rem;
+  margin-bottom: 5px;
 }

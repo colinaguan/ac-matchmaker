@@ -25,6 +25,19 @@ exports.profilePost = async (req, res) => {
   res.status(201).send(profile);
 };
 
+
+/**
+ * GETs a profile object
+ * retrieves the specified user profile.
+ * @param {*} req
+ * @param {*} res
+ */
+ exports.getProfileByProfileId = async (req, res) => {
+  console.log(req.params.profileid);
+  const profile = await profileModel.getProfileByProfileId(req.params.profileid);
+  res.status(201).send(profile);
+};
+
 /**
  * POSTs a profile object
  * sends the newly created id back.

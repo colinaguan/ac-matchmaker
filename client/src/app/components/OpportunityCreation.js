@@ -34,7 +34,7 @@ export default function OpportunityCreation({toggle}) {
   const [newOpportunity, setNewOpportunity] = useState({
     eventname: '',
     usersponsors: {'creator': userProfile.profileid},
-    remote: null,
+    locationtype: 'in-person',
     eventlocation: {},
     eventzoomlink: '',
     organization: null,
@@ -49,7 +49,7 @@ export default function OpportunityCreation({toggle}) {
     eventbanner: 'https://www.sorenkaplan.com/wp-content/uploads/2017/07/Testing.jpg',
     organizationtype: null,
     opportunitytype: '',
-    roles: [],
+    roles: null,
     starttime: null,
     endtime: null,
 
@@ -60,6 +60,11 @@ export default function OpportunityCreation({toggle}) {
   const [opportunityTypes, setOpportunityTypes] = useState(null);
   const [organizationTypes, setOrganizationTypes] = useState(null);
   const [organizations, setOrganizations] = useState(null);
+  const [role1, setRole1] = useState(null);
+  const [role2, setRole2] = useState(null);
+  const [role3, setRole3] = useState(null);
+  const [roleList, setRoleList] = useState(null);
+
 
   const handleAdditionalRoleClick = () => {
     if (additionalRole < 2) {
@@ -167,6 +172,58 @@ export default function OpportunityCreation({toggle}) {
     console.log(e.target.value);
     const {name, value} = e.target;
     setNewOpportunity({...newOpportunity, [name]: value});
+  };
+
+  /* useEffect(() => {
+    if (role3 != null && role2 != null && role1 != null) {
+      setRoleList([role1, role2, role3]);
+    } else if (role2 != null && role1 != null) {
+      setRoleList([role1, role2]);
+    } else if (role1 != null) {
+      setRoleList([role1]);
+    }
+    setNewOpportunity({...newOpportunity, ['roles']: roleList});
+    console.log(newOpportunity);
+  }, [role1, role2, role3]);
+*/
+
+  const handleRole1Change = (e) => {
+    console.log(e.target.value);
+    setRole1(e.target.value);
+    if (role3 != null && role2 != null && role1 != null) {
+      setRoleList([role1, role2, role3]);
+    } else if (role2 != null && role1 != null) {
+      setRoleList([role1, role2]);
+    } else if (role1 != null) {
+      setRoleList([role1]);
+    }
+    setNewOpportunity({...newOpportunity, ['roles']: roleList});
+  };
+
+  const handleRole2Change = (e) => {
+    console.log(e.target.value);
+    setRole2(e.target.value);
+    if (role3 != null && role2 != null && role1 != null) {
+      setRoleList([role1, role2, role3]);
+    } else if (role2 != null && role1 != null) {
+      setRoleList([role1, role2]);
+    } else if (role1 != null) {
+      setRoleList([role1]);
+    }
+    setNewOpportunity({...newOpportunity, ['roles']: roleList});
+  };
+
+  const handleRole3Change = (e) => {
+    console.log(e.target.value);
+    setRole3(e.target.value);
+    if (role3 != null && role2 != null && role1 != null) {
+      setRoleList([role1, role2, role3]);
+    } else if (role2 != null && role1 != null) {
+      setRoleList([role1, role2]);
+    } else if (role1 != null) {
+      setRoleList([role1]);
+    }
+    setNewOpportunity({...newOpportunity, ['roles']: roleList});
   };
 
   const handleSponsorChange = (e) => {
@@ -294,13 +351,13 @@ export default function OpportunityCreation({toggle}) {
           </div>
 
 
-          <div className='opportunity-creation__remote'>
+          <div className='opportunity-creation__locationtype'>
             <TextField
-              value={newOpportunity.remote}
-              defaultValue=''
-              name='remote'
+              value={newOpportunity.locationtype}
+              defaultValue='in-person'
+              name='locationtype'
               select
-              label='Remote or In-Person'
+              label='locationtype or In-Person'
               onChange={handleChange}
               sx={{backgroundColor: 'rgb(255, 255, 255)',
                 display: 'flex',
@@ -311,13 +368,13 @@ export default function OpportunityCreation({toggle}) {
                 marginBottom: '10px',
               }}
             >
-              <MenuItem value={true}>
+              <MenuItem value='remote'>
                 Remote
               </MenuItem>
-              <MenuItem value={false}>
+              <MenuItem value='in-person'>
                 In-Person
               </MenuItem>
-              <MenuItem value='Hybrid'>
+              <MenuItem value='hybrid'>
                 Hybrid
               </MenuItem>
             </TextField>
@@ -455,6 +512,9 @@ export default function OpportunityCreation({toggle}) {
                 width: '600px',
                 backgroundColor: 'rgb(255, 255, 255)',
               }}
+              name='role1'
+              value={role1}
+              onChange={handleRole1Change}
               label='New Role'
             />
 
@@ -467,6 +527,9 @@ export default function OpportunityCreation({toggle}) {
                   width: '600px',
                   backgroundColor: 'rgb(255, 255, 255)',
                 }}
+                name='role2'
+                value={role2}
+                onChange={handleRole2Change}
               />
               <IconButton
                 aria-label="remove opportunity role"
@@ -489,6 +552,9 @@ export default function OpportunityCreation({toggle}) {
                   width: '600px',
                   backgroundColor: 'rgb(255, 255, 255)',
                 }}
+                name='role3'
+                value={role3}
+                onChange={handleRole3Change}
               />
               <IconButton
                 aria-label="remove opportunity role"
@@ -569,16 +635,16 @@ export default function OpportunityCreation({toggle}) {
             </LocalizationProvider>
 
 
-            {newOpportunity.remote === false &&
+            {newOpportunity.locationtype == 'in-person' &&
               <AddressForm
                 newOpportunity={newOpportunity}
                 setNewOpportunity={setNewOpportunity} />}
 
-            {newOpportunity.remote === true &&
+            {newOpportunity.locationtype == 'remote' &&
               <div>
                 <TextField
                   name='eventzoomlink'
-                  label='Enter Remote Meeting Link'
+                  label='Enter locationtype Meeting Link'
                   value={newOpportunity.eventzoomlink}
                   onChange={handleChange}
                   sx={{display: 'flex',
@@ -593,14 +659,14 @@ export default function OpportunityCreation({toggle}) {
               </div>}
 
 
-            {newOpportunity.remote == 'Hybrid' &&
+            {newOpportunity.locationtype == 'hybrid' &&
             <div>
               <AddressForm
                 newOpportunity={newOpportunity}
                 setNewOpportunity={setNewOpportunity}/>
               <TextField
                 name='eventzoomlink'
-                label='Enter Remote Meeting Link'
+                label='Enter locationtype Meeting Link'
                 value={newOpportunity.eventzoomlink}
                 onChange={handleChange}
                 sx={{display: 'flex',

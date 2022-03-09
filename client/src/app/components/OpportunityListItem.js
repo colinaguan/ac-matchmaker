@@ -106,7 +106,6 @@ export default function OpportunityListItem({data}) {
 
   return (
     <ListItem
-      onClick={handleClick}
       sx={{
         display: 'flex',
         cursor: 'pointer',
@@ -128,9 +127,11 @@ export default function OpportunityListItem({data}) {
             <img
               className='opportunity-card-left-cover'
               src={data.eventbanner}
+              onClick={handleClick}
             />
           </div>
           <CardContent
+            onClick={handleClick}
             sx={{
               padding: '0',
               height: '100%',
@@ -178,16 +179,16 @@ export default function OpportunityListItem({data}) {
                     <LocationOnIcon sx={IconStyles} />
                   </div>
                   <div className='opportunity-card-right-location-text'>
-                    {data.remote && data.remote == 'true' ?
-                    data.eventzoomlink : data.remote &&
-                    data.remote == 'false' &&
+                    {data.locationtype && data.locationtype == 'remote' ?
+                    data.eventzoomlink : data.locationtype &&
+                    data.locationtype == 'in-person' &&
                     data.eventlocation &&
                     data.eventlocation.address && data.eventlocation.city &&
                     data.eventlocation.state && data.eventlocation.zip ?
                     data.eventlocation.address + ' ' + data.eventlocation.city +
                     ', ' + data.eventlocation.state + ' ' +
                     data.eventlocation.zip :
-                    data.remote && data.remote == 'false' &&
+                    data.locationtype && data.locationtype == 'in-person' &&
                     data.eventlocation && data.eventlocation.address}
                   </div>
                 </div>
@@ -214,7 +215,8 @@ export default function OpportunityListItem({data}) {
           <IconButton sx={{height: '50px',
             display: 'flex',
             justifyContent: 'flex-end',
-            alignContent: 'end'}}
+            alignContent: 'end',
+          }}
           aria-controls={menuId}
           aria-haspopup="true"
           onClick={handleMenuOpen}>
