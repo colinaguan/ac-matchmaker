@@ -3,7 +3,6 @@ import '../stylesheets/Browse.css';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import BrowseFilterDrawer from '../components/BrowseFilterDrawer';
-// import BrowseTabs from '../components/BrowseTabs';
 import TabBar from '../components/TabBar';
 import BrowseOpportunities from '../components/BrowseOpportunities';
 import BrowsePeople from '../components/BrowsePeople';
@@ -26,9 +25,30 @@ export default function Browse() {
 
   // tab data
   const data = [
-    {name: 'Opportunities', component: <BrowseOpportunities />},
-    {name: 'Calendar', component: <BrowsePeople />},
+    {
+      name: 'Opportunities',
+      component: <BrowseOpportunities
+        locationFilter={locationFilter}
+        oppTypeFilter={oppTypeFilter}
+        orgTypeFilter={orgTypeFilter}
+      />,
+    },
+    {
+      name: 'People',
+      component: <BrowsePeople
+        locationFilter={locationFilter}
+        oppTypeFilter={oppTypeFilter}
+        orgTypeFilter={orgTypeFilter}
+      />,
+    },
   ];
+
+  // reset filters when switching tabs
+  React.useEffect(() => {
+    setLocationFilter([]);
+    setOppTypeFilter([]);
+    setOrgTypeFilter([]);
+  }, [tab]);
 
   return (
     <div className='Browse'>

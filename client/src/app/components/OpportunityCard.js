@@ -71,6 +71,7 @@ export default function OpportunityCard({data}) {
   const handleClick = () => {
     // console.log('');
   };
+  console.log(data);
 
   const formatDate = (date) => {
     const dateOptions = {

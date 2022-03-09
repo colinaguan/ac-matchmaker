@@ -11,11 +11,9 @@ import Collapse from '@mui/material/Collapse';
 import Checkbox from '@mui/material/Checkbox';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CategoryIcon from '@mui/icons-material/Category';
 import SchoolIcon from '@mui/icons-material/School';
-
 import '../stylesheets/FilterDrawer.css';
 
 /**
@@ -105,6 +103,8 @@ export default function BrowseFilterDrawer(props) {
   const handleClickOrgType = () => {
     setOpenOrgType(!openOrgType);
   };
+
+  // RETURN OBJECT -------------------------------------------------
 
   return (
     <Drawer
@@ -213,7 +213,6 @@ export default function BrowseFilterDrawer(props) {
       >
         <ListItemIcon>
           <Checkbox
-            color="secondary"
             edge="start"
             checked={checked.indexOf(value) !== -1}
             tabIndex={-1}
