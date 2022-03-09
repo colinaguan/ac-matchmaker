@@ -1,7 +1,7 @@
 import * as React from 'react';
+import {useState} from 'react';
 import '../stylesheets/Browse.css';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import BrowseFilterDrawer from '../components/BrowseFilterDrawer';
 import TabBar from '../components/TabBar';
 import BrowseOpportunities from '../components/BrowseOpportunities';
@@ -19,9 +19,9 @@ export default function Browse() {
   const [tab, setTab] = React.useState(oppInd);
 
   // states for opportunity filters
-  const [locationFilter, setLocationFilter] = React.useState([]);
-  const [oppTypeFilter, setOppTypeFilter] = React.useState([]);
-  const [orgTypeFilter, setOrgTypeFilter] = React.useState([]);
+  const [locationFilter, setLocationFilter] = useState([]);
+  const [oppTypeFilter, setOppTypeFilter] = useState([]);
+  const [orgTypeFilter, setOrgTypeFilter] = useState([]);
 
   // tab data
   const data = [
@@ -68,15 +68,6 @@ export default function Browse() {
             tab={tab}
             setTab={setTab}
           />
-          <Typography paragraph>
-            {locationFilter}
-          </Typography>
-          <Typography paragraph>
-            {oppTypeFilter}
-          </Typography>
-          <Typography paragraph>
-            {orgTypeFilter}
-          </Typography>
         </Box>
       </Box>
     </div>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState, useEffect} from 'react';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
@@ -35,10 +36,53 @@ export default function BrowseFilterDrawer(props) {
     setOrgTypeFilter,
   } = props;
 
-  // get filter lists from the database (hardcoded for now)
+  // get filter lists from the database
   const locations = ['In-Person', 'Remote', 'Hybrid'];
-  const oppTypes = ['Community Service', 'Speaker', 'Mentor'];
-  const orgTypes = ['Art', 'Computer Science', 'Game Design'];
+  const [oppTypes, setOppTypes] = useState([]);
+  const [orgTypes, setOrgTypes] = useState([]);
+
+  useEffect(() => {
+    getOpportunityTypes();
+    getOrganizationTypes();
+  }, []);
+
+  const getOpportunityTypes = () => {
+    fetch(`/api/getOpportunityTypes`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          const tempOppTypes = json.map((elem) => (elem.name));
+          console.log(tempOppTypes);
+          setOppTypes(tempOppTypes);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity types');
+        });
+  };
+
+  const getOrganizationTypes = () => {
+    fetch(`/api/getOrganizationTypes`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          const tempOrgTypes = json.map((elem) => (elem.name));
+          console.log(tempOrgTypes);
+          setOrgTypes(tempOrgTypes);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving organization types');
+        });
+  };
 
   // CHECKBOX HANDLING ----------------------------------------------
 
@@ -152,7 +196,7 @@ export default function BrowseFilterDrawer(props) {
             <ListItemIcon>
               <CategoryIcon />
             </ListItemIcon>
-            <ListItemText primary="Types" />
+            <ListItemText primary="Opportunity Types" />
             {openOppType ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={openOppType} timeout="auto" unmountOnExit>
