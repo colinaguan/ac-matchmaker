@@ -116,6 +116,7 @@ export default function BrowseOpportunities(props) {
             <OpportunityCard
               key={`people-list-item-${index}`}
               data={opp}
+              isBrowsing
             />
           ))
         }

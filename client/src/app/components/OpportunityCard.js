@@ -26,7 +26,7 @@ const IconStyles = {
  * @param {*} data
  * @return {HTML} OpportunityCard component
  */
-export default function OpportunityCard({data}) {
+export default function OpportunityCard({data, isBrowsing}) {
   const [opportunityCreator, setOpportunityCreator] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentItem, setCurrentItem] = React.useState(null);
@@ -251,9 +251,11 @@ export default function OpportunityCard({data}) {
             <div>
               <MenuItem>Edit Opportunity</MenuItem>
               <MenuItem>Cancel Opportunity</MenuItem>
-              <MenuItem onClick={(e) => handleMenuItemClick(e, 'Invite')}>
-                Invite
-              </MenuItem>
+              {isBrowsing &&
+                <MenuItem onClick={(e) => handleMenuItemClick(e, 'Invite')}>
+                  Invite
+                </MenuItem>
+              }
             </div>
           </Menu>
           {currentItem && currentItem === 'Invite' ? (
