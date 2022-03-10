@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+// import {useNavigate} from 'react-router-dom';
 import {Button,
   FormControl,
   StepLabel,
@@ -28,7 +28,7 @@ import useAuth from '../util/AuthContext';
  * @return {HTML} opportunity creation
  */
 export default function OpportunityCreation({toggle}) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {userProfile} = useAuth();
 
   const [newOpportunity, setNewOpportunity] = useState({
@@ -63,8 +63,7 @@ export default function OpportunityCreation({toggle}) {
   const [role1, setRole1] = useState(null);
   const [role2, setRole2] = useState(null);
   const [role3, setRole3] = useState(null);
-  const [roleList, setRoleList] = useState(null);
-
+  const [triggerCreate, setTriggerCreate] = useState(false);
 
   const handleAdditionalRoleClick = () => {
     if (additionalRole < 2) {
@@ -79,27 +78,18 @@ export default function OpportunityCreation({toggle}) {
   };
 
   const createOpportunity = () => {
-    fetch(`/api/postOpportunity`, {
-      method: 'POST',
-      body: JSON.stringify(newOpportunity),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          console.log(res);
-          return res;
-        })
-        .then((json) => {
-          console.log(json);
-          navigate(`/`);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (role3 != null && role2 != null && role1 != null) {
+      setNewOpportunity({...newOpportunity, roles: [role1, role2, role3]});
+      console.log('Here3');
+    } else if (role2 != null && role1 != null) {
+      setNewOpportunity({...newOpportunity, roles: [role1, role2]});
+      console.log('Here2');
+    } else if (role1 != null) {
+      setNewOpportunity({...newOpportunity, roles: [role1]});
+      console.log('Here1');
+    }
+    console.log(newOpportunity);
+    setTriggerCreate(true);
   };
 
   const getOpportunityTypes = () => {
@@ -174,56 +164,46 @@ export default function OpportunityCreation({toggle}) {
     setNewOpportunity({...newOpportunity, [name]: value});
   };
 
-  /* useEffect(() => {
-    if (role3 != null && role2 != null && role1 != null) {
-      setRoleList([role1, role2, role3]);
-    } else if (role2 != null && role1 != null) {
-      setRoleList([role1, role2]);
-    } else if (role1 != null) {
-      setRoleList([role1]);
-    }
-    setNewOpportunity({...newOpportunity, ['roles']: roleList});
+  useEffect(() => {
     console.log(newOpportunity);
-  }, [role1, role2, role3]);
-*/
+    if (triggerCreate == true) {
+      fetch(`/api/postOpportunity`, {
+        method: 'POST',
+        body: JSON.stringify(newOpportunity),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+          .then((res) => {
+            if (!res.ok) {
+              throw res;
+            }
+            console.log(res);
+            return res;
+          })
+          .then((json) => {
+            console.log(json);
+            navigate(`/`);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
+  }, [newOpportunity]);
 
   const handleRole1Change = (e) => {
     console.log(e.target.value);
     setRole1(e.target.value);
-    if (role3 != null && role2 != null && role1 != null) {
-      setRoleList([role1, role2, role3]);
-    } else if (role2 != null && role1 != null) {
-      setRoleList([role1, role2]);
-    } else if (role1 != null) {
-      setRoleList([role1]);
-    }
-    setNewOpportunity({...newOpportunity, ['roles']: roleList});
   };
 
   const handleRole2Change = (e) => {
     console.log(e.target.value);
     setRole2(e.target.value);
-    if (role3 != null && role2 != null && role1 != null) {
-      setRoleList([role1, role2, role3]);
-    } else if (role2 != null && role1 != null) {
-      setRoleList([role1, role2]);
-    } else if (role1 != null) {
-      setRoleList([role1]);
-    }
-    setNewOpportunity({...newOpportunity, ['roles']: roleList});
   };
 
   const handleRole3Change = (e) => {
     console.log(e.target.value);
     setRole3(e.target.value);
-    if (role3 != null && role2 != null && role1 != null) {
-      setRoleList([role1, role2, role3]);
-    } else if (role2 != null && role1 != null) {
-      setRoleList([role1, role2]);
-    } else if (role1 != null) {
-      setRoleList([role1]);
-    }
-    setNewOpportunity({...newOpportunity, ['roles']: roleList});
   };
 
   const handleSponsorChange = (e) => {

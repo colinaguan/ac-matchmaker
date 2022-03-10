@@ -17,7 +17,9 @@ import '../stylesheets/RequestCard.css';
  * @return {html} RequestCard component
  */
 export default function RequestCard({request,
-  getPendingRequests, getApprovedRequests, getRejectedRequests, data}) {
+  pendingRequests,
+  getPendingRequests, setPendingRequests,
+  getApprovedRequests, getRejectedRequests, data}) {
   const navigate = useNavigate();
   const {userProfile} = useAuth();
   const [requester, setRequester] = useState(null);
@@ -80,10 +82,10 @@ export default function RequestCard({request,
           return res;
         })
         .then((json) => {
+          setPendingRequests(null);
+          setRequester(null);
           getPendingRequests();
           getApprovedRequests();
-          setRequester(null);
-          getRequester();
         })
         .catch((error) => {
           console.log(error);
@@ -106,10 +108,10 @@ export default function RequestCard({request,
           return res;
         })
         .then((json) => {
+          setPendingRequests(null);
+          setRequester(null);
           getPendingRequests();
           getRejectedRequests();
-          setRequester(null);
-          getRequester();
         })
         .catch((error) => {
           console.log(error);

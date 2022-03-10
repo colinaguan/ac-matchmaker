@@ -11,10 +11,11 @@ const pool = new Pool();
  */
  exports.getPendingOpportunities= async (profileid) => {
   const query = {
-    text: `SELECT requests.requester, requests.requestee, requests.requeststatus, events.*
+    text: `SELECT DISTINCT requests.opportunityid, requests.requeststatus, events.*
            FROM requests
-           INNER JOIN events ON (requests.opportunityid = events.eventid AND (requests.requester = $1 OR requests.requestee = $1))`,
-    values: [profileid],
+           INNER JOIN events ON requests.opportunityid = events.eventid
+           WHERE requests.requeststatus = $1`,
+    values: ["pending"],
   };
 
   const {rows} = await pool.query(query);
