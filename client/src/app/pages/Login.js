@@ -20,9 +20,9 @@ export default function Login() {
 
 
   // eslint-disable-next-line no-unused-vars
-  const {user, setUser, setLoggedIn, userProfile, setUserProfile} = useAuth();
+  const {user, setUser, setLoggedIn, userProfile, setUserProfile,
+    setSocket, notificationCount, setNotificationCount} = useAuth();
   // Socket.io useAuth()
-  const {setSocket} = useAuth();
   // console.log('current user: ', user);
   // console.log('current user profile: ', userProfile);
 
@@ -148,6 +148,17 @@ export default function Login() {
           console.log(json);
           const newSocket = io();
           newSocket.emit('newOnlineUser', json.userid );
+
+          // adding a event listener upon socket creation
+          newSocket.on('getNotification', (data) =>{
+            // just increments the notificaiton count
+            const notificationCountTemp = notificationCount + 1;
+            console.log(notificationCountTemp);
+            console.log(setNotificationCount);
+            setNotificationCount(notificationCountTemp);
+            // console.log(notificationCount);
+          });
+
           setSocket(newSocket);
         })
         .catch((err) => {

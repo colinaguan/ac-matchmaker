@@ -28,12 +28,18 @@ export default function NavBar() {
     loggedIn,
     setLoggedIn,
     userProfile,
-    setUserProfile} = useAuth();
+    setUserProfile,
+    notificationCount,
+  } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  // LOCAL STATE FOR AUTH CONTEXT'S NOTIFICATION COUNT
+  const [notificationCountNav, setNotificationCountNav] =
+    React.useState(notificationCount);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,6 +74,13 @@ export default function NavBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  // DEBUG for Socket.io
+  React.useEffect(() => {
+    setNotificationCountNav(notificationCount);
+    console.log(notificationCountNav);
+  }, [notificationCount]);
+
 
   // MENU FOR PROFILE
   const menuId = 'profile-menu';
@@ -147,7 +160,7 @@ export default function NavBar() {
             aria-label="show 17 new messages"
             color="inherit"
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={notificationCountNav} color="error">
               <ChatBubbleIcon />
             </Badge>
           </IconButton>
@@ -158,7 +171,7 @@ export default function NavBar() {
             aria-label="show 17 new notifications"
             color="inherit"
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={notificationCountNav} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -228,7 +241,7 @@ export default function NavBar() {
                   aria-label="show 17 new messages"
                   color="inherit"
                 >
-                  <Badge badgeContent={17} color="error">
+                  <Badge badgeContent={notificationCountNav} color="error">
                     <ChatBubbleIcon />
                   </Badge>
                 </IconButton>
@@ -240,7 +253,7 @@ export default function NavBar() {
                   aria-label="show 17 new notifications"
                   color="inherit"
                 >
-                  <Badge badgeContent={17} color="error">
+                  <Badge badgeContent={notificationCountNav} color="error">
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>

@@ -23,6 +23,10 @@ export function AuthProvider(props) {
   // Socket.io State
   const [socket, setSocket] = useState(null);
 
+  // Functionality test, CHANGE THIS LATER
+  // SocketIO sets up a listener for events from the backend.
+  const [notificationCount, setNotificationCount] = useState(0);
+
   return (
     <AuthContext.Provider
       value={{
@@ -43,11 +47,15 @@ export function AuthProvider(props) {
         // Socket.io state
         socket,
         setSocket,
+        // Socket.io Functionality debug
+        notificationCount,
+        setNotificationCount,
       }}>
       {props.children}
     </AuthContext.Provider>
   );
 }
+
 
 /**
  * allows other components to use auth

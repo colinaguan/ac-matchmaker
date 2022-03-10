@@ -63,7 +63,7 @@ const app = express();
    if (onlineUsers.some( (user) => user.userId === userId) === false){
      onlineUsers.push({ userId, socketId});
      // Debug 
-     console.log(onlineUsers);
+     //  console.log(onlineUsers);
    };
  };
  
@@ -77,7 +77,7 @@ const app = express();
  
  
  io.on('connection', (socket) => {
-   console.log('a user connected');
+   //  console.log('a user connected');
  
    socket.on('ping', () =>{
      console.log('Still connected!: ' + socket.id);
@@ -86,7 +86,8 @@ const app = express();
    // Send notification
    socket.on('sendNotification', (userId) => {
     const receiver = getUser(userId);
-    io.to(receiever.socketId).emit('getNotification');
+    console.log('A notification has been sent to :' + receiver.socketId);
+    io.to(receiver.socketId).emit('getNotification');
    });
  
    // Add a event listener for when a user is authenticated.

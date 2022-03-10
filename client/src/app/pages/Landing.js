@@ -19,10 +19,9 @@ export default function Landing() {
   };
 
   // A debug onClick functionality for socket.
-  const {socket} = useAuth();
+  const {socket, userProfile} = useAuth();
   const printSocket = () =>{
-    console.log(socket);
-    socket.emit('ping');
+    socket.emit('sendNotification', userProfile.userid);
   };
 
   return (
