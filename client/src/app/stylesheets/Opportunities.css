@@ -121,3 +121,33 @@
   position: relative;
   top: 550px;
 }
+
+.invite-title {
+  padding-bottom: 1.5em;
+  border-bottom: 0.5px solid var(--border-primary);
+  font-weight: 600;
+  color: var(--text-black);
+}
+
+.invite-subtitle {
+  padding-top: 1.5em;
+  font-size: 0.9rem;
+}
+
+.invite-message {
+  padding-top: 0.5em;
+  padding-bottom: 1.5em;
+}
+
+.invite-buttons {
+  display: flex;
+}
+
+.invite-buttons-cancel {
+  padding-inline: 1em;
+}
+
+.invite-checkboxes {
+  padding-block: 1em;
+  font-size: 0.9rem;
+}

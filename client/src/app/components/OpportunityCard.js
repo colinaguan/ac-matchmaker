@@ -4,12 +4,15 @@ import {ListItem, IconButton, Menu, MenuItem} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
+import Paper from '@mui/material/Paper';
+import Modal from '@mui/material/Modal';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import '../stylesheets/Opportunities.css';
 import useAuth from '../util/AuthContext';
+import ThemedButton from './ThemedButton';
 
 const IconStyles = {
   fontSize: '1.3rem',
@@ -26,11 +29,19 @@ const IconStyles = {
 export default function OpportunityCard({data}) {
   const [opportunityCreator, setOpportunityCreator] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [currentItem, setCurrentItem] = React.useState(null);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [inviteMessage, setInviteMessage] = React.useState('');
   const [creatorName, setCreatorName] = useState('');
 
   const isMenuOpen = Boolean(anchorEl);
+  const menuId = 'opportunity-menu';
 
   const {userProfile} = useAuth();
+
+  const handleClick = () => {
+    // console.log('');
+  };
 
   const handleMenuOpen = (e) => {
     setAnchorEl(e.currentTarget);
@@ -40,7 +51,37 @@ export default function OpportunityCard({data}) {
     setAnchorEl(null);
   };
 
-  const menuId = 'opportunity-menu';
+  const handleMenuItemClick = (event, action) => {
+    setCurrentItem(action);
+    setIsModalOpen(true);
+    setAnchorEl(null);
+  };
+
+  const handleModalClose = () => {
+    setCurrentItem(null);
+    setIsModalOpen(false);
+    setInviteMessage('');
+  };
+
+  const handleInviteMessage = (e) => {
+    setInviteMessage(e.target.value);
+  };
+
+  const handleInviteClick = (e) => {
+    // Send invite here
+    // Access opportunity data with:
+    // data
+    // opportunityCreator
+    // inviteMessage
+
+    console.log(data);
+    console.log(opportunityCreator);
+    console.log(inviteMessage);
+
+    setCurrentItem(null);
+    setIsModalOpen(false);
+    setInviteMessage('');
+  };
 
   const getOpportunityCreator = () => {
     fetch(`/api/getProfileName/${data.usersponsors.creator}`)
@@ -62,14 +103,6 @@ export default function OpportunityCard({data}) {
         });
   };
 
-  useEffect(() => {
-    getOpportunityCreator();
-  }, []);
-
-  const handleClick = () => {
-    // console.log('');
-  };
-
   const formatDate = (date) => {
     const dateOptions = {
       year: 'numeric',
@@ -87,6 +120,10 @@ export default function OpportunityCard({data}) {
 
     return {date: convertDate, time: convertTime};
   };
+
+  useEffect(() => {
+    getOpportunityCreator();
+  }, []);
 
   return (
     <ListItem
@@ -183,16 +220,19 @@ export default function OpportunityCard({data}) {
               </div>
             </div>
           </CardContent>
-          <IconButton sx={{height: '50px',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignContent: 'end'}}
-          aria-controls={menuId}
-          aria-haspopup="true"
-          onClick={handleMenuOpen}>
-            <MoreHorizIcon>
-            </MoreHorizIcon>
-          </IconButton>
+          <div>
+            <IconButton
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleMenuOpen}
+              sx={{
+                margin: '0.5em',
+              }}
+            >
+              <MoreHorizIcon>
+              </MoreHorizIcon>
+            </IconButton>
+          </div>
           <Menu
             anchorEl={anchorEl}
             anchorOrigin={{
@@ -211,10 +251,97 @@ export default function OpportunityCard({data}) {
             <div>
               <MenuItem>Edit Opportunity</MenuItem>
               <MenuItem>Cancel Opportunity</MenuItem>
+              <MenuItem onClick={(e) => handleMenuItemClick(e, 'Invite')}>
+                Invite
+              </MenuItem>
             </div>
           </Menu>
+          {currentItem && currentItem === 'Invite' ? (
+            <InviteModal
+              isModalOpen={isModalOpen}
+              handleModalClose={handleModalClose}
+              inviteMessage={inviteMessage}
+              handleInviteMessage={handleInviteMessage}
+              handleInviteClick={handleInviteClick}
+            />
+          ) : null}
         </Card>
       }
     </ListItem>
+  );
+}
+
+/**
+ * Modal for invite request
+ * @param {Object} props
+ * @return {Object} JSX
+ */
+function InviteModal(props) {
+  const {
+    isModalOpen,
+    handleModalClose,
+    inviteMessage,
+    handleInviteMessage,
+    handleInviteClick,
+  } = props;
+
+  return (
+    <Modal
+      open={isModalOpen}
+      onClose={handleModalClose}
+    >
+      <Paper
+        sx={{
+          position: 'absolute',
+          padding: '1.5em',
+          top: '50%',
+          left: '50%',
+          height: 'auto',
+          width: '600px',
+          transform: 'translate(-50%, -50%)',
+          boxShadow: '0px 0px 50px -14px rgba(0, 0, 0, 0.1)',
+          borderRadius: '10px',
+        }}
+      >
+        <div className='invite-title'>
+          Invite Request
+        </div>
+        <div className='invite-subtitle'>
+          Your Request Message:
+        </div>
+        <div className='invite-message'>
+          <textarea
+            value={inviteMessage}
+            onChange={handleInviteMessage}
+            style={{
+              resize: 'none',
+              height: '200px',
+              width: '595px',
+              outline: 'none',
+            }}
+          />
+        </div>
+        <div className='invite-buttons'>
+          <div className='invite-buttons-request'>
+            <ThemedButton
+              color={'yellow'}
+              variant={'themed'}
+              onClick={handleInviteClick}
+            >
+              Send Invite Request
+            </ThemedButton>
+          </div>
+          <div className='invite-buttons-cancel'>
+            <ThemedButton
+              color={'gray'}
+              variant={'cancel'}
+              onClick={handleModalClose}
+            >
+              Cancel
+            </ThemedButton>
+          </div>
+        </div>
+      </Paper>
+    </Modal>
   );
 }
