@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-// import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {Button,
   FormControl,
   StepLabel,
@@ -28,7 +28,7 @@ import useAuth from '../util/AuthContext';
  * @return {HTML} opportunity creation
  */
 export default function OpportunityCreation({toggle}) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const {userProfile} = useAuth();
 
   const [newOpportunity, setNewOpportunity] = useState({
@@ -52,7 +52,7 @@ export default function OpportunityCreation({toggle}) {
     roles: null,
     starttime: null,
     endtime: null,
-
+    subject: null,
   });
 
   const [additionalRole, setAdditionalRole] = useState(0);
@@ -555,7 +555,7 @@ export default function OpportunityCreation({toggle}) {
               <h4>Details</h4>
             </div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <div>
+              <div className='datetime-row'>
                 <DesktopDatePicker
                   label="Start Date"
                   inputFormat="MM/dd/yyyy"
@@ -566,8 +566,7 @@ export default function OpportunityCreation({toggle}) {
                     sx={{width: '150px',
                       display: 'flex',
                       position: 'relative',
-                      mt: '70px',
-                      mb: '15px',
+                      mr: '5px',
                     }}/>}
                 />
                 <DesktopDatePicker
@@ -580,10 +579,10 @@ export default function OpportunityCreation({toggle}) {
                     sx={{width: '150px',
                       display: 'flex',
                       position: 'relative',
-                      ml: '155px',
-                      bottom: '71px',
                     }}/>}
                 />
+              </div>
+              <div className='datetime-row'>
                 <TimePicker
                   label="Start time"
                   timeFormat="HH:mm"
@@ -594,7 +593,7 @@ export default function OpportunityCreation({toggle}) {
                     sx={{width: '150px',
                       display: 'flex',
                       position: 'relative',
-                      bottom: '50px',
+                      mr: '5px',
                     }}/>}
                 />
                 <TimePicker
@@ -607,21 +606,36 @@ export default function OpportunityCreation({toggle}) {
                     sx={{width: '150px',
                       display: 'flex',
                       position: 'relative',
-                      bottom: '106px',
-                      left: '155px',
                     }}/>}
                 />
               </div>
             </LocalizationProvider>
 
+            <div className='location-details'>
+              {newOpportunity.locationtype == 'in-person' &&
+                <AddressForm
+                  newOpportunity={newOpportunity}
+                  setNewOpportunity={setNewOpportunity} />}
 
-            {newOpportunity.locationtype == 'in-person' &&
-              <AddressForm
-                newOpportunity={newOpportunity}
-                setNewOpportunity={setNewOpportunity} />}
+              {newOpportunity.locationtype == 'remote' &&
+                <TextField
+                  name='eventzoomlink'
+                  label='Enter locationtype Meeting Link'
+                  value={newOpportunity.eventzoomlink}
+                  onChange={handleChange}
+                  sx={{display: 'flex',
+                    width: '305px',
+                    height: 'auto',
+                    backgroundColor: 'rgb(255, 255, 255)',
+                  }}
+                />}
 
-            {newOpportunity.locationtype == 'remote' &&
+
+              {newOpportunity.locationtype == 'hybrid' &&
               <div>
+                <AddressForm
+                  newOpportunity={newOpportunity}
+                  setNewOpportunity={setNewOpportunity}/>
                 <TextField
                   name='eventzoomlink'
                   label='Enter locationtype Meeting Link'
@@ -629,40 +643,17 @@ export default function OpportunityCreation({toggle}) {
                   onChange={handleChange}
                   sx={{display: 'flex',
                     position: 'relative',
-                    right: '305px',
                     width: '305px',
-                    top: '230px',
                     height: 'auto',
+                    mt: '10px',
                     backgroundColor: 'rgb(255, 255, 255)',
                   }}
                 />
               </div>}
+            </div>
 
-
-            {newOpportunity.locationtype == 'hybrid' &&
-            <div>
-              <AddressForm
-                newOpportunity={newOpportunity}
-                setNewOpportunity={setNewOpportunity}/>
+            <div className='subject'>
               <TextField
-                name='eventzoomlink'
-                label='Enter locationtype Meeting Link'
-                value={newOpportunity.eventzoomlink}
-                onChange={handleChange}
-                sx={{display: 'flex',
-                  position: 'relative',
-                  right: '305px',
-                  width: '305px',
-                  top: '240px',
-                  height: 'auto',
-                  backgroundColor: 'rgb(255, 255, 255)',
-                }}
-              />
-            </div>}
-
-            <div>
-              <TextField
-                value=''
                 defaultValue=''
                 name='subject'
                 select
@@ -670,11 +661,7 @@ export default function OpportunityCreation({toggle}) {
                 onChange={handleChange}
                 sx={{backgroundColor: 'rgb(255, 255, 255)',
                   display: 'flex',
-                  position: 'relative',
-                  left: '440px',
-                  bottom: '16px',
-                  width: '325px',
-                  marginBottom: '10px',
+                  width: '305px',
                 }}
               >
                 <MenuItem value='computer science'>
@@ -688,16 +675,32 @@ export default function OpportunityCreation({toggle}) {
                 </MenuItem>
               </TextField>
             </div>
+
+            <div className='opportunity-creation__other'>
+              <TextField multiline
+                rows={5}
+                name='eventdata'
+                label='Other details'
+                value={newOpportunity.eventdata}
+                onChange={handleChange}
+                sx={{display: 'flex',
+                  position: 'relative',
+                  width: '305px',
+                  height: 'auto',
+                  backgroundColor: 'rgb(255, 255, 255)',
+                }}
+              />
+            </div>
             <div className='opportunity-creation__creation-buttons'>
               <Button onClick={toggle}
                 sx={{
                   display: 'flex',
                   position: 'relative',
                   width: '100px',
-                  top: '50px',
-                  right: '80px',
                   height: '50px',
+                  marginRight: '5px',
                   backgroundColor: 'gray',
+                  fontSize: '8pt',
                 }}>
                 Cancel
               </Button>
@@ -705,11 +708,10 @@ export default function OpportunityCreation({toggle}) {
                 sx={{
                   display: 'flex',
                   position: 'relative',
-                  width: '150px',
-                  bottom: '0px',
-                  left: '40px',
+                  width: '100px',
                   height: '50px',
                   backgroundColor: '#fdc700',
+                  fontSize: '8pt',
                 }}>
                 Create Opportunity
               </Button>

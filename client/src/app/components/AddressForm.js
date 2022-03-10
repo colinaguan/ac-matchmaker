@@ -44,10 +44,7 @@ export default function AddressForm({newOpportunity, setNewOpportunity}) {
 
   return (
     <form>
-      <Grid container spacing={1} sx={{width: '315px',
-        position: 'relative',
-        top: '220px',
-        right: '305px'}}>
+      <Grid container spacing={1} sx={{width: '315px'}}>
         <Grid item xs={4} md={12} lg={12} xl={12}>
           <TextField
             name='address'
