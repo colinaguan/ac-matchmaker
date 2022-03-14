@@ -18,6 +18,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
+import Skeleton from '@mui/material/Skeleton';
 import AddressForm from './AddressForm';
 import '../stylesheets/OpportunityCreation.css';
 import useAuth from '../util/AuthContext';
@@ -322,11 +323,15 @@ export default function OpportunityCreation({toggle}) {
                 marginBottom: '10px',
               }}
             >
-              {opportunityTypes && opportunityTypes.map((type, index) => (
-                <MenuItem value={type.name} key={index}>
-                  {type.name}
-                </MenuItem>
-              ))}
+              {
+                opportunityTypes ?
+                opportunityTypes.map((type, index) => (
+                  <MenuItem value={type.name} key={index}>
+                    {type.name}
+                  </MenuItem>
+                )) :
+                <Skeleton variant="rectangular" width={325} height={26} />
+              }
             </TextField>
           </div>
 
