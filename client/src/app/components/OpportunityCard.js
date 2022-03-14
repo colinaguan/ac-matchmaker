@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
+import Skeleton from '@mui/material/Skeleton';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -26,7 +27,7 @@ const IconStyles = {
  * @param {*} data
  * @return {HTML} OpportunityCard component
  */
-export default function OpportunityCard({data, isBrowsing}) {
+export default function OpportunityCard({data}) {
   const [opportunityCreator, setOpportunityCreator] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentItem, setCurrentItem] = React.useState(null);
@@ -134,7 +135,12 @@ export default function OpportunityCard({data, isBrowsing}) {
       }}
       disablePadding
     >
-      {data &&
+      {
+        !data || !opportunityCreator &&
+        <Skeleton variant="rectangular" width={785} height={210} />
+      }
+      {
+        data && opportunityCreator &&
         <Card
           sx={{
             display: 'flex',
@@ -251,7 +257,7 @@ export default function OpportunityCard({data, isBrowsing}) {
             <div>
               <MenuItem>Edit Opportunity</MenuItem>
               <MenuItem>Cancel Opportunity</MenuItem>
-              {isBrowsing &&
+              {opportunityCreator.profileid == userProfile.profileid &&
                 <MenuItem onClick={(e) => handleMenuItemClick(e, 'Invite')}>
                   Invite
                 </MenuItem>
