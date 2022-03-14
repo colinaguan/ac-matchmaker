@@ -4,6 +4,22 @@ const Pool = require('pg').Pool;
 const pool = new Pool();
 
 /**
+ * getOpportunities
+ * gets opportunities
+ * @param {*} profileid
+ */
+ exports.getOpportunities = async () => {
+  const query = {
+    text: `SELECT * FROM events 
+           WHERE active = true`,
+    values: [],
+  };
+
+  const {rows} = await pool.query(query);
+  return rows;
+};
+
+/**
  * getJoinedOpportunities
  * gets opportunity data based on user profileid provided
  * Returns the specified user's joined opportunities

@@ -28,7 +28,7 @@ export default function MyProfile() {
 
   return (
     <div className='MyProfile'>
-      <TabBar data={data} state={tab ? tab : 0} />
+      <TabBar data={data} tab={tab} setTab={setTab}/>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import CreatedOpportunities from './CreatedOpportunities';
 import JoinedOpportunities from './JoinedOpportunities';
 import PastOpportunities from './PastOpportunities';
 import PendingOpportunities from './PendingOpportunities';
-import '../stylesheets/OpportunityListItem.css';
+import '../stylesheets/OpportunityCard.css';
 
 /**
  * creates Opportunities
@@ -30,7 +30,7 @@ export default function Opportunities() {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           setJoinedOpportunities(json);
         })
         .catch((err) => {
@@ -48,7 +48,7 @@ export default function Opportunities() {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           setCreatedOpportunities(json);
         })
         .catch((err) => {
@@ -66,7 +66,7 @@ export default function Opportunities() {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           setPastOpportunities(json);
         })
         .catch((err) => {
@@ -84,7 +84,7 @@ export default function Opportunities() {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           setPendingOpportunities(json);
         })
         .catch((err) => {

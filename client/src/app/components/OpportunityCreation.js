@@ -332,7 +332,7 @@ export default function OpportunityCreation({toggle}) {
               defaultValue='in-person'
               name='locationtype'
               select
-              label='locationtype or In-Person'
+              label='Location Type'
               onChange={handleChange}
               sx={{backgroundColor: 'rgb(255, 255, 255)',
                 display: 'flex',
