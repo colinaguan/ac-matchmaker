@@ -32,7 +32,7 @@ export default function OpportunityCard({data}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentItem, setCurrentItem] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [inviteMessage, setInviteMessage] = React.useState('');
+  const [requestMessage, setRequestMessage] = React.useState('');
   const [creatorName, setCreatorName] = useState('');
 
   const isMenuOpen = Boolean(anchorEl);
@@ -61,27 +61,27 @@ export default function OpportunityCard({data}) {
   const handleModalClose = () => {
     setCurrentItem(null);
     setIsModalOpen(false);
-    setInviteMessage('');
+    setRequestMessage('');
   };
 
-  const handleInviteMessage = (e) => {
-    setInviteMessage(e.target.value);
+  const handleRequestMessage = (e) => {
+    setRequestMessage(e.target.value);
   };
 
-  const handleInviteClick = (e) => {
-    // Send invite here
+  const handleRequestClick = (e) => {
+    // Send request here
     // Access opportunity data with:
     // data
     // opportunityCreator
-    // inviteMessage
+    // requestMessage
 
     console.log(data);
     console.log(opportunityCreator);
-    console.log(inviteMessage);
+    console.log(requestMessage);
 
     setCurrentItem(null);
     setIsModalOpen(false);
-    setInviteMessage('');
+    setRequestMessage('');
   };
 
   const getOpportunityCreator = () => {
@@ -257,20 +257,21 @@ export default function OpportunityCard({data}) {
             <div>
               <MenuItem>Edit Opportunity</MenuItem>
               <MenuItem>Cancel Opportunity</MenuItem>
-              {opportunityCreator.profileid == userProfile.profileid &&
-                <MenuItem onClick={(e) => handleMenuItemClick(e, 'Invite')}>
-                  Invite
+              {
+                opportunityCreator.profileid !== userProfile.profileid &&
+                <MenuItem onClick={(e) => handleMenuItemClick(e, 'Request')}>
+                  Request to Join
                 </MenuItem>
               }
             </div>
           </Menu>
-          {currentItem && currentItem === 'Invite' ? (
-            <InviteModal
+          {currentItem && currentItem === 'Request' ? (
+            <RequestModal
               isModalOpen={isModalOpen}
               handleModalClose={handleModalClose}
-              inviteMessage={inviteMessage}
-              handleInviteMessage={handleInviteMessage}
-              handleInviteClick={handleInviteClick}
+              requestMessage={requestMessage}
+              handleRequestMessage={handleRequestMessage}
+              handleRequestClick={handleRequestClick}
             />
           ) : null}
         </Card>
@@ -280,17 +281,17 @@ export default function OpportunityCard({data}) {
 }
 
 /**
- * Modal for invite request
+ * Modal for request request
  * @param {Object} props
  * @return {Object} JSX
  */
-function InviteModal(props) {
+function RequestModal(props) {
   const {
     isModalOpen,
     handleModalClose,
-    inviteMessage,
-    handleInviteMessage,
-    handleInviteClick,
+    requestMessage,
+    handleRequestMessage,
+    handleRequestClick,
   } = props;
 
   return (
@@ -311,16 +312,16 @@ function InviteModal(props) {
           borderRadius: '10px',
         }}
       >
-        <div className='invite-title'>
-          Invite Request
+        <div className='request-title'>
+          Request to Join
         </div>
-        <div className='invite-subtitle'>
+        <div className='request-subtitle'>
           Your Request Message:
         </div>
-        <div className='invite-message'>
+        <div className='request-message'>
           <textarea
-            value={inviteMessage}
-            onChange={handleInviteMessage}
+            value={requestMessage}
+            onChange={handleRequestMessage}
             style={{
               resize: 'none',
               height: '200px',
@@ -329,17 +330,17 @@ function InviteModal(props) {
             }}
           />
         </div>
-        <div className='invite-buttons'>
-          <div className='invite-buttons-request'>
+        <div className='request-buttons'>
+          <div className='request-buttons-request'>
             <ThemedButton
               color={'yellow'}
               variant={'themed'}
-              onClick={handleInviteClick}
+              onClick={handleRequestClick}
             >
-              Send Invite Request
+              Send Request to Join
             </ThemedButton>
           </div>
-          <div className='invite-buttons-cancel'>
+          <div className='request-buttons-cancel'>
             <ThemedButton
               color={'gray'}
               variant={'cancel'}
