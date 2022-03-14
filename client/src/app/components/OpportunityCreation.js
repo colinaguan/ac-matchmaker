@@ -39,7 +39,7 @@ export default function OpportunityCreation({toggle}) {
     eventzoomlink: '',
     organization: null,
     description: null,
-    userparticipants: [userProfile.profileid],
+    userparticipants: [],
     preferences: null,
     eventdata: null,
     startdate: (new Date()),
@@ -53,6 +53,7 @@ export default function OpportunityCreation({toggle}) {
     starttime: null,
     endtime: null,
     subject: null,
+    assignedroles: {},
   });
 
   const [additionalRole, setAdditionalRole] = useState(0);
@@ -80,15 +81,11 @@ export default function OpportunityCreation({toggle}) {
   const createOpportunity = () => {
     if (role3 != null && role2 != null && role1 != null) {
       setNewOpportunity({...newOpportunity, roles: [role1, role2, role3]});
-      console.log('Here3');
     } else if (role2 != null && role1 != null) {
       setNewOpportunity({...newOpportunity, roles: [role1, role2]});
-      console.log('Here2');
     } else if (role1 != null) {
       setNewOpportunity({...newOpportunity, roles: [role1]});
-      console.log('Here1');
     }
-    console.log(newOpportunity);
     setTriggerCreate(true);
   };
 
@@ -101,7 +98,6 @@ export default function OpportunityCreation({toggle}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setOpportunityTypes(json);
         })
         .catch((err) => {
@@ -119,7 +115,6 @@ export default function OpportunityCreation({toggle}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setOrganizationTypes(json);
         })
         .catch((err) => {
@@ -137,7 +132,6 @@ export default function OpportunityCreation({toggle}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setOrganizations(json);
         })
         .catch((err) => {
@@ -158,14 +152,11 @@ export default function OpportunityCreation({toggle}) {
   }, [newOpportunity.organizationtype]);
 
   const handleChange = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
     const {name, value} = e.target;
     setNewOpportunity({...newOpportunity, [name]: value});
   };
 
   useEffect(() => {
-    console.log(newOpportunity);
     if (triggerCreate == true) {
       fetch(`/api/postOpportunity`, {
         method: 'POST',
@@ -178,11 +169,9 @@ export default function OpportunityCreation({toggle}) {
             if (!res.ok) {
               throw res;
             }
-            console.log(res);
             return res;
           })
           .then((json) => {
-            console.log(json);
             navigate(`/`);
           })
           .catch((error) => {
@@ -192,17 +181,14 @@ export default function OpportunityCreation({toggle}) {
   }, [newOpportunity]);
 
   const handleRole1Change = (e) => {
-    console.log(e.target.value);
     setRole1(e.target.value);
   };
 
   const handleRole2Change = (e) => {
-    console.log(e.target.value);
     setRole2(e.target.value);
   };
 
   const handleRole3Change = (e) => {
-    console.log(e.target.value);
     setRole3(e.target.value);
   };
 

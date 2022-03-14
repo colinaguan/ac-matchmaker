@@ -1,4 +1,5 @@
 const requestModel = require('./request_model');
+const opportunityModel = require('./opportunity_model');
 const uuid = require('uuid');
 
 
@@ -121,16 +122,26 @@ const uuid = require('uuid');
 
 /**
  * POSTs a request object
- * sets the specified request status to approved
+ * sets the specified request status to approved and adds the users profile id to the opportunity participants list and assigned roles
  * @param {*} req
  * @param {*} res
  */
  exports.approveRequest = async (req, res) => {
-  console.log(req.body);
   try {
     const requestId = await requestModel.approveRequest(req.body);
-    console.log(requestId);
-    res.status(200).send(requestId);
+    const event = await opportunityModel.getOpportunity(req.body.opportunityid);
+
+    var users = new Array();
+    var roles = new Array();
+
+    users.push.apply(users, event.userparticipants);
+    users.push(req.body.requester);
+    roles.push.apply(roles, event.assignedroles[`${req.body.role}`]);
+    roles.push(req.body.requester);
+
+    const participantRoles = await opportunityModel.setParticipants(users, req.body.role, roles, req.body.opportunityid)
+
+    res.status(200).send(requestId + event + participantRoles);
   }
   catch (error) {
     console.log(error);
