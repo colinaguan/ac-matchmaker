@@ -65,6 +65,7 @@ export default function OpportunityCreation({toggle}) {
 
   const [roleCount, setRoleCount] = useState(0);
   const [roles, setRoles] = useState([]);
+  // TODO: need error messages when trying to add over max roles
   const maxRoles = 3;
 
   const [triggerCreate, setTriggerCreate] = useState(false);
