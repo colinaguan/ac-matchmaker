@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-// import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {Button,
   FormControl,
   StepLabel,
@@ -29,7 +29,7 @@ import useAuth from '../util/AuthContext';
  * @return {HTML} opportunity creation
  */
 export default function OpportunityCreation({toggle}) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const {userProfile} = useAuth();
 
   const [opportunityTypes, setOpportunityTypes] = useState(null);
@@ -187,6 +187,7 @@ export default function OpportunityCreation({toggle}) {
             return res;
           })
           .then((json) => {
+            // TODO: should just toggle close instead of navigating to home
             navigate(`/`);
           })
           .catch((error) => {
