@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+// import {useNavigate} from 'react-router-dom';
 import {Button,
   FormControl,
   StepLabel,
@@ -29,8 +29,12 @@ import useAuth from '../util/AuthContext';
  * @return {HTML} opportunity creation
  */
 export default function OpportunityCreation({toggle}) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {userProfile} = useAuth();
+
+  const [opportunityTypes, setOpportunityTypes] = useState(null);
+  const [organizationTypes, setOrganizationTypes] = useState(null);
+  const [organizations, setOrganizations] = useState(null);
 
   const [newOpportunity, setNewOpportunity] = useState({
     eventname: '',
@@ -56,39 +60,44 @@ export default function OpportunityCreation({toggle}) {
     subject: null,
   });
 
-  const [additionalRole, setAdditionalRole] = useState(0);
   const [sponsorType, setSponsorType] = useState(null);
-  const [opportunityTypes, setOpportunityTypes] = useState(null);
-  const [organizationTypes, setOrganizationTypes] = useState(null);
-  const [organizations, setOrganizations] = useState(null);
-  const [role1, setRole1] = useState(null);
-  const [role2, setRole2] = useState(null);
-  const [role3, setRole3] = useState(null);
+
+  const [roleCount, setRoleCount] = useState(0);
+  const [roles, setRoles] = useState([]);
+  const maxRoles = 3;
+
   const [triggerCreate, setTriggerCreate] = useState(false);
 
   const handleAdditionalRoleClick = () => {
-    if (additionalRole < 2) {
-      setAdditionalRole(additionalRole+1);
+    if (roleCount < maxRoles) {
+      const newRoleCount = roleCount + 1;
+      setRoleCount(newRoleCount);
+      const rolesCopy = [...roles];
+      rolesCopy.push('');
+      console.log(rolesCopy);
+      setRoles(rolesCopy);
     }
   };
 
-  const handleRemoveRoleClick = () => {
-    if (additionalRole > 0) {
-      setAdditionalRole(additionalRole-1);
-    }
+  const handleRemoveRoleClick = (e) => {
+    const newRoleCount = roleCount - 1;
+    setRoleCount(newRoleCount);
+    const rolesCopy = [...roles];
+    const roleIndex = parseInt(e.target.parentElement.id, 10);
+    rolesCopy.splice(roleIndex, 1);
+    setRoles(rolesCopy);
+  };
+
+  const handleRoleChange = (e) => {
+    const roleIndex = parseInt(e.target.id, 10);
+    const rolesCopy = [...roles];
+    rolesCopy[roleIndex] = e.target.value;
+    setRoles(rolesCopy);
   };
 
   const createOpportunity = () => {
-    if (role3 != null && role2 != null && role1 != null) {
-      setNewOpportunity({...newOpportunity, roles: [role1, role2, role3]});
-      console.log('Here3');
-    } else if (role2 != null && role1 != null) {
-      setNewOpportunity({...newOpportunity, roles: [role1, role2]});
-      console.log('Here2');
-    } else if (role1 != null) {
-      setNewOpportunity({...newOpportunity, roles: [role1]});
-      console.log('Here1');
-    }
+    // TODO: error check roles
+    setNewOpportunity({...newOpportunity, roles: roles});
     console.log(newOpportunity);
     setTriggerCreate(true);
   };
@@ -167,7 +176,7 @@ export default function OpportunityCreation({toggle}) {
 
   useEffect(() => {
     console.log(newOpportunity);
-    if (triggerCreate == true) {
+    if (triggerCreate) {
       fetch(`/api/postOpportunity`, {
         method: 'POST',
         body: JSON.stringify(newOpportunity),
@@ -190,22 +199,7 @@ export default function OpportunityCreation({toggle}) {
             console.log(error);
           });
     }
-  }, [newOpportunity]);
-
-  const handleRole1Change = (e) => {
-    console.log(e.target.value);
-    setRole1(e.target.value);
-  };
-
-  const handleRole2Change = (e) => {
-    console.log(e.target.value);
-    setRole2(e.target.value);
-  };
-
-  const handleRole3Change = (e) => {
-    console.log(e.target.value);
-    setRole3(e.target.value);
-  };
+  }, [triggerCreate]);
 
   const handleSponsorChange = (e) => {
     const value = e.target.value;
@@ -491,67 +485,43 @@ export default function OpportunityCreation({toggle}) {
                 <AddCircleIcon />
               </IconButton>
             </div>
-            <TextField
-              sx={{display: 'flex',
-                position: 'relative',
-                width: '600px',
-                backgroundColor: 'rgb(255, 255, 255)',
-              }}
-              name='role1'
-              value={role1}
-              onChange={handleRole1Change}
-              label='New Role'
-            />
-
-            {additionalRole >= 1 &&
-            <div className='opportunity-creation__additional-role-input'>
-              <TextField
-                sx={{display: 'flex',
-                  position: 'relative',
-                  marginTop: '10px',
-                  width: '600px',
-                  backgroundColor: 'rgb(255, 255, 255)',
-                }}
-                name='role2'
-                value={role2}
-                onChange={handleRole2Change}
-              />
-              <IconButton
-                aria-label="remove opportunity role"
-                color="inherit"
-                sx = {{position: 'relative',
-                  marginTop: '12px',
-                  marginLeft: '5px'}}
-                onClick={handleRemoveRoleClick}
-              >
-                <RemoveCircleOutlineIcon sx={{color: 'red'}} fontSize="large"/>
-              </IconButton>
-            </div>}
-
-            {additionalRole >= 2 &&
-            <div className='opportunity-creation__additional-role-input'>
-              <TextField
-                sx={{display: 'flex',
-                  position: 'relative',
-                  marginTop: '10px',
-                  width: '600px',
-                  backgroundColor: 'rgb(255, 255, 255)',
-                }}
-                name='role3'
-                value={role3}
-                onChange={handleRole3Change}
-              />
-              <IconButton
-                aria-label="remove opportunity role"
-                color="inherit"
-                sx = {{position: 'relative',
-                  marginTop: '12px',
-                  marginLeft: '5px'}}
-                onClick={handleRemoveRoleClick}
-              >
-                <RemoveCircleOutlineIcon sx={{color: 'red'}} fontSize="large"/>
-              </IconButton>
-            </div>}
+            {
+              roles.length > 0 &&
+              roles.map((role, index) => (
+                <div
+                  className='opportunity-creation__additional-role-input'
+                  key={`role${index}`}
+                  id={index.toString()}
+                >
+                  <TextField
+                    sx={{display: 'flex',
+                      position: 'relative',
+                      marginTop: '10px',
+                      width: '600px',
+                      backgroundColor: 'rgb(255, 255, 255)',
+                    }}
+                    name={`role${index}`}
+                    id={index.toString()}
+                    value={role}
+                    onChange={handleRoleChange}
+                  />
+                  <IconButton
+                    id={index.toString()}
+                    aria-label="remove opportunity role"
+                    color="inherit"
+                    sx = {{position: 'relative',
+                      marginTop: '12px',
+                      marginLeft: '5px'}}
+                    onClick={handleRemoveRoleClick}
+                  >
+                    <RemoveCircleOutlineIcon
+                      sx={{color: 'red'}}
+                      fontSize="large"
+                    />
+                  </IconButton>
+                </div>
+              ))
+            }
           </div>
 
 
