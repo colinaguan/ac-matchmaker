@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
 import Skeleton from '@mui/material/Skeleton';
+import Divider from '@mui/material/Divider';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -255,13 +256,19 @@ export default function OpportunityCard({data}) {
             onClose={handleMenuClose}
           >
             <div>
-              <MenuItem>Edit Opportunity</MenuItem>
-              <MenuItem>Cancel Opportunity</MenuItem>
               {
                 opportunityCreator.profileid !== userProfile.profileid &&
                 <MenuItem onClick={(e) => handleMenuItemClick(e, 'Request')}>
                   Request to Join
                 </MenuItem>
+              }
+              {
+                opportunityCreator.profileid === userProfile.profileid &&
+                <div>
+                  <MenuItem>Edit Opportunity</MenuItem>
+                  <Divider />
+                  <MenuItem>Cancel Opportunity</MenuItem>
+                </div>
               }
             </div>
           </Menu>
