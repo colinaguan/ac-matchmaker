@@ -44,7 +44,7 @@ export default function OpportunityCreation({toggle}) {
     eventzoomlink: '',
     organization: null,
     description: null,
-    userparticipants: [userProfile.profileid],
+    userparticipants: [],
     preferences: null,
     eventdata: null,
     startdate: (new Date()),
@@ -58,6 +58,7 @@ export default function OpportunityCreation({toggle}) {
     starttime: null,
     endtime: null,
     subject: null,
+    assignedroles: {},
   });
 
   const [sponsorType, setSponsorType] = useState(null);
@@ -111,7 +112,6 @@ export default function OpportunityCreation({toggle}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setOpportunityTypes(json);
         })
         .catch((err) => {
@@ -129,7 +129,6 @@ export default function OpportunityCreation({toggle}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setOrganizationTypes(json);
         })
         .catch((err) => {
@@ -147,7 +146,6 @@ export default function OpportunityCreation({toggle}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setOrganizations(json);
         })
         .catch((err) => {
@@ -168,8 +166,6 @@ export default function OpportunityCreation({toggle}) {
   }, [newOpportunity.organizationtype]);
 
   const handleChange = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
     const {name, value} = e.target;
     setNewOpportunity({...newOpportunity, [name]: value});
   };
@@ -188,11 +184,9 @@ export default function OpportunityCreation({toggle}) {
             if (!res.ok) {
               throw res;
             }
-            console.log(res);
             return res;
           })
           .then((json) => {
-            console.log(json);
             navigate(`/`);
           })
           .catch((error) => {
