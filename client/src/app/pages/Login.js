@@ -4,6 +4,7 @@ import {Stack} from '@mui/material';
 import {toast} from 'react-toastify';
 import '../stylesheets/Login.css';
 
+import {VerifyEmail as verifyEmail} from '../util/EmailVerification';
 import useAuth from '../util/AuthContext';
 
 /**
@@ -15,11 +16,7 @@ export default function Login() {
   const location = useLocation();
   const [signUp, setSignUp] = useState(location.state.signUp);
 
-
-  // eslint-disable-next-line no-unused-vars
-  const {user, setUser, setLoggedIn, userProfile, setUserProfile} = useAuth();
-  // console.log('current user: ', user);
-  // console.log('current user profile: ', userProfile);
+  const {user, setUser, setLoggedIn, setUserProfile} = useAuth();
 
   const [accountLoginCredentials, setAccountLoginCredentials] = useState({
     useremail: '',
@@ -31,7 +28,6 @@ export default function Login() {
     userpassword: '',
     active: 'false',
   });
-
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -84,7 +80,6 @@ export default function Login() {
           return res.json();
         })
         .then((json) => {
-          console.log(json.userid);
           fetch(`/api/profileCreation`, {
             method: 'POST',
             body: JSON.stringify({userid: json.userid}),
@@ -101,9 +96,14 @@ export default function Login() {
             draggable: true,
             progress: undefined,
           });
-          setUser(json);
-          setLoggedIn(true);
-          navigate(`/`);
+
+          <>{verifyEmail(newAccountCredentials.useremail)}</>;
+
+          setnewAccountCredentials(
+              {useremail: '',
+                userpassword: '',
+                active: 'false'});
+          setSignUp(false);
         });
   };
 
