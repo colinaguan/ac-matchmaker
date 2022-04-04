@@ -25,9 +25,13 @@ export default function Notification({props}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           setNotifications(json);
-          // props.setNotificationCount(notifications.length)
+        })
+        .then(() => {
+          if (notifications) {
+            props.setNotificationCount(notifications.length);
+          }
         })
         .catch((err) => {
           console.log(err);
