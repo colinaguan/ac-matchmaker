@@ -35,7 +35,7 @@ export default function NavBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const showNotification = Boolean(notificationAnchorEl);
-  // const [notificationCount, setNotificationCount] = React.useState(0);
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
