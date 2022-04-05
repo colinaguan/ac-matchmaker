@@ -31,9 +31,7 @@ exports.userPost = async (req, res) => {
     // Signing a JWT Token, stored in user table of db
      const verificationToken = jwt.sign(
       {
-        userid: user[0].userid,
-        useremail: user[0].useremail,
-        active: user[0].active,
+        useremail: req.body.useremail,
       },
       secrets.accessToken,
       {

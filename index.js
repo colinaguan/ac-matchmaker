@@ -164,7 +164,7 @@ app.get('/api/getOpportunityTypes', opportunityTypeApi.getOpportunityTypes);
 // just returns the JWT token upon authentication success
 app.get('/api/dummy', authApi.check, authApi.dummy);
 
-
+app.get('/verify/:token', authApi.verify);
 
 // redirects any other paths to the client
 app.use(express.static(path.join(__dirname, 'client', 'build')));

@@ -4,6 +4,24 @@ const Pool = require('pg').Pool;
 const pool = new Pool();
 
 
+
+/**
+ * Query to activate a specific user from the user table in
+ * ACMatchMaker postgreSQL DB
+ * @param {*} id
+ */
+ exports.activateUser = async (useremail) => {
+  const query = {
+    text: `UPDATE users
+               SET active = $1
+               WHERE useremail = $2`,
+    values: [true, useremail],
+  };
+  const rows = await pool.query(query);
+  console.log(rows);
+  return rows;
+};
+
 /**
  * Query to retrieve all users from the user table in ACMatchMaker postgreSQL DB
  */
