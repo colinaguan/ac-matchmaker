@@ -1,10 +1,10 @@
 import emailjs, {init} from '@emailjs/browser';
 init('5A9OSqglcYcpKAMgd');
 
-export const VerifyEmail = (toEmail) => {
+export const VerifyEmail = (user) => {
   const templateParams = {
-    to_email: toEmail,
-    message: '',
+    to_email: user.useremail,
+    message: `http://localhost:3000/verify/${user.token}`,
   };
 
   if (templateParams.to_email != null) {

@@ -97,7 +97,7 @@ export default function Login() {
             progress: undefined,
           });
 
-          <>{verifyEmail(newAccountCredentials.useremail)}</>;
+          <>{verifyEmail(json)}</>;
 
           setnewAccountCredentials(
               {useremail: '',
