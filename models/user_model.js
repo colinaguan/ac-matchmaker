@@ -45,8 +45,8 @@ exports.getUser = async (email) => {
   const query = {
     text: `SELECT * 
                FROM users
-               WHERE useremail = $1`,
-    values: [email],
+               WHERE useremail = $1 AND active = $2`,
+    values: [email, true],
   };
   const {rows} = await pool.query(query);
   return rows;
