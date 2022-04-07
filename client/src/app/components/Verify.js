@@ -11,7 +11,7 @@ export default function Verify() {
   const params = useParams();
   console.log(params);
 
-  const [response, setResponse] = useState(null);
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     fetch(`/verify/${params.token}`, {
@@ -27,18 +27,19 @@ export default function Verify() {
           return res;
         })
         .then((json) => {
-          setResponse('User Profile Sucessfully Activated');
+          setStatus('Success');
         })
         .catch((err) => {
           console.log(err);
+          setStatus('Failed');
           alert('Error verifying account');
         });
   }, [params]);
 
   return (
     <div className='Verify'>
-      <div className='verificationResponse'>
-        <h2 className='response'>{response}</h2>
+      {status == 'Success' && <div className='verificationResponse'>
+        <h2 className='response'>User Profile Successfully Activated</h2>
         <p>You can now login to your account and start building your profile</p>
         <Button sx={{border: '1px solid black', width: '100px',
           display: 'flex', marginX: 'auto'}}>
@@ -48,7 +49,11 @@ export default function Verify() {
               Log In
           </Link>
         </Button>
-      </div>
+      </div>}
+      {status == 'Failed' && <div className='verificationResponse'>
+        <h2 className='response'>User Profile Could Not Be Activated</h2>
+        <p>Your link was either invalid or expired.</p>
+      </div>}
     </div>
   );
 }
