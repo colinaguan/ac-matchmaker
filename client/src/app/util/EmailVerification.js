@@ -4,6 +4,8 @@ init('5A9OSqglcYcpKAMgd');
 export const VerifyEmail = (user) => {
   const templateParams = {
     to_email: user.useremail,
+    // to-do: Make message link dynamic so that we
+    // dont have to switch for production or developement
     message: `http://localhost:3000/verify/${user.token}`,
   };
 
