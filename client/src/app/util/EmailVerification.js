@@ -2,17 +2,12 @@ import emailjs, {init} from '@emailjs/browser';
 init('5A9OSqglcYcpKAMgd');
 
 export const VerifyEmail = (user) => {
-  let route;
-  if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
-    route = `http://tassel.com/verify/${user.token}`;
-  } else {
-    route = `http://localhost:3000/verify/${user.token}`;
-  }
+  const url = window.location.href;
+  const route = url+`/verify/${user.token}`;
+  console.log(route);
 
   const templateParams = {
     to_email: user.useremail,
-    // to-do: Make message link dynamic so that we
-    // dont have to switch for production or developement
     message: route,
   };
 
