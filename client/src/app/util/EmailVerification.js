@@ -1,5 +1,5 @@
-// import emailjs, {init} from '@emailjs/browser';
-// init('5A9OSqglcYcpKAMgd');
+import emailjs, {init} from '@emailjs/browser';
+init('5A9OSqglcYcpKAMgd');
 
 export const VerifyEmail = (user) => {
   let route;
@@ -17,8 +17,7 @@ export const VerifyEmail = (user) => {
   };
 
   if (templateParams.to_email != null) {
-    console.log(templateParams.message);
-    /* console.log('templateParams:', templateParams);
+    console.log('templateParams:', templateParams);
     emailjs.send('service_2ncxfor', 'template_np5ucmd', templateParams)
         .then(function(response) {
           console.log('SUCCESS!', response.status, response.text);
@@ -26,7 +25,7 @@ export const VerifyEmail = (user) => {
         }, function(error) {
           console.log('FAILED...', error);
           return ('Failed');
-        });*/
+        });
   }
 };
 
