@@ -4,7 +4,6 @@ init('5A9OSqglcYcpKAMgd');
 export const VerifyEmail = (user) => {
   const url = window.location.href;
   const route = url+`/verify/${user.token}`;
-  console.log(route);
 
   const templateParams = {
     to_email: user.useremail,
