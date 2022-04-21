@@ -16,7 +16,6 @@ export default function Login() {
   const location = useLocation();
   const [signUp, setSignUp] = useState(location.state.signUp);
   const [verifyEmailNotification, setVerifyEmailNotification] = useState(false);
-  // const [unverifiedEmail, setUnverifiedEmail] = useState(null);
   const [createdProfileData, setCreatedProfileData] = useState(null);
 
   const {user, setUser, setLoggedIn, setUserProfile} = useAuth();
@@ -76,7 +75,6 @@ export default function Login() {
   };
 
   const createUser = () => {
-    // setUnverifiedEmail(newAccountCredentials.useremail);
     fetch(`/api/userCreation`, {
       method: 'POST',
       body: JSON.stringify(newAccountCredentials),
