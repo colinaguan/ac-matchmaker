@@ -14,13 +14,14 @@ export default function Verify() {
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
-    fetch(`/verify/${params.token}`, {
+    fetch(`/api/verify/${params.token}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     })
         .then((res) => {
+          console.log(res);
           if (!res.ok) {
             throw res;
           }
