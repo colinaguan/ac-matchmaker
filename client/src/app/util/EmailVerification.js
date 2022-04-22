@@ -1,7 +1,7 @@
 import emailjs, {init} from '@emailjs/browser';
 init('5A9OSqglcYcpKAMgd');
 
-export const VerifyEmail = (user) => {
+export const verifyEmail = (user) => {
   const pathArray = window.location.href.split( '/' );
   const url = pathArray[0] + '//' + pathArray[1] + pathArray[2];
   const route = url+`/verify/${user.token}`;
@@ -24,3 +24,4 @@ export const VerifyEmail = (user) => {
   }
 };
 
+export default verifyEmail;
