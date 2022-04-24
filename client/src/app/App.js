@@ -4,7 +4,8 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './stylesheets/App.css';
 
-import NavBar from './components/NavBar';
+// import NavBarLoggedIn from './components/NavBarLoggedIn';
+import NavBarLoggedOut from './components/NavBarLoggedOut';
 import Landing from './pages/Landing';
 import GetStarted from './pages/GetStarted';
 import Login from './pages/Login';
@@ -24,7 +25,7 @@ export default function App() {
   return (
     <AuthProvider>
       <ToastContainer />
-      <NavBar/>
+      <NavBarLoggedOut/>
       <Routes>
         <Route path='/' element={<Landing />}/>
         <Route path='/login' element={<Login />}/>
