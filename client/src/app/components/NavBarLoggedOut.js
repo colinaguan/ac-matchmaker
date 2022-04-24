@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import ThemedButton from '../components/ThemedButton';
+import PersonIcon from '@mui/icons-material/Person';
 import {
   DrawerHeader,
   AppBar,
@@ -42,9 +43,22 @@ export default function NavBarLoggedOut() {
           </Typography>
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-            <Button color="tertiary" style={{fontWeight: 600}}>
+            <ThemedButton
+              startIcon={<PersonIcon />}
+              color={'gray'}
+              variant={'cancel'}
+              type={'submit'}
+            >
                 Login
-            </Button>
+            </ThemedButton>
+            <ThemedButton
+              color={'yellow'}
+              variant={'gradient'}
+              type={'submit'}
+              style={{marginLeft: '1rem'}}
+            >
+                Join Now
+            </ThemedButton>
           </Box>
         </Toolbar>
       </AppBar>

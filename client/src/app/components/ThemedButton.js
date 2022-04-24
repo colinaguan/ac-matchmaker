@@ -26,6 +26,16 @@ const ButtonTheme = createTheme({
             backgroundColor: 'white',
           },
         },
+        {
+          props: {variant: 'gradient'},
+          style: {
+            fontFamily: 'Montserrat',
+            fontWeight: '600',
+            textTransform: 'none',
+            boxShadow: 'none',
+            backgroundColor: 'white',
+          },
+        },
       ],
       defaultProps: {
         disableElevation: true,
@@ -59,9 +69,9 @@ export default function ThemedButton({children, color, variant, ...props}) {
       blue.main,
     '&:hover': {
       backgroundColor:
-        color === 'yellow' ? yellow.main :
-        color === 'gray' ? gray.main :
-        blue.main,
+        color === 'yellow' ? yellow.dark :
+        color === 'gray' ? gray.dark :
+        blue.dark,
     },
   };
 
@@ -77,7 +87,28 @@ export default function ThemedButton({children, color, variant, ...props}) {
       color === 'gray' ? `1px solid ${gray.main}` :
       `1px solid ${blue.main}`,
     '&:hover': {
-      backgroundColor: 'white',
+      backgroundColor:
+        color === 'yellow' ? yellow.lightHover :
+        color === 'gray' ? gray.lightHover :
+        blue.lightHover,
+    },
+  };
+
+  const gradientStyling = {
+    'padding': '8px 22px',
+    'fontSize': '0.9375rem',
+    'color': 'white',
+    'background':
+      color === 'yellow' ?
+        `linear-gradient(to right, ${yellow.light}, ${yellow.dark})` :
+      color === 'gray' ?
+        `linear-gradient(to right, ${gray.light}, ${gray.dark})` :
+        `linear-gradient(to right, ${blue.light}, ${blue.dark})`,
+    '&:hover': {
+      backgroundColor:
+        color === 'yellow' ? yellow.dark :
+        color === 'gray' ? gray.dark :
+        blue.dark,
     },
   };
 
@@ -89,6 +120,7 @@ export default function ThemedButton({children, color, variant, ...props}) {
         sx={
           variant === 'themed' ? themedStyling :
           variant === 'cancel' ? cancelStyling :
+          variant === 'gradient' ? gradientStyling :
           null
         }
       >
