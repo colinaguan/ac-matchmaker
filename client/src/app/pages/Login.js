@@ -13,7 +13,7 @@ import useAuth from '../util/AuthContext';
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [signUp, setSignUp] = useState(location.state.signUp);
+  const [signUp, setSignUp] = useState(false);
 
 
   // eslint-disable-next-line no-unused-vars
@@ -60,7 +60,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    setSignUp(location.state.signUp);
+    setSignUp(false);
   }, [location.key, location.state]);
 
   useEffect(() => {

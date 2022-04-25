@@ -111,15 +111,21 @@ export default function NavBarLoggedIn() {
           </IconButton>
           {
             !open &&
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              color="secondary"
-              style={{fontWeight: 600, fontStyle: 'italic'}}
-            >
-              Tassel
-            </Typography>
+            <Link to='/dashboard'>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                color="secondary"
+                style={{
+                  fontWeight: 600,
+                  fontStyle: 'italic',
+                  cursor: 'pointer',
+                }}
+              >
+                Tassel
+              </Typography>
+            </Link>
           }
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
@@ -137,41 +143,51 @@ export default function NavBarLoggedIn() {
               </IconButton>
             </Tooltip>
             {showNotification && renderNotification}
-            <ThemedButton
-              startIcon={
-                <Avatar src={userProfile.profilepicture}
-                  alt="Remy Sharp"
-                  onError={handleError}
-                  style={{marginRight: 5}}
-                />
-              }
-              color={'white'}
-              variant={'themed'}
-              type={'submit'}
-              style={{paddingLeft: 5}}
-            >
-              FirstName
-            </ThemedButton>
+            <Link className='link' to="/myprofile">
+              <ThemedButton
+                startIcon={
+                  <Avatar src={userProfile.profilepicture}
+                    alt="Remy Sharp"
+                    onError={handleError}
+                    style={{marginRight: 5}}
+                  />
+                }
+                color={'white'}
+                variant={'themed'}
+                type={'submit'}
+                style={{borderRadius: 30, padding: 10}}
+              >
+                {/* TODO: replace with userProfile's first name */}
+                FirstName
+              </ThemedButton>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            color="secondary"
+          <Link
+            to='/dashboard'
             style={{
-              fontWeight: 600,
-              fontStyle: 'italic',
               position: 'absolute',
               left: 0,
               paddingLeft: '24px',
             }}
           >
-            Tassel
-          </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              color="secondary"
+              style={{
+                fontWeight: 600,
+                fontStyle: 'italic',
+                cursor: 'pointer',
+              }}
+            >
+              Tassel
+            </Typography>
+          </Link>
           <IconButton onClick={handleDrawerClose}>
             {
                theme.direction === 'rtl' ?
