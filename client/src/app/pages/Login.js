@@ -4,7 +4,7 @@ import {Stack} from '@mui/material';
 import {toast} from 'react-toastify';
 import '../stylesheets/Login.css';
 
-import {VerifyEmail as verifyEmail} from '../util/EmailVerification';
+import verifyEmail from '../util/EmailVerification';
 import useAuth from '../util/AuthContext';
 
 /**
@@ -71,7 +71,7 @@ export default function Login() {
   const handleResendClick = () => {
     console.log('here');
     console.log(createdProfileData);
-    <>{verifyEmail(createdProfileData)}</>;
+    verifyEmail(createdProfileData);
   };
 
   const createUser = () => {
@@ -106,7 +106,7 @@ export default function Login() {
             progress: undefined,
           });
           setCreatedProfileData(json);
-          <>{verifyEmail(json)}</>;
+          verifyEmail(json);
           setVerifyEmailNotification(true);
           setnewAccountCredentials(
               {useremail: '',
