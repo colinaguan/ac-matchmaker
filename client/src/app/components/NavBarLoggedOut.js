@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import {styled, useTheme} from '@mui/material/styles';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -40,22 +40,26 @@ export default function NavBarLoggedOut() {
           </Typography>
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-            <ThemedButton
-              startIcon={<PersonIcon />}
-              color={'gray'}
-              variant={'cancel'}
-              type={'submit'}
-            >
-                Login
-            </ThemedButton>
-            <ThemedButton
-              color={'yellow'}
-              variant={'gradient'}
-              type={'submit'}
-              style={{marginLeft: '1rem'}}
-            >
-                Join Now
-            </ThemedButton>
+            <Link to='/login'>
+              <ThemedButton
+                startIcon={<PersonIcon />}
+                color={'gray'}
+                variant={'cancel'}
+                type={'submit'}
+              >
+                  Login
+              </ThemedButton>
+            </Link>
+            <Link to='/signup'>
+              <ThemedButton
+                color={'yellow'}
+                variant={'gradient'}
+                type={'submit'}
+                style={{marginLeft: '1rem'}}
+              >
+                  Join Now
+              </ThemedButton>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>

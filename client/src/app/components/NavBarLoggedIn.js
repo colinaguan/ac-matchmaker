@@ -1,7 +1,7 @@
 import * as React from 'react';
 import useAuth from '../util/AuthContext';
 import {useTheme} from '@mui/material/styles';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -37,8 +37,9 @@ import Notification from './Notification';
  * @return {*} Drawer Component
  */
 export default function NavBarLoggedIn() {
-  const {userProfile} = useAuth();
+  const {userProfile, setUser, setLoggedIn, setUserProfile} = useAuth();
   const theme = useTheme();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
   const pages = [
@@ -68,11 +69,17 @@ export default function NavBarLoggedIn() {
       }}
     />
   );
-  console.log(showNotification);
 
   // Profile
   const handleError = (e) => {
     e.target.src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setLoggedIn(false);
+    setUserProfile(null);
+    navigate('/');
   };
 
   // Drawer Functions
@@ -236,6 +243,7 @@ export default function NavBarLoggedIn() {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
+              onClick={handleLogout}
             >
               <ListItemIcon
                 sx={{
