@@ -49,8 +49,10 @@ const ButtonTheme = createTheme({
 /**
  * Themed Button
  * @param {Object} children 'Button content'
- * @param {String} color 'yellow' || 'blue' || 'gray' - Default to 'blue'
- * @param {String} variant 'themed' || 'cancel' - Default to MUI button
+ * @param {String} color 'yellow' || 'blue' || 'gray' || 'white'
+ *                       - Default to 'blue'
+ * @param {String} variant 'themed' || 'cancel' || 'gradient
+ *                         - Default to MUI button
  * @param {Object} props 'Any MUI Button props'
  * @return {Object} JSX
  */
@@ -59,6 +61,7 @@ export default function ThemedButton({children, color, variant, ...props}) {
   const blue = theme.palette.primary;
   const yellow = theme.palette.secondary;
   const gray = theme.palette.tertiary;
+  const white = 'white';
 
   const themedStyling = {
     'padding': '8px 22px',
@@ -66,12 +69,17 @@ export default function ThemedButton({children, color, variant, ...props}) {
     'backgroundColor':
       color === 'yellow' ? yellow.main :
       color === 'gray' ? gray.main :
-      blue.main,
+      color === 'blue' ? blue.main :
+      white,
+    'color':
+      color === 'white' ? gray.dark :
+      white,
     '&:hover': {
       backgroundColor:
         color === 'yellow' ? yellow.dark :
         color === 'gray' ? gray.dark :
-        blue.dark,
+        color === 'blue' ? blue.dark :
+        gray.lightHover,
     },
   };
 

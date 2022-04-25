@@ -7,10 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import ThemedButton from '../components/ThemedButton';
 import PersonIcon from '@mui/icons-material/Person';
-import {
-  DrawerHeader,
-  AppBar,
-} from './NavBarComponents';
+import {AppBar} from './NavBarComponents';
 
 const drawerWidth = 240;
 
@@ -20,7 +17,7 @@ const drawerWidth = 240;
  */
 export default function NavBarLoggedOut() {
   return (
-    <Box sx={{display: 'flex'}}>
+    <div>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -62,23 +59,6 @@ export default function NavBarLoggedOut() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box component="main" sx={{flexGrow: 1, p: 3}}>
-        <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor puru
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis vi
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermen
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lob
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec
-          sapien faucibus et molestie ac.
-        </Typography>
-      </Box>
-    </Box>
+    </div>
   );
 }

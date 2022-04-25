@@ -1,4 +1,5 @@
 import * as React from 'react';
+import useAuth from '../util/AuthContext';
 import {useTheme} from '@mui/material/styles';
 import {Link} from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -7,6 +8,10 @@ import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import ThemedButton from '../components/ThemedButton';
+import Tooltip from '@mui/material/Tooltip';
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -18,18 +23,21 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventIcon from '@mui/icons-material/Event';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Avatar from '@mui/material/Avatar';
 import {
   drawerWidth,
   DrawerHeader,
   Drawer,
   AppBar,
 } from './NavBarComponents';
+import Notification from './Notification';
 
 /**
  * the drawer component
  * @return {*} Drawer Component
  */
 export default function NavBarLoggedIn() {
+  const {userProfile} = useAuth();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -39,6 +47,35 @@ export default function NavBarLoggedIn() {
     ['Settings', '/settings', <SettingsIcon key='Settings'/>],
   ];
 
+  // Notifications
+  const [notificationAnchorEl, setNotificationAnchorEl] = React.useState(null);
+  const showNotification = Boolean(notificationAnchorEl);
+  const [notificationCount, setNotificationCount] = React.useState(0);
+
+  const handleNotificationOpen = (event) => {
+    setNotificationAnchorEl(event.currentTarget);
+  };
+
+  const notificationId = 'notification-popover';
+  const renderNotification = (
+    <Notification
+      props={{
+        notificationAnchorEl: notificationAnchorEl,
+        notificationId: notificationId,
+        showNotification: showNotification,
+        setNotificationAnchorEl: setNotificationAnchorEl,
+        setNotificationCount: setNotificationCount,
+      }}
+    />
+  );
+  console.log(showNotification);
+
+  // Profile
+  const handleError = (e) => {
+    e.target.src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  };
+
+  // Drawer Functions
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -48,7 +85,7 @@ export default function NavBarLoggedIn() {
   };
 
   return (
-    <Box sx={{display: 'flex'}}>
+    <div>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -62,12 +99,11 @@ export default function NavBarLoggedIn() {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: 5,
+              marginRight: 3,
               ...(open && {display: 'none'}),
             }}
           >
@@ -85,6 +121,38 @@ export default function NavBarLoggedIn() {
               Tassel
             </Typography>
           }
+          <Box sx={{flexGrow: 1}} />
+          <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+            <Tooltip title="Notifications">
+              <IconButton
+                aria-controls={notificationId}
+                size="large"
+                aria-haspopup="true"
+                aria-label="show number of new notifications"
+                onClick = {handleNotificationOpen}
+              >
+                <Badge badgeContent={notificationCount} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            {showNotification && renderNotification}
+            <ThemedButton
+              startIcon={
+                <Avatar src={userProfile.profilepicture}
+                  alt="Remy Sharp"
+                  onError={handleError}
+                  style={{marginRight: 5}}
+                />
+              }
+              color={'white'}
+              variant={'themed'}
+              type={'submit'}
+              style={{paddingLeft: 5}}
+            >
+              FirstName
+            </ThemedButton>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -171,23 +239,6 @@ export default function NavBarLoggedIn() {
           </List>
         </div>
       </Drawer>
-      <Box component="main" sx={{flexGrow: 1, p: 3}}>
-        <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor puru
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis vi
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermen
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lob
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec
-          sapien faucibus et molestie ac.
-        </Typography>
-      </Box>
-    </Box>
+    </div>
   );
 }
