@@ -34,7 +34,7 @@ exports.dummy = async (req, res) =>{
 exports.verify = (req, res) => {
     const token = req.params.token;
     // Verifing the JWT token 
-    jwt.verify(token, secrets.accessToken, (err, decoded) => {
+    jwt.verify(token, secrets.verificationToken, (err, decoded) => {
         if (err) {
             console.log(err);
             console.log("Email verification failed, possibly the link is invalid or expired");

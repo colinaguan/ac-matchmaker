@@ -27,12 +27,12 @@ exports.userPost = async (req, res) => {
   const result = await userModel.createUser(req.body, newUUID);
   if (result == 1) {
     
-    // Signing a JWT Token, stored in user table of db
+    // Signing a JWT Token
      const verificationToken = jwt.sign(
       {
         useremail: req.body.useremail,
       },
-      secrets.accessToken,
+      secrets.verificationToken,
       {
         expiresIn: '48h',
         algorithm: 'HS256',
