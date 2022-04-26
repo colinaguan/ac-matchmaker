@@ -29,15 +29,21 @@ export default function NavBarLoggedOut() {
         }}
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            color="secondary"
-            style={{fontWeight: 600, fontStyle: 'italic'}}
-          >
-              Tassel
-          </Typography>
+          <Link to='/'>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              color="secondary"
+              style={{
+                fontWeight: 600,
+                fontStyle: 'italic',
+                cursor: 'pointer',
+              }}
+            >
+                Tassel
+            </Typography>
+          </Link>
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             <Link to='/login'>
