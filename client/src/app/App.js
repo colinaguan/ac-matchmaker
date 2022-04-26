@@ -16,6 +16,7 @@ import Verify from './components/Verify';
 
 import {AuthProvider} from './util/AuthContext';
 
+
 /**
  * returns basic routes and navbar of app
  * @return {HTML} App component

@@ -2,6 +2,12 @@ const jwt = require('jsonwebtoken');
 const secrets = require('./secrets.json');
 const userModel = require('./user_model.js');
 
+/**
+ *  check is used to verfiy if the JWT is valid.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.check = (req, res, next) => {
     // Code to verifiy JWTS
     // console.log(req.cookies.accessToken);   
@@ -20,7 +26,7 @@ exports.check = (req, res, next) => {
             next();
         });
     } else {
-        console.log("JWT does not exist");
+        console.log("JWT IS INVALID");
         res.sendStatus(401);
     }
 };
