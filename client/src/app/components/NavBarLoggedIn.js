@@ -33,8 +33,10 @@ import {
 import Notification from './Notification';
 
 /**
- * the drawer component
- * @return {*} Drawer Component
+ * logged in navbar
+ * displays drawer on side
+ * displays notifications and avatar on top
+ * @return {*} NavBar Component
  */
 export default function NavBarLoggedIn() {
   const {userProfile, setUser, setLoggedIn, setUserProfile} = useAuth();
@@ -48,7 +50,8 @@ export default function NavBarLoggedIn() {
     ['Settings', '/settings', <SettingsIcon key='Settings'/>],
   ];
 
-  // Notifications
+  // Notifications -------------------------------------------------------------
+
   const [notificationAnchorEl, setNotificationAnchorEl] = React.useState(null);
   const showNotification = Boolean(notificationAnchorEl);
   const [notificationCount, setNotificationCount] = React.useState(0);
@@ -70,7 +73,8 @@ export default function NavBarLoggedIn() {
     />
   );
 
-  // Profile
+  // Profile -------------------------------------------------------------------
+
   const handleError = (e) => {
     e.target.src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   };
@@ -91,9 +95,11 @@ export default function NavBarLoggedIn() {
     setOpen(false);
   };
 
+  // NavBar --------------------------------------------------------------------
   return (
     <div>
       <CssBaseline />
+      {/* top navbar */}
       <AppBar
         position="fixed"
         open={open}
@@ -105,6 +111,7 @@ export default function NavBarLoggedIn() {
         }}
       >
         <Toolbar>
+          {/* header */}
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -135,6 +142,7 @@ export default function NavBarLoggedIn() {
             </Link>
           }
           <Box sx={{flexGrow: 1}} />
+          {/* top right icons */}
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             <Tooltip title="Notifications">
               <IconButton
@@ -172,6 +180,7 @@ export default function NavBarLoggedIn() {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
+        {/* header */}
         <DrawerHeader>
           <Link
             to='/dashboard'
@@ -203,6 +212,7 @@ export default function NavBarLoggedIn() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        {/* main pages */}
         <List>
           {pages.map((arr, index) => {
             const [label, route, icon] = arr;
@@ -234,6 +244,7 @@ export default function NavBarLoggedIn() {
             );
           })}
         </List>
+        {/* logout */}
         <div style={{position: 'absolute', bottom: 0, width: '100%'}}>
           <Divider/>
           <List>

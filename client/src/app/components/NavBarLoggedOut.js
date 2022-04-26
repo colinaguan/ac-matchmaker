@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import {styled, useTheme} from '@mui/material/styles';
 import {Link} from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,8 +11,8 @@ import {AppBar} from './NavBarComponents';
 const drawerWidth = 240;
 
 /**
- * the drawer component
- * @return {*} Drawer Component
+ * logged out navbar
+ * @return {*} NavBar Component
  */
 export default function NavBarLoggedOut() {
   return (
@@ -29,6 +28,7 @@ export default function NavBarLoggedOut() {
         }}
       >
         <Toolbar>
+          {/* header */}
           <Link to='/'>
             <Typography
               variant="h6"
@@ -45,6 +45,7 @@ export default function NavBarLoggedOut() {
             </Typography>
           </Link>
           <Box sx={{flexGrow: 1}} />
+          {/* icons */}
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             <Link to='/login'>
               <ThemedButton
