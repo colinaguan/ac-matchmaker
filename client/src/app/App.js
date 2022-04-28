@@ -20,7 +20,7 @@ import Browse from './pages/Browse';
 import Settings from './pages/Settings';
 import Box from '@mui/material/Box';
 import {DrawerHeader} from './components/NavBarComponents';
-
+import Verify from './components/Verify';
 
 /**
  * returns basic routes and navbar of app
@@ -39,6 +39,7 @@ export default function App() {
           <Route path='/' element={<Landing />}/>
           <Route path='/login' element={<Login />}/>
           <Route path='/signup' element={<GetStarted />}/>
+          <Route path='/verify/:token' element={<Verify />} />
           <Route path='/myprofile' element={<MyProfile />} />
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/opportunities' element={<Opportunities/>}/>
