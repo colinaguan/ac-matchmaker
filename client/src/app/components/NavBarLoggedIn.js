@@ -155,7 +155,7 @@ export default function NavBarLoggedIn() {
                 aria-haspopup='true'
                 onClick = {handleNotificationOpen}
                 size='large'
-                sx={{'&:hover': {background: 'none'}}}
+                sx={{height: '45px', marginTop: '8px'}}
               >
                 <Badge badgeContent={notificationCount} color='error'>
                   <NotificationsRoundedIcon className='icon-gray-main' />
@@ -175,12 +175,11 @@ export default function NavBarLoggedIn() {
                 }
                 color={'white'}
                 variant={'themed'}
-                style={{borderRadius: 0, padding: 10}}
+                style={{borderRadius: 30, padding: 10}}
               >
                 {/* TODO: replace with userProfile's first name */}
                 <Box className='text-xbold text-lineheight-16 text-dark'>
                   <p>First Name</p>
-                  <p>Last Name</p>
                 </Box>
               </ThemedButton>
             </Link>
