@@ -3,8 +3,10 @@
 :root {
   --primary-blue-main: #00C2FF;
   --secondary-yellow-light: #fdd835;
-  --secondary-yellow-main: #fbc02d;
+  --secondary-yellow-main: #FFBF22;
   --secondary-yellow-dark: #f9a825;
+  --tertiary-gray-main: #8B95A5;
+  --tertiary-gray-light: #C0C4CB;
   --error-red-light: #ef5350;
   --error-red-main: #f44336;
   --error-red-dark: #e53935;
@@ -17,9 +19,8 @@
   --info-lightblue-main: #03a9f4;
   --text-dark: #3C4047;
   --text-white: #ffffff;
-  --text-gray-primary: #8B95A5;
-  --text-gray-secondary: #9e9e9e;
-  --text-gray-disabled: #bdbdbd;
+  --text-gray-primary: #7E8694;
+  --text-gray-secondary: #A4A9AF;
   --border-primary: #d1d1d1;
   --background-primary: #f8f8fa;
 }

@@ -33,7 +33,7 @@ const theme = createTheme({
       lightHover: grey[100],
       light: grey[400],
       main: grey[500],
-      dark: grey[600],
+      dark: '#7E8694',
     },
     error: {
       light: red[400],
@@ -57,7 +57,7 @@ const theme = createTheme({
       main: lightBlue[500],
     },
     text: {
-      primary: grey[600],
+      primary: '#7E8694',
       secondary: grey[500],
       disabled: grey[400],
     },

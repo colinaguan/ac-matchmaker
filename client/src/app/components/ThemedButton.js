@@ -79,7 +79,11 @@ export default function ThemedButton({children, color, variant, ...props}) {
         color === 'yellow' ? yellow.dark :
         color === 'gray' ? gray.dark :
         color === 'blue' ? blue.dark :
-        gray.lightHover,
+        'transparent',
+    },
+    '&:disabled': {
+      backgroundColor: '#ebedf0',
+      color: gray.main,
     },
   };
 
