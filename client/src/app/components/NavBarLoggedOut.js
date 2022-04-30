@@ -19,7 +19,8 @@ export default function NavBarLoggedOut() {
     <div>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        id='navbar-logged-out'
+        position='fixed'
         sx={{
           background: 'white',
           borderBottom: '0.5px solid #D1D1D1',
@@ -31,10 +32,10 @@ export default function NavBarLoggedOut() {
           {/* header */}
           <Link to='/'>
             <Typography
-              variant="h6"
+              variant='h6'
               noWrap
-              component="div"
-              color="secondary"
+              component='div'
+              color='secondary'
               style={{
                 fontWeight: 600,
                 fontStyle: 'italic',

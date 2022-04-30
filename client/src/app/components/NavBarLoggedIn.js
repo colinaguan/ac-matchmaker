@@ -108,7 +108,8 @@ export default function NavBarLoggedIn() {
       <CssBaseline />
       {/* top navbar */}
       <AppBar
-        position="fixed"
+        id='navbar-logged-in'
+        position='fixed'
         open={open}
         sx={{
           background: 'white',
@@ -120,9 +121,9 @@ export default function NavBarLoggedIn() {
         <Toolbar>
           {/* header */}
           <IconButton
-            aria-label="open drawer"
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
+            edge='start'
             sx={{
               marginRight: 3,
               ...(open && {display: 'none'}),
@@ -134,10 +135,10 @@ export default function NavBarLoggedIn() {
             !open &&
             <Link to='/dashboard'>
               <Typography
-                variant="h6"
+                variant='h6'
                 noWrap
-                component="div"
-                color="secondary"
+                component='div'
+                color='secondary'
                 style={{
                   fontWeight: 600,
                   fontStyle: 'italic',
@@ -151,25 +152,25 @@ export default function NavBarLoggedIn() {
           <Box sx={{flexGrow: 1}} />
           {/* top right icons */}
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-            <Tooltip title="Notifications">
+            <Tooltip title='Notifications'>
               <IconButton
                 aria-controls={notificationId}
-                size="large"
-                aria-haspopup="true"
-                aria-label="show number of new notifications"
+                size='large'
+                aria-haspopup='true'
+                aria-label='show number of new notifications'
                 onClick = {handleNotificationOpen}
               >
-                <Badge badgeContent={notificationCount} color="error">
+                <Badge badgeContent={notificationCount} color='error'>
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
             </Tooltip>
             {showNotification && renderNotification}
-            <Link className='link' to="/myprofile">
+            <Link className='link' to='/myprofile'>
               <ThemedButton
                 startIcon={
                   <Avatar src={userProfile.profilepicture}
-                    alt="Remy Sharp"
+                    alt='Remy Sharp'
                     onError={handleError}
                     style={{marginRight: 5}}
                   />
@@ -186,7 +187,7 @@ export default function NavBarLoggedIn() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant='permanent' open={open}>
         {/* header */}
         <DrawerHeader>
           <Link
@@ -198,10 +199,10 @@ export default function NavBarLoggedIn() {
             }}
           >
             <Typography
-              variant="h6"
+              variant='h6'
               noWrap
-              component="div"
-              color="secondary"
+              component='div'
+              color='secondary'
               style={{
                 fontWeight: 600,
                 fontStyle: 'italic',
@@ -273,7 +274,7 @@ export default function NavBarLoggedIn() {
                 <LogoutIcon />
               </ListItemIcon>
               <ListItemText
-                primary="Logout"
+                primary='Logout'
                 sx={{opacity: open ? 1 : 0}}
                 style={{fontWeight: 600}}
               />
