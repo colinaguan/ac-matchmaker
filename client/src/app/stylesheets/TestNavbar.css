@@ -1,0 +1,64 @@
+/* Block */
+
+.indicator {
+  position: absolute;
+  right: 0;
+  height: 48px;
+  width: 4px;
+  background: var(--primary-blue-main);
+  transition: all 300ms ease-in-out;
+}
+
+/* Utility */
+
+.text-lineheight-16 {
+  line-height: 1rem;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+.text-xbold {
+  font-weight: 700;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-dark {
+  color: var(--text-dark);
+}
+
+.text-yellow {
+  color: var(--secondary-yellow-main);
+}
+
+.text-gray-primary {
+  color: var(--text-gray-primary);
+}
+
+.text-gray-secondary {
+  color: var(--text-gray-secondary);
+}
+
+.icon-gray-main {
+  color: var(--tertiary-gray-main);
+}
+
+.icon-gray-light {
+  color: var(--tertiary-gray-light);
+}
+
+.icon-yellow {
+  color: var(--secondary-yellow-main);
+}
+
+.icon-blue {
+  color: var(--primary-blue-main);
+}
+
+.navbar-height {
+  height: 70px;
+}
