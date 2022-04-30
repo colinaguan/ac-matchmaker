@@ -1,60 +1,88 @@
-import * as React from 'react';
-import useAuth from '../util/AuthContext';
-import {useTheme} from '@mui/material/styles';
+import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ThemedButton from '../components/ThemedButton';
-import Tooltip from '@mui/material/Tooltip';
+import {useTheme} from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import EventIcon from '@mui/icons-material/Event';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import EventIcon from '@mui/icons-material/Event';
+import MenuIcon from '@mui/icons-material/Menu';
+import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Avatar from '@mui/material/Avatar';
-import {
-  drawerWidth,
-  DrawerHeader,
-  Drawer,
-  AppBar,
-} from './NavBarComponents';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import Notification from './Notification';
+import ThemedButton from './ThemedButton';
+import useAuth from '../util/AuthContext';
+import * as Nav from './NavBarComponents';
+import '../stylesheets/TestNavbar.css';
+
+const LogoutStyling = {
+  position: 'absolute',
+  bottom: 0,
+  width: '100%',
+  borderTop: '0.5px solid #C0C4CB',
+};
+
+const BrandStyling = {
+  // 20px = Button Side Padding
+  // 8px = Button Width (32px) - Icon Width (24px)
+  // 6px = Icon Width (24px) - Vector Width (18px)
+  // 2px = Account for scale
+  display: 'flex',
+  alignItems: 'center',
+  paddingLeft: 'calc(20px - 8px + 6px - 2px)',
+  width: '100%',
+  cursor: 'pointer',
+};
+
+const ListButtonStyling = {
+  minHeight: 48,
+  px: 2.5,
+};
+
+const ListIconStyling = {
+  minWidth: 0,
+  ml: '4px',
+};
+
+const ListTextStyling = {
+  '.MuiTypography-root': {
+    'fontWeight': '600',
+    'fontSize': '0.9rem',
+  },
+};
 
 /**
- * logged in navbar
- * displays drawer on side
- * displays notifications and avatar on top
- * @return {*} NavBar Component
+ * @return {JSX} NavBar Component
  */
 export default function NavBarLoggedIn() {
   const {userProfile, setUser, setLoggedIn, setUserProfile} = useAuth();
   const theme = useTheme();
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const pages = [
-    ['Dashboard', '/dashboard', <DashboardIcon key='Dashboard'/>],
-    ['Opportunities', '/opportunities', <EventIcon key='Opportunities'/>],
-    ['Settings', '/settings', <SettingsIcon key='Settings'/>],
+    ['Dashboard', '/dashboard', <GridViewRoundedIcon key='Dashboard' />],
+    ['Opportunities', '/opportunities', <EventIcon key='Opportunities' />],
+    ['Settings', '/settings', <SettingsIcon key='Settings' />],
   ];
 
   // Notifications -------------------------------------------------------------
 
-  const [notificationAnchorEl, setNotificationAnchorEl] = React.useState(null);
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
+  const [notificationCount, setNotificationCount] = useState(0);
   const showNotification = Boolean(notificationAnchorEl);
-  const [notificationCount, setNotificationCount] = React.useState(0);
 
   const handleNotificationOpen = (event) => {
     setNotificationAnchorEl(event.currentTarget);
@@ -80,20 +108,12 @@ export default function NavBarLoggedIn() {
   };
 
   const handleLogout = () => {
-    fetch(`/api/expireUserSession`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(()=>{
-      setUser(null);
-      setLoggedIn(false);
-      setUserProfile(null);
-      navigate('/');
-    });
+    setUser(null);
+    setLoggedIn(false);
+    setUserProfile(null);
+    navigate('/');
   };
 
-  // Drawer Functions
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -102,185 +122,146 @@ export default function NavBarLoggedIn() {
     setOpen(false);
   };
 
-  // NavBar --------------------------------------------------------------------
+  const handleTabClick = (index) => {
+    setTabIndex(index);
+  };
+
   return (
-    <div>
-      <CssBaseline />
-      {/* top navbar */}
-      <AppBar
-        position="fixed"
+    <>
+      <Nav.AppBarLoggedIn
+        position='fixed'
         open={open}
         sx={{
-          background: 'white',
-          borderBottom: '0.5px solid #D1D1D1',
           boxShadow: '0',
-          ml: {sm: `${drawerWidth}px`},
+          borderBottom: '0.5px solid #C0C4CB',
         }}
       >
-        <Toolbar>
-          {/* header */}
+        <Toolbar className='navbar-height'>
           <IconButton
-            aria-label="open drawer"
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 3,
-              ...(open && {display: 'none'}),
-            }}
+            edge='start'
+            color='inherit'
+            sx={{marginRight: 5, ...(open && {display: 'none'})}}
           >
-            <MenuIcon />
+            <MenuIcon className='icon-gray-main' />
           </IconButton>
-          {
-            !open &&
-            <Link to='/dashboard'>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                color="secondary"
-                style={{
-                  fontWeight: 600,
-                  fontStyle: 'italic',
-                  cursor: 'pointer',
-                }}
-              >
-                Tassel
-              </Typography>
-            </Link>
-          }
           <Box sx={{flexGrow: 1}} />
-          {/* top right icons */}
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-            <Tooltip title="Notifications">
+            <Tooltip title='Notifications'>
               <IconButton
+                aria-label='show number of new notifications'
                 aria-controls={notificationId}
-                size="large"
-                aria-haspopup="true"
-                aria-label="show number of new notifications"
+                aria-haspopup='true'
                 onClick = {handleNotificationOpen}
+                size='large'
+                sx={{'&:hover': {background: 'none'}}}
               >
-                <Badge badgeContent={notificationCount} color="error">
-                  <NotificationsIcon />
+                <Badge badgeContent={notificationCount} color='error'>
+                  <NotificationsRoundedIcon className='icon-gray-main' />
                 </Badge>
               </IconButton>
             </Tooltip>
             {showNotification && renderNotification}
-            <Link className='link' to="/myprofile">
+            <Link to='/myprofile'>
               <ThemedButton
                 startIcon={
-                  <Avatar src={userProfile.profilepicture}
-                    alt="Remy Sharp"
+                  <Avatar
+                    src={userProfile.profilepicture}
+                    alt='Remy Sharp'
                     onError={handleError}
                     style={{marginRight: 5}}
                   />
                 }
                 color={'white'}
                 variant={'themed'}
-                type={'submit'}
-                style={{borderRadius: 30, padding: 10}}
+                style={{borderRadius: 0, padding: 10}}
               >
                 {/* TODO: replace with userProfile's first name */}
-                FirstName
+                <Box className='text-xbold text-lineheight-16 text-dark'>
+                  <p>First Name</p>
+                  <p>Last Name</p>
+                </Box>
               </ThemedButton>
             </Link>
           </Box>
         </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        {/* header */}
-        <DrawerHeader>
-          <Link
-            to='/dashboard'
-            style={{
-              position: 'absolute',
-              left: 0,
-              paddingLeft: '24px',
-            }}
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              color="secondary"
-              style={{
-                fontWeight: 600,
-                fontStyle: 'italic',
-                cursor: 'pointer',
-              }}
-            >
-              Tassel
-            </Typography>
+      </Nav.AppBarLoggedIn>
+      <Nav.Drawer variant='permanent' open={open}>
+        <Nav.DrawerHeader>
+          <Link to='/dashboard'>
+            <Box onClick={() => handleTabClick(0)} sx={BrandStyling}>
+              <StarRoundedIcon
+                className='icon-yellow'
+                sx={{mr: 3, transform: 'scale(1.5)'}}
+              />
+              <h3
+                className='text-italic text-yellow'
+                style={{display: 'block', opacity: open ? 1 : 0}}
+              >
+                Tassel
+              </h3>
+            </Box>
           </Link>
           <IconButton onClick={handleDrawerClose}>
-            {
-               theme.direction === 'rtl' ?
-               <ChevronRightIcon /> : <ChevronLeftIcon />
+            {theme.direction === 'rtl' ?
+              <ChevronRightIcon className='icon-gray-main' /> :
+              <ChevronLeftIcon className='icon-gray-main' />
             }
           </IconButton>
-        </DrawerHeader>
-        <Divider />
-        {/* main pages */}
+        </Nav.DrawerHeader>
         <List>
           {pages.map((arr, index) => {
             const [label, route, icon] = arr;
             return (
               <Link key={label} to={route}>
                 <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
+                  onClick={() => handleTabClick(index)}
+                  sx={ListButtonStyling}
                 >
                   <ListItemIcon
                     sx={{
-                      minWidth: 0,
+                      ...ListIconStyling,
                       mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
+                      color: index === tabIndex ? '#7E8694' : '#C0C4CB',
                     }}
                   >
                     {icon}
                   </ListItemIcon>
                   <ListItemText
-                    primary={label}
-                    sx={{opacity: open ? 1 : 0}}
-                    style={{fontWeight: 600}}
-                  />
+                    sx={{
+                      ...ListTextStyling,
+                      '.MuiTypography-root': {
+                        ...ListTextStyling['.MuiTypography-root'],
+                        'color': index === tabIndex ? '#7E8694' : '#A4A9AF',
+                      },
+                      'opacity': open ? 1 : 0,
+                    }}
+                  >
+                    {label}
+                  </ListItemText>
                 </ListItemButton>
               </Link>
             );
           })}
+          <Box
+            className='indicator'
+            sx={{top: `calc(8px + ${tabIndex*48}px)`}}
+          />
         </List>
-        {/* logout */}
-        <div style={{position: 'absolute', bottom: 0, width: '100%'}}>
-          <Divider/>
+        <Box sx={LogoutStyling}>
           <List>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-              onClick={handleLogout}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              >
-                <LogoutIcon />
+            <ListItemButton onClick={handleLogout} sx={ListButtonStyling}>
+              <ListItemIcon sx={{...ListIconStyling, mr: open ? 3 : 'auto'}}>
+                <LogoutIcon className='icon-gray-main' />
               </ListItemIcon>
-              <ListItemText
-                primary="Logout"
-                sx={{opacity: open ? 1 : 0}}
-                style={{fontWeight: 600}}
-              />
+              <ListItemText sx={{...ListTextStyling, 'opacity': open ? 1 : 0}}>
+                Logout
+              </ListItemText>
             </ListItemButton>
           </List>
-        </div>
-      </Drawer>
-    </div>
+        </Box>
+      </Nav.Drawer>
+    </>
   );
 }

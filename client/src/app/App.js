@@ -20,8 +20,8 @@ import Browse from './pages/Browse';
 // TODO: settings page?
 import Settings from './pages/Settings';
 
-import TestNavbarLoggedIn from './components/TestNavbarLoggedIn';
-import TestNavbarLoggedOut from './components/TestNavbarLoggedOut';
+import NavBarLoggedIn from './components/NavBarLoggedIn';
+import NavBarLoggedOut from './components/NavBarLoggedOut';
 
 /**
  * returns basic routes and navbar of app
@@ -33,7 +33,7 @@ export default function App() {
   return (
     <Box sx={{display: 'flex'}}>
       <ToastContainer />
-      {userProfile !== null ? <TestNavbarLoggedIn /> : <TestNavbarLoggedOut/>}
+      {userProfile !== null ? <NavBarLoggedIn /> : <NavBarLoggedOut/>}
       <Box component='main' sx={{flexGrow: 1, marginTop: '70px'}}>
         <Routes>
           <Route path='/' element={<Landing />}/>
