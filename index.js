@@ -10,6 +10,22 @@ const cookieParser = require('cookie-parser')
 const jsonwebtoken = require('jsonwebtoken');
 const secrets = require('./models/secrets.json');
 
+/**
+ * Firebase Imports
+ * Initializing the firebase obj
+ */
+const admin = require('firebase-admin');
+const serviceAccount = require("./serviceAccountKey.json");
+// Intialize the firebase-admin project/account
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://tassel-65f6d-default-rtdb.firebaseio.com/',
+});
+// Gets the messaging service
+const messaging = admin.messaging();
+console.log(messaging)
+
+
 const path = require('path');
 
 // User API
