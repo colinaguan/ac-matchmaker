@@ -9,7 +9,7 @@ import theme from './app/util/Theme';
 import {ThemeProvider} from '@mui/material/styles';
 import {AuthProvider} from './app/util/AuthContext';
 
-import {fbapp} from './push-notification';
+// import {fbapp} from './push-notification';
 
 render((
   <BrowserRouter>
@@ -22,8 +22,7 @@ render((
 ), document.getElementById('root'));
 
 // initializes the firebase function
-fbapp();
-
+// fbapp();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

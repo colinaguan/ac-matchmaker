@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from 'firebase/app';
+import {getMessaging, getToken} from 'firebase/messaging';
 //  import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -17,6 +18,18 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const fbapp = () =>{
-  initializeApp(firebaseConfig);
+export const fbapp = initializeApp(firebaseConfig);
+
+
+export const askForPermissioToReceiveNotifications = async () => {
+  try {
+    const messaging = getMessaging(fbapp);
+    // console.log(messaging);
+    // await messaging.requestPermission();
+    const token = await getToken(messaging);
+    console.log('token do usuário:', token);
+    return token;
+  } catch (error) {
+    console.error(error);
+  }
 };

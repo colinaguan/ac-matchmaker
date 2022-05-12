@@ -1,6 +1,8 @@
 import * as React from 'react';
 import '../stylesheets/Landing.css';
 
+import {askForPermissioToReceiveNotifications} from '../../push-notification';
+
 // import useAuth from '../util/AuthContext';
 /**
  * creates landing page
@@ -15,6 +17,8 @@ export default function Landing() {
       },
     });
   };
+
+  askForPermissioToReceiveNotifications();
 
   return (
     <div className='Landing'>
