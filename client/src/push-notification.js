@@ -27,9 +27,19 @@ export const askForPermissioToReceiveNotifications = async () => {
     // console.log(messaging);
     // await messaging.requestPermission();
     const token = await getToken(messaging);
-    console.log('token do usuário:', token);
+    console.log('Client Token:', token);
     return token;
   } catch (error) {
     console.error(error);
   }
 };
+
+// https://www.youtube.com/watch?v=rqBh4YP_CwM
+export const onMessageListener = () =>{
+  new Promise((resolve) =>{
+    messaging.onMessage((payload)=> {
+      resolve(payload);
+    });
+  });
+};
+
