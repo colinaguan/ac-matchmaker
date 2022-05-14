@@ -22,6 +22,8 @@ import Box from '@mui/material/Box';
 import {DrawerHeader} from './components/NavBarComponents';
 import Verify from './components/Verify';
 
+import ViewOpportunity from './pages/ViewOpportunity';
+
 /**
  * returns basic routes and navbar of app
  * @return {HTML} App component
@@ -50,6 +52,8 @@ export default function App() {
           <Route path='/browse' element={<Browse />}/>
           {/* TODO: settings page? */}
           <Route path='/settings' element={<Settings />}/>
+
+          <Route path='/testing' element={<ViewOpportunity />}/>
         </Routes>
       </Box>
     </Box>

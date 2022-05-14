@@ -56,7 +56,13 @@ const ButtonTheme = createTheme({
  * @param {Object} props 'Any MUI Button props'
  * @return {Object} JSX
  */
-export default function ThemedButton({children, color, variant, ...props}) {
+export default function ThemedButton({
+  children,
+  color,
+  variant,
+  size,
+  ...props
+}) {
   const theme = useTheme();
   const blue = theme.palette.primary;
   const yellow = theme.palette.secondary;
@@ -65,7 +71,10 @@ export default function ThemedButton({children, color, variant, ...props}) {
 
   const themedStyling = {
     'padding': '8px 22px',
-    'fontSize': '0.9375rem',
+    'fontSize':
+      size === 'small' ? '0.8rem' :
+      size === 'large' ? '1rem' :
+      '0.9375rem',
     'backgroundColor':
       color === 'yellow' ? yellow.main :
       color === 'gray' ? gray.main :
@@ -85,7 +94,10 @@ export default function ThemedButton({children, color, variant, ...props}) {
 
   const cancelStyling = {
     'padding': '8px 22px',
-    'fontSize': '0.9375rem',
+    'fontSize':
+      size === 'small' ? '0.8rem' :
+      size === 'large' ? '1rem' :
+      '0.9375rem',
     'color':
       color === 'yellow' ? yellow.main :
       color === 'gray' ? gray.main :
@@ -104,7 +116,10 @@ export default function ThemedButton({children, color, variant, ...props}) {
 
   const gradientStyling = {
     'padding': '8px 22px',
-    'fontSize': '0.9375rem',
+    'fontSize':
+      size === 'small' ? '0.8rem' :
+      size === 'large' ? '1rem' :
+      '0.9375rem',
     'color': 'white',
     'background':
       color === 'yellow' ?
