@@ -10,7 +10,7 @@ import Landing from './pages/Landing';
 import GetStarted from './pages/GetStarted';
 import Login from './pages/Login';
 import MyProfile from './pages/MyProfile';
-import Opportunities from './pages/Opportunities';
+// import Opportunities from './pages/Opportunities';
 import Dashboard from './pages/Dashboard';
 import Opportunity from './pages/Opportunity';
 import Profile from './components/Profile';
@@ -44,7 +44,7 @@ export default function App() {
           <Route path='/verify/:token' element={<Verify />} />
           <Route path='/myprofile' element={<MyProfile />} />
           <Route path='/dashboard' element={<Dashboard/>}/>
-          <Route path='/opportunities' element={<Opportunities/>}/>
+          {/* <Route path='/opportunities' element={<Opportunities/>}/> */}
           <Route path='/opportunity/:opportunityid'
             element={<Opportunity/>}/>
           <Route path='/profile/:profileid' element={<Profile />} />
@@ -53,7 +53,7 @@ export default function App() {
           {/* TODO: settings page? */}
           <Route path='/settings' element={<Settings />}/>
 
-          <Route path='/testing' element={<ViewOpportunity />}/>
+          <Route path='/opportunities' element={<ViewOpportunity />}/>
         </Routes>
       </Box>
     </Box>

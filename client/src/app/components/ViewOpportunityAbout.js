@@ -15,11 +15,36 @@ import TimerRoundedIcon from '@mui/icons-material/TimerRounded';
 import ThemedButton from './ThemedButton';
 import '../stylesheets/OpportunityComponents.css';
 
+const Page = styled((props) => (
+  <Box {...props} />
+))(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  height: 'auto',
+  width: 'auto',
+  padding: '3em',
+  background: '#F8F8FA',
+}));
+
+/**
+ * About tab for view opportunity
+ * @return {JSX}
+ */
+export default function ViewOpportunityAbout() {
+  return (
+    <Page className='flow-large'>
+      <DetailsCard />
+      <RolesCard />
+    </Page>
+  );
+};
+
 /**
  * Opportunity details card
  * @return {JSX}
  */
-export function DetailsCard(/* {data} */) {
+function DetailsCard(/* {data} */) {
   // const creatorName = 'Bob Higgins';
 
   // const userProfile = {
@@ -160,8 +185,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
  * Opportunity roles card
  * @return {JSX}
  */
-export function RolesCard(/* {data} */) {
-  const [expanded, setExpanded] = React.useState('panel0');
+function RolesCard(/* {data} */) {
+  const [expanded, setExpanded] = React.useState(null);
 
   const arrayOfRoles = [
     {

@@ -1,27 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Box from '@mui/material/Box';
-import * as Opportunity from '../components/OpportunityComponents';
+import CompressedTabBar from '../components/CompressedTabBar';
+import PageHeader from '../components/PageHeader';
+import ThemedButton from '../components/ThemedButton';
+import OpportunityBanner from '../assets/examplecover.png';
+import ViewOpportunityAbout from '../components/ViewOpportunityAbout';
 
 /**
  * View opportunity page
  * @return {JSX}
  */
 export default function ViewOpportunity() {
+  const [tab, setTab] = useState(0);
+  const tabs = [
+    {name: 'About', component: <ViewOpportunityAbout />},
+    {name: 'Members', component: <p>Hello World</p>},
+    {name: 'Threads', component: <p>Hello World</p>},
+  ];
+
   return (
-    <Box
-      className='flow-large'
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 'calc(100vh - 64px)',
-        paddingInline: '3em',
-        background: '#F8F8FA',
-      }}
-    >
-      <Opportunity.DetailsCard />
-      <Opportunity.RolesCard />
+    <Box className='ViewOpportunity'>
+      <PageHeader
+        title='2022 CruzHacks'
+        subtitle='APR 17, 2022 AT 5PM - APR 19, 2022 AT 7PM'
+        image={OpportunityBanner}
+        rightComponent={
+          <ThemedButton variant='gradient' color='yellow' size='small'>
+            Request to Join
+          </ThemedButton>
+        }
+      />
+      <CompressedTabBar data={tabs} tab={tab} setTab={setTab} />
     </Box>
   );
 }
