@@ -13,7 +13,6 @@ import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import TimerRoundedIcon from '@mui/icons-material/TimerRounded';
 import ThemedButton from './ThemedButton';
-import '../stylesheets/OpportunityComponents.css';
 
 const Page = styled((props) => (
   <Box {...props} />

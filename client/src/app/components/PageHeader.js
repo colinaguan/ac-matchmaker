@@ -2,7 +2,6 @@ import * as React from 'react';
 import {styled} from '@mui/material/styles';
 import MuiBox from '@mui/material/Box';
 import MuiPaper from '@mui/material/Paper';
-import '../stylesheets/OpportunityComponents.css';
 
 const Paper = styled((props) => (
   <MuiPaper elevation={0} {...props} />

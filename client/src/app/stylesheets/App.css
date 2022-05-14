@@ -94,3 +94,132 @@ a, a:hover, a:focus, a:active {
     text-decoration: none;
     color:inherit;
 }
+
+/* Composition */
+
+.flow-large > :where(:not(:first-child)) {
+  margin-top: var(--flow-large-spacer, 2.5em);
+}
+
+.flow-small > :where(:not(:first-child)) {
+  margin-top: var(--flow-small-spacer, 1em);
+}
+
+.grid-flow-small {
+  display: grid;
+  gap: 5px;
+}
+
+.grid-flow-large {
+  display: grid;
+  gap: 10px;
+}
+
+.grid-center {
+  place-items: center;
+}
+
+.flex-horizontal {
+  display: flex;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-flow-small {
+  display: flex;
+  gap: 5px;
+}
+
+.flex-flow-large {
+  display: flex;
+  gap: 10px;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-align-center {
+  align-items: center;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.width-300-pixels {
+  width: 300px;
+}
+
+/* Utility */
+
+.text-center {
+  text-align: center;
+}
+
+.text-tiny {
+  font-size: 0.7rem;
+}
+
+.text-light {
+  font-weight: 400;
+}
+
+.text-normal {
+  font-weight: 500;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+.text-xbold {
+  font-weight: 800;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-dark {
+  color: var(--text-dark);
+}
+
+.text-gray {
+  color: var(--text-gray-primary);
+}
+
+.text-white {
+  color: var(--text-white);
+}
+
+.text-blue {
+  color: var(--primary-blue-main);
+}
+
+.text-warning {
+  color: var(--error-red-main);
+}
+
+.text-lineheight-24 {
+  line-height: 1.5rem;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.margin-left-32 {
+  margin-left: 2rem;
+}
+
+.padding-64 {
+  padding: 4rem;
+}
