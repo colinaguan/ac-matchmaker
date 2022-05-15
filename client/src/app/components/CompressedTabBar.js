@@ -31,7 +31,7 @@ export default function CompressedTabBar({data, tab, setTab}) {
         className='tab-container'
         style={{
           height: '4rem',
-          width: '100%',
+          width: 'auto',
           paddingLeft: '3em',
         }}
       >

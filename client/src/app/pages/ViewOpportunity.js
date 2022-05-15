@@ -22,8 +22,10 @@ export default function ViewOpportunity() {
     <Box className='ViewOpportunity'>
       <PageHeader
         title='2022 CruzHacks'
-        subtitle='APR 17, 2022 AT 5PM - APR 19, 2022 AT 7PM'
-        image={OpportunityBanner}
+        subtitle='Hosted by:'
+        host='John Higgins'
+        avatar={OpportunityBanner}
+        banner={OpportunityBanner}
         rightComponent={
           <ThemedButton variant='gradient' color='yellow' size='small'>
             Request to Join

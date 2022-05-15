@@ -1,7 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -10,7 +9,6 @@ import AccessTimeFilledRounded from
   '@mui/icons-material/AccessTimeFilledRounded';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import TimerRoundedIcon from '@mui/icons-material/TimerRounded';
 import ThemedButton from './ThemedButton';
 
@@ -79,36 +77,31 @@ function DetailsCard(/* {data} */) {
       className='flex-vertical flex-flow-large'
       elevation={0}
       sx={{
-        padding: '2em',
-        paddingBottom: '1.5em',
+        paddingBottom: '2em',
         height: 'auto',
-        width: '100%',
+        width: '50%',
         background: 'white',
         boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
         borderRadius: '10px',
       }}
     >
-      <h4 className='text-dark' style={{marginBottom: '0.5em'}}>Details</h4>
-      <Box className='flex-vertical flex-flow-large'>
-        <div className='flex-horizontal flex-flow-large'>
-          <PersonRoundedIcon />
-          <div>
-            <p className='text-tiny'>Hosted by</p>
-            <p className='text-bold'>
-              Name
-            </p>
-          </div>
-        </div>
+      <h4 className='text-dark' style={{padding: '2em 2em 1.5em 2em'}}>
+        Details
+      </h4>
+      <Box
+        className='flex-vertical flex-flow-large'
+        sx={{paddingInline: '2em'}}
+      >
         <div className='flex-horizontal flex-flow-large'>
           <AccessTimeFilledRounded />
           <div className='width-300-pixels'>
-            <p className='text-tiny'>Start</p>
+            <p className='text-xsmall'>Start</p>
             <p className='text-bold'>
               Saturday, September 31 at 12PM
             </p>
           </div>
           <div className='margin-left-32'>
-            <p className='text-tiny'>End</p>
+            <p className='text-xsmall'>End</p>
             <p className='text-bold'>
               Saturday, September 31 at 12PM
             </p>
@@ -117,7 +110,7 @@ function DetailsCard(/* {data} */) {
         <div className='flex-horizontal flex-flow-large'>
           <TimerRoundedIcon />
           <div>
-            <p className='text-tiny'>Duration</p>
+            <p className='text-xsmall'>Duration</p>
             <p className='text-bold'>
               Length
             </p>
@@ -126,21 +119,19 @@ function DetailsCard(/* {data} */) {
         <div className='flex-horizontal flex-flow-large'>
           <LocationOnRoundedIcon />
           <div className='width-300-pixels'>
-            <p className='text-tiny'>Location</p>
+            <p className='text-xsmall'>Location</p>
             <p className='text-bold'>
               Exhibition Rd, South Kensington, London SW7 2DD, UK
             </p>
           </div>
           <div className='margin-left-32'>
-            <p className='text-tiny'>Location</p>
+            <p className='text-xsmall'>Link</p>
             <p className='text-bold'>
-              Link
+              www.zoom.com
             </p>
           </div>
         </div>
       </Box>
-      <Divider sx={{marginBlock: '0.8em'}} />
-      <p className='text-bold'>Description</p>
     </Paper>
   );
 }
@@ -252,7 +243,7 @@ function RolesCard(/* {data} */) {
                   <p className='text-bold text-blue'>
                     {`${role.name} (${role.slots})`}
                   </p>
-                  <p className='text-tiny text-gray'>
+                  <p className='text-xsmall text-gray'>
                     {role.tags}
                   </p>
                 </Box>
@@ -269,13 +260,15 @@ function RolesCard(/* {data} */) {
               >
                 <div className='flex-vertical'>
                   <p className='text-bold'>Responsibilites</p>
-                  <p className='text-tiny text-gray'>{role.responsibilites}</p>
+                  <p className='text-xsmall text-gray'>
+                    {role.responsibilites}
+                  </p>
                 </div>
                 <div className='flex-vertical'>
                   <p className='text-bold'>
                     Preferred Qualifications
                   </p>
-                  <p className='text-tiny text-gray'>{role.preferences}</p>
+                  <p className='text-xsmall text-gray'>{role.preferences}</p>
                 </div>
               </AccordionDetails>
             </Accordion>

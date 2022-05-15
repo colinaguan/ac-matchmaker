@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {styled} from '@mui/material/styles';
+import MuiAvatar from '@mui/material/Avatar';
 import MuiBox from '@mui/material/Box';
 import MuiPaper from '@mui/material/Paper';
 
@@ -12,7 +13,11 @@ const Paper = styled((props) => (
   borderRadius: 0,
 }));
 
-const Banner = styled(({image}, props) => (
+const Avatar = ({image}, props) => (
+  <MuiAvatar sx={{height: '50px', width: '50px'}} src={image} {...props} />
+);
+
+const Banner = ({image}, props) => (
   <MuiBox sx={{height: '30vh', width: '100%'}} {...props}>
     <img
       src={image}
@@ -23,7 +28,7 @@ const Banner = styled(({image}, props) => (
       }}
     />
   </MuiBox>
-))(() => ({}));
+);
 
 const Details = styled((props) => (
   <MuiBox {...props} />
@@ -32,7 +37,6 @@ const Details = styled((props) => (
   justifyContent: 'space-between',
   alignItems: 'center',
   paddingBlock: '1.5em',
-  paddingInline: '3em',
   height: '25%',
   width: '100%',
 }));
@@ -48,18 +52,32 @@ const Details = styled((props) => (
 export default function PageHeader({
   title,
   subtitle,
-  image,
+  host,
+  avatar,
+  banner,
   rightComponent,
 }) {
   return (
     <Paper>
-      {image && <Banner image={image} />}
+      {banner && <Banner image={banner} />}
       <Details>
-        <div>
-          <h2 className='text-dark'>{title}</h2>
-          <p className='text-bold'>{subtitle}</p>
+        <div
+          className='flex-horizontal flex-align-center flex-flow-large'
+          style={{paddingLeft: '3em'}}
+        >
+          {avatar && <Avatar image={avatar} />}
+          <div>
+            <h2 className='text-dark'>{title}</h2>
+            <p className='text-bold'>
+              {`${subtitle}`}
+              &nbsp;&nbsp;
+              {host && <span className='text-blue'>{host}</span>}
+            </p>
+          </div>
         </div>
-        {rightComponent}
+        <div style={{paddingRight: '3em'}}>
+          {rightComponent}
+        </div>
       </Details>
     </Paper>
   );
