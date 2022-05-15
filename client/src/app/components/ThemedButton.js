@@ -90,6 +90,10 @@ export default function ThemedButton({
         color === 'blue' ? blue.dark :
         gray.lightHover,
     },
+    '&:disabled': {
+      backgroundColor: '#ebedf0',
+      color: gray.main,
+    },
   };
 
   const cancelStyling = {
