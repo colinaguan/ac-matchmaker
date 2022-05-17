@@ -31,7 +31,7 @@ const theme = createTheme({
     },
     tertiary: {
       lightHover: grey[100],
-      light: grey[400],
+      light: grey[200],
       main: grey[500],
       dark: grey[600],
     },

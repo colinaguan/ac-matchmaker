@@ -4,24 +4,37 @@ import Box from '@mui/material/Box';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Paper from '@mui/material/Paper';
-import AccessTimeFilledRounded from
-  '@mui/icons-material/AccessTimeFilledRounded';
+import MuiPaper from '@mui/material/Paper';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import TimerRoundedIcon from '@mui/icons-material/TimerRounded';
 import ThemedButton from './ThemedButton';
 
-const Page = styled((props) => (
-  <Box {...props} />
+const Details = styled((props) => (
+  <MuiPaper elevation={0} {...props} />
 ))(() => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
+  marginTop: '1em',
+  padding: '1.5em 2em 1.5em 2em',
   height: 'auto',
   width: 'auto',
-  padding: '3em',
-  background: '#F8F8FA',
+  background: 'white',
+  boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
+  border: '0.5px solid rgba(0, 0, 0, 0.15)',
+  borderRadius: '10px',
+}));
+
+const Roles = styled((props) => (
+  <MuiPaper elevation={0} {...props} />
+))(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '1em',
+  height: 'auto',
+  width: '100%',
+  background: 'white',
+  boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
+  border: '0.5px solid rgba(0, 0, 0, 0.15)',
+  borderRadius: '10px',
 }));
 
 /**
@@ -30,10 +43,10 @@ const Page = styled((props) => (
  */
 export default function ViewOpportunityAbout() {
   return (
-    <Page className='flow-large'>
+    <>
       <DetailsCard />
       <RolesCard />
-    </Page>
+    </>
   );
 };
 
@@ -41,98 +54,28 @@ export default function ViewOpportunityAbout() {
  * Opportunity details card
  * @return {JSX}
  */
-function DetailsCard(/* {data} */) {
-  // const creatorName = 'Bob Higgins';
-
-  // const userProfile = {
-  //   profileid: 0,
-  // };
-
-  // const opportunityCreator = {
-  //   profileid: 0,
-  //   profilepicture: 'image',
-  // };
-
-  // const data = {
-  //   eventname: 'Marine Biology Seminar',
-  //   eventbanner: 'image',
-  //   organization: null,
-  //   startdate: {
-  //     date: 'Saturday, September 31',
-  //     time: '12PM',
-  //   },
-  //   enddate: {
-  //     date: 'Saturday, September 31',
-  //     time: '4PM',
-  //   },
-  //   duration: '4 Hours',
-  //   location: {
-  //     address: 'Exhibition Rd, South Kensington, London SW7 2DD, UK',
-  //     link: 'www.zoom.com/link',
-  //   },
-  // };
-
+function DetailsCard() {
   return (
-    <Paper
-      className='flex-vertical flex-flow-large'
-      elevation={0}
-      sx={{
-        paddingBottom: '2em',
-        height: 'auto',
-        width: '50%',
-        background: 'white',
-        boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
-        borderRadius: '10px',
-      }}
-    >
-      <h4 className='text-dark' style={{padding: '2em 2em 1.5em 2em'}}>
+    <Details>
+      <h4 className='text-dark' style={{paddingBottom: '1.5em'}}>
         Details
       </h4>
-      <Box
-        className='flex-vertical flex-flow-large'
-        sx={{paddingInline: '2em'}}
-      >
-        <div className='flex-horizontal flex-flow-large'>
-          <AccessTimeFilledRounded />
-          <div className='width-300-pixels'>
-            <p className='text-xsmall'>Start</p>
-            <p className='text-bold'>
-              Saturday, September 31 at 12PM
-            </p>
-          </div>
-          <div className='margin-left-32'>
-            <p className='text-xsmall'>End</p>
-            <p className='text-bold'>
-              Saturday, September 31 at 12PM
-            </p>
-          </div>
-        </div>
-        <div className='flex-horizontal flex-flow-large'>
-          <TimerRoundedIcon />
-          <div>
-            <p className='text-xsmall'>Duration</p>
-            <p className='text-bold'>
-              Length
-            </p>
-          </div>
-        </div>
-        <div className='flex-horizontal flex-flow-large'>
-          <LocationOnRoundedIcon />
-          <div className='width-300-pixels'>
-            <p className='text-xsmall'>Location</p>
-            <p className='text-bold'>
-              Exhibition Rd, South Kensington, London SW7 2DD, UK
-            </p>
-          </div>
-          <div className='margin-left-32'>
-            <p className='text-xsmall'>Link</p>
-            <p className='text-bold'>
-              www.zoom.com
-            </p>
-          </div>
-        </div>
-      </Box>
-    </Paper>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Hac habitasse platea dictumst vestibulum rhoncus est pellentesque.
+        Aliquam sem fringilla ut morbi tincidunt augue interdum velit.
+        Vestibulum mattis ullamcorper velit sed ullamcorper morbi. Orci
+        dapibus ultrices in iaculis nunc sed. Interdum consectetur libero
+        id faucibus nisl tincidunt. Ultrices eros in cursus turpis massa.
+        Mauris vitae ultricies leo integer malesuada nunc. Eros in cursus
+        turpis massa tincidunt dui. Rhoncus dolor purus non enim praesent
+        elementum facilisis. Mauris pellentesque pulvinar pellentesque
+        habitant morbi tristique senectus et netus. In fermentum posuere
+        urna nec tincidunt praesent. Enim sed faucibus turpis in eu mi
+        bibendum neque egestas. At auctor urna nunc id cursus metus aliquam.
+      </p>
+    </Details>
   );
 }
 
@@ -140,7 +83,7 @@ const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({theme}) => ({
   'paddingInline': '2em',
-  'borderBlock': `1px solid ${theme.palette.divider}`,
+  'borderBlock': `0.5px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
     borderBottom: 0,
   },
@@ -175,7 +118,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
  * Opportunity roles card
  * @return {JSX}
  */
-function RolesCard(/* {data} */) {
+function RolesCard() {
   const [expanded, setExpanded] = React.useState(null);
 
   const arrayOfRoles = [
@@ -207,18 +150,8 @@ function RolesCard(/* {data} */) {
   };
 
   return (
-    <Paper
-      className='flex-vertical'
-      elevation={0}
-      sx={{
-        height: 'auto',
-        width: '100%',
-        background: 'white',
-        boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
-        borderRadius: '10px',
-      }}
-    >
-      <h4 className='text-dark' style={{padding: '2em 2em 1.5em 2em'}}>
+    <Roles>
+      <h4 className='text-dark' style={{padding: '1.5em 2em 1.5em 2em'}}>
         Roles
       </h4>
       <Box>
@@ -275,6 +208,6 @@ function RolesCard(/* {data} */) {
           ))
         }
       </Box>
-    </Paper>
+    </Roles>
   );
 }
