@@ -16,7 +16,7 @@ const Page = styled((props) => (
   display: 'flex',
   height: 'auto',
   width: 'auto',
-  background: '#F8F8FA',
+  background: 'var(--background-primary)',
 }));
 
 /**

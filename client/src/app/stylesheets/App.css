@@ -34,7 +34,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--text-gray-primary);
+  background-color: var(--text-gray);
   border-radius: 10px;
 }
 
@@ -172,6 +172,11 @@ a, a:hover, a:focus, a:active {
   justify-content: flex-start;
 }
 
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .width-300-pixels {
   width: 300px;
 }
@@ -238,8 +243,8 @@ a, a:hover, a:focus, a:active {
   cursor: pointer;
 }
 
-.margin-left-32 {
-  margin-left: 2rem;
+.hover-underline:hover {
+  text-decoration: underline;
 }
 
 .padding-64 {

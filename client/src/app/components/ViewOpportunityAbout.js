@@ -8,6 +8,19 @@ import MuiPaper from '@mui/material/Paper';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import ThemedButton from './ThemedButton';
 
+/**
+ * About tab for view opportunity
+ * @return {JSX}
+ */
+export default function ViewOpportunityAbout() {
+  return (
+    <>
+      <DetailsCard />
+      <RolesCard />
+    </>
+  );
+};
+
 const Details = styled((props) => (
   <MuiPaper elevation={0} {...props} />
 ))(() => ({
@@ -22,33 +35,6 @@ const Details = styled((props) => (
   border: '0.5px solid rgba(0, 0, 0, 0.15)',
   borderRadius: '10px',
 }));
-
-const Roles = styled((props) => (
-  <MuiPaper elevation={0} {...props} />
-))(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: '1em',
-  height: 'auto',
-  width: '100%',
-  background: 'white',
-  boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
-  border: '0.5px solid rgba(0, 0, 0, 0.15)',
-  borderRadius: '10px',
-}));
-
-/**
- * About tab for view opportunity
- * @return {JSX}
- */
-export default function ViewOpportunityAbout() {
-  return (
-    <>
-      <DetailsCard />
-      <RolesCard />
-    </>
-  );
-};
 
 /**
  * Opportunity details card
@@ -78,6 +64,20 @@ function DetailsCard() {
     </Details>
   );
 }
+
+const Roles = styled((props) => (
+  <MuiPaper elevation={0} {...props} />
+))(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '1em',
+  height: 'auto',
+  width: '100%',
+  background: 'white',
+  boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
+  border: '0.5px solid rgba(0, 0, 0, 0.15)',
+  borderRadius: '10px',
+}));
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />

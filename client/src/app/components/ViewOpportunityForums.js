@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import MuiBox from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiPaper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import OpportunityBanner from '../assets/examplecover.png';
 
 const Post = styled((props) => (
@@ -40,10 +43,41 @@ const Comment = styled((props) => (
 const Bubble = styled((props) => (
   <MuiBox {...props} />
 ))(({theme}) => ({
-  padding: '1em',
+  padding: '0.75em',
   borderRadius: '10px',
   background: theme.palette.tertiary.bright,
 }));
+
+const Input = ({image}, props) => (
+  <MuiBox
+    sx={{
+      display: 'flex',
+      gap: '10px',
+    }}
+  >
+    <MuiAvatar
+      src={image}
+      sx={{
+        marginBlock: '4px',
+        height: '30px',
+        width: '30px',
+      }}
+    />
+    <TextField
+      placeholder='Write a comment...'
+      size='small'
+      InputProps={{
+        style: {
+          fontSize: '0.9rem',
+          borderRadius: '10px',
+        },
+      }}
+      multiline
+      fullWidth
+      {...props}
+    />
+  </MuiBox>
+);
 
 const PosterAvatar = ({image}, props) => (
   <MuiAvatar sx={{height: '40px', width: '40px'}} src={image} {...props} />
@@ -54,10 +88,16 @@ const CommenterAvatar = ({image}, props) => (
 );
 
 /**
- * About tab for view opportunity
+ * Forums tab for view opportunity
  * @return {JSX}
  */
 export default function ViewOpportunityForums() {
+  const [areCommentsShown, setAreCommentsShown] = useState(false);
+
+  const handleClick = () => {
+    setAreCommentsShown(!areCommentsShown);
+  };
+
   const examplePosts = [
     {
       name: 'Robert Jamestown',
@@ -108,7 +148,7 @@ export default function ViewOpportunityForums() {
     {
       name: 'Tom Cruise',
       title: 'Can anyone pick me up from the airport before the event?',
-      posted: 'May 14 at 4:30 PM',
+      posted: 'Sep 14 at 4:30 PM',
       description:
         `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -120,7 +160,7 @@ export default function ViewOpportunityForums() {
   ];
 
   return (
-    <div>
+    <>
       {examplePosts ? (
         examplePosts.map((post, index) => (
           <Post key={`post-${index}`}>
@@ -137,7 +177,20 @@ export default function ViewOpportunityForums() {
               </div>
             </Headline>
             <p>{post.description}</p>
-            {post.comments &&
+            {post.comments && (
+              <div className='flex-end flex-align-center'>
+                <p
+                  className='hover-underline'
+                  onClick={handleClick}
+                  style={{'cursor': 'pointer'}}
+                >
+                  Show Comments
+                </p>
+                {!areCommentsShown && <ArrowDropUpRoundedIcon />}
+                {areCommentsShown && <ArrowDropDownRoundedIcon />}
+              </div>
+            )}
+            {post.comments && areCommentsShown &&
               (
                 <>
                   <Divider
@@ -155,11 +208,12 @@ export default function ViewOpportunityForums() {
                 </>
               )
             }
+            <Input />
           </Post>
         ))
       ) : (
         <p>There are no posts</p>
       )}
-    </div>
+    </>
   );
 };

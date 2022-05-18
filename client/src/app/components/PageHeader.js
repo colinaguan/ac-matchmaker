@@ -14,11 +14,11 @@ const IconStyling = {
   fontSize: '0.9rem',
 };
 
-const Paper = styled((props) => (
+const Header = styled((props) => (
   <MuiPaper elevation={0} {...props} />
 ))(() => ({
   height: 'auto',
-  width: '100%',
+  width: 'auto',
   border: '1px solid rgba(0, 0, 0, 0.15)',
   borderRadius: '10px',
 }));
@@ -81,7 +81,7 @@ export default function PageHeader({
   tabs,
 }) {
   return (
-    <Paper>
+    <Header>
       {banner && <Banner image={banner} />}
       <Details>
         <div
@@ -152,6 +152,6 @@ export default function PageHeader({
         </Data>
       )}
       {tabs && tabs}
-    </Paper>
+    </Header>
   );
 }

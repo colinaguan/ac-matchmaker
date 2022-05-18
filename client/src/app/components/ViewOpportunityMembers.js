@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import MuiBox from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiPaper from '@mui/material/Paper';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import OpportunityBanner from '../assets/examplecover.png';
 
 const Paper = styled((props) => (
@@ -32,7 +33,7 @@ const Avatar = ({image}, props) => (
 );
 
 /**
- * About tab for view opportunity
+ * Members section for view opportunity
  * @return {JSX}
  */
 export default function ViewOpportunityMembers() {
@@ -79,7 +80,20 @@ export default function ViewOpportunityMembers() {
           <Member key={`member-${index}`}>
             <Avatar image={member.avatar} />
             <div>
-              <p className='text-bold text-blue'>{member.name}</p>
+              <div className='flex-align-center'>
+                <p className='text-bold text-blue'>
+                  {member.name}
+                </p>
+                {member.role === 'Owner' && (
+                  <StarRoundedIcon
+                    sx={{
+                      margin: '0 0 2px 5px',
+                      fontSize: '1rem',
+                      color: 'var(--secondary-yellow-main)',
+                    }}
+                  />
+                )}
+              </div>
               <p>{member.role}</p>
             </div>
           </Member>
