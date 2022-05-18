@@ -88,7 +88,7 @@ export default function ThemedButton({
         color === 'yellow' ? yellow.dark :
         color === 'gray' ? gray.dark :
         color === 'blue' ? blue.dark :
-        gray.lightHover,
+        gray.bright,
     },
     '&:disabled': {
       backgroundColor: '#ebedf0',
@@ -112,9 +112,9 @@ export default function ThemedButton({
       `1px solid ${blue.main}`,
     '&:hover': {
       backgroundColor:
-        color === 'yellow' ? yellow.lightHover :
-        color === 'gray' ? gray.lightHover :
-        blue.lightHover,
+        color === 'yellow' ? yellow.bright :
+        color === 'gray' ? gray.bright :
+        blue.bright,
     },
   };
 

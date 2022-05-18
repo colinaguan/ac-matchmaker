@@ -42,7 +42,7 @@ const Bubble = styled((props) => (
 ))(({theme}) => ({
   padding: '1em',
   borderRadius: '10px',
-  background: theme.palette.tertiary.light,
+  background: theme.palette.tertiary.bright,
 }));
 
 const PosterAvatar = ({image}, props) => (
