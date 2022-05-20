@@ -6,7 +6,7 @@ import ThemedButton from './ThemedButton';
 import PersonIcon from '@mui/icons-material/Person';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import * as Nav from './NavBarComponents';
-import '../stylesheets/TestNavbar.css';
+import '../stylesheets/Navbar.css';
 
 const BrandStyling = {
   display: 'flex',
