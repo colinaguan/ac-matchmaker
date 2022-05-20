@@ -1,13 +1,8 @@
-#navbar-item-selected {
-    color: #42a5f5;
-    background-color: white;
-}
-
-#navbar-item-selected:hover {
-    color: #42a5f5;
-    background-color: rgba(0, 0, 0, 0.04);
-}
-
-#navbar-icon-selected {
-    color: #42a5f5;
+.indicator {
+  position: absolute;
+  right: 0;
+  height: 48px;
+  width: 4px;
+  background: var(--primary-blue-main);
+  transition: all 300ms ease-in-out;
 }
