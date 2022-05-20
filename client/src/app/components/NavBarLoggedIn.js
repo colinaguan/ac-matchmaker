@@ -197,7 +197,11 @@ export default function NavBarLoggedIn() {
               >
                 {/* TODO: replace with userProfile's first name */}
                 <Box className='text-xbold text-lineheight-16 text-dark'>
-                  <p>{userProfile.firstname}</p>
+                  <p>
+                    {`${userProfile.firstname}`}
+                    &nbsp;
+                    {`${userProfile.lastname.charAt(0)}.`}
+                  </p>
                 </Box>
               </ThemedButton>
             </Link>
