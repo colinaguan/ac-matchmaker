@@ -162,7 +162,7 @@ export default function NavBarLoggedIn() {
             color='inherit'
             sx={{marginRight: 5, ...(open && {display: 'none'})}}
           >
-            <MenuIcon className='icon-gray-main' />
+            <MenuIcon className='icon-gray' />
           </IconButton>
           <Box sx={{flexGrow: 1}} />
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
@@ -176,7 +176,7 @@ export default function NavBarLoggedIn() {
                 sx={{height: '45px', marginTop: '8px'}}
               >
                 <Badge badgeContent={notificationCount} color='error'>
-                  <NotificationsRoundedIcon className='icon-gray-main' />
+                  <NotificationsRoundedIcon className='icon-gray' />
                 </Badge>
               </IconButton>
             </Tooltip>
@@ -197,7 +197,7 @@ export default function NavBarLoggedIn() {
               >
                 {/* TODO: replace with userProfile's first name */}
                 <Box className='text-xbold text-lineheight-16 text-dark'>
-                  <p>First Name</p>
+                  <p>{userProfile.firstname}</p>
                 </Box>
               </ThemedButton>
             </Link>
@@ -222,8 +222,8 @@ export default function NavBarLoggedIn() {
           </Link>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ?
-              <ChevronRightIcon className='icon-gray-main' /> :
-              <ChevronLeftIcon className='icon-gray-main' />
+              <ChevronRightIcon className='icon-gray' /> :
+              <ChevronLeftIcon className='icon-gray' />
             }
           </IconButton>
         </Nav.DrawerHeader>
@@ -270,7 +270,7 @@ export default function NavBarLoggedIn() {
           <List>
             <ListItemButton onClick={handleLogout} sx={ListButtonStyling}>
               <ListItemIcon sx={{...ListIconStyling, mr: open ? 3 : 'auto'}}>
-                <LogoutIcon className='icon-gray-main' />
+                <LogoutIcon className='icon-gray' />
               </ListItemIcon>
               <ListItemText sx={{...ListTextStyling, 'opacity': open ? 1 : 0}}>
                 Logout
