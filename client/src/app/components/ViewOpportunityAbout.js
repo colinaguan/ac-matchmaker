@@ -12,16 +12,16 @@ import ThemedButton from './ThemedButton';
  * About tab for view opportunity
  * @return {JSX}
  */
-export default function ViewOpportunityAbout() {
+export default function ViewOpportunityAbout({description, roles}) {
   return (
     <>
-      <DetailsCard />
-      <RolesCard />
+      <DescriptionCard description={description} />
+      <RolesCard roles={roles} />
     </>
   );
 };
 
-const Details = styled((props) => (
+const Description = styled((props) => (
   <MuiPaper elevation={0} {...props} />
 ))(() => ({
   display: 'flex',
@@ -40,28 +40,14 @@ const Details = styled((props) => (
  * Opportunity details card
  * @return {JSX}
  */
-function DetailsCard() {
+function DescriptionCard({description}) {
   return (
-    <Details>
+    <Description>
       <h4 className='text-dark' style={{paddingBottom: '1.5em'}}>
-        Details
+        Description
       </h4>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-        do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Hac habitasse platea dictumst vestibulum rhoncus est pellentesque.
-        Aliquam sem fringilla ut morbi tincidunt augue interdum velit.
-        Vestibulum mattis ullamcorper velit sed ullamcorper morbi. Orci
-        dapibus ultrices in iaculis nunc sed. Interdum consectetur libero
-        id faucibus nisl tincidunt. Ultrices eros in cursus turpis massa.
-        Mauris vitae ultricies leo integer malesuada nunc. Eros in cursus
-        turpis massa tincidunt dui. Rhoncus dolor purus non enim praesent
-        elementum facilisis. Mauris pellentesque pulvinar pellentesque
-        habitant morbi tristique senectus et netus. In fermentum posuere
-        urna nec tincidunt praesent. Enim sed faucibus turpis in eu mi
-        bibendum neque egestas. At auctor urna nunc id cursus metus aliquam.
-      </p>
-    </Details>
+      <p>{description}</p>
+    </Description>
   );
 }
 
@@ -118,32 +104,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
  * Opportunity roles card
  * @return {JSX}
  */
-function RolesCard() {
+function RolesCard({roles}) {
   const [expanded, setExpanded] = React.useState(null);
-
-  const arrayOfRoles = [
-    {
-      name: 'Software Engineer Mentor',
-      tags: 'Computer Science, Computer Engineering',
-      slots: 2,
-      responsibilites: 'This is a description',
-      preferences: 'This is a list of preferences',
-    },
-    {
-      name: 'Hackathon Judge',
-      tags: 'Computer Science, Computer Engineering',
-      slots: 4,
-      responsibilites: 'This is a description',
-      preferences: 'This is a list of preferences',
-    },
-    {
-      name: 'Hackathon Panelist',
-      tags: 'Computer Science, Computer Engineering',
-      slots: 2,
-      responsibilites: 'This is a description',
-      preferences: 'This is a list of preferences',
-    },
-  ];
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -156,7 +118,7 @@ function RolesCard() {
       </h4>
       <Box>
         {
-          arrayOfRoles.map((role, index) => (
+          roles.map((role, index) => (
             <Accordion
               key={`panel${index}`}
               expanded={expanded === `panel${index}`}
@@ -177,7 +139,7 @@ function RolesCard() {
                     {`${role.name} (${role.slots})`}
                   </p>
                   <p className='text-xsmall text-gray'>
-                    {role.tags}
+                    {role.tags.join(', ')}
                   </p>
                 </Box>
                 <ThemedButton
@@ -194,14 +156,23 @@ function RolesCard() {
                 <div className='flex-vertical'>
                   <p className='text-bold'>Responsibilites</p>
                   <p className='text-xsmall text-gray'>
-                    {role.responsibilites}
+                    {role.responsibilities}
                   </p>
                 </div>
                 <div className='flex-vertical'>
                   <p className='text-bold'>
                     Preferred Qualifications
                   </p>
-                  <p className='text-xsmall text-gray'>{role.preferences}</p>
+                  <ul style={{padding: 0, margin: 0}}>
+                    {role.preferences.map((preference, index) => (
+                      <p
+                        className='text-xsmall text-gray'
+                        key={`preference-${index}`}
+                      >
+                        {`· ${preference}`}
+                      </p>
+                    ))}
+                  </ul>
                 </div>
               </AccordionDetails>
             </Accordion>
