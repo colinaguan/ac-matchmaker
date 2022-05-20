@@ -1,27 +1,27 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
-import Box from '@mui/material/Box';
 import useAuth from './util/AuthContext';
+import NavBarLoggedIn from './components/NavBarLoggedIn';
+import NavBarLoggedOut from './components/NavBarLoggedOut';
 import Landing from './pages/Landing';
-import GetStarted from './pages/GetStarted';
-import Login from './pages/Login';
 import MyProfile from './pages/MyProfile';
 import Opportunities from './pages/Opportunities';
 import Dashboard from './pages/Dashboard';
 import Opportunity from './pages/Opportunity';
 import Profile from './components/Profile';
-import Verify from './components/Verify';
 import 'react-toastify/dist/ReactToastify.css';
 import './stylesheets/App.css';
+
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Verify from './components/Verify';
 
 // TODO: delete browse page
 import Browse from './pages/Browse';
 // TODO: settings page?
 import Settings from './pages/Settings';
-
-import NavBarLoggedIn from './components/NavBarLoggedIn';
-import NavBarLoggedOut from './components/NavBarLoggedOut';
+import Box from '@mui/material/Box';
 
 /**
  * returns basic routes and navbar of app
@@ -37,9 +37,6 @@ export default function App() {
       <Box component='main' sx={{flexGrow: 1, marginTop: '70px'}}>
         <Routes>
           <Route path='/' element={<Landing />}/>
-          <Route path='/login' element={<Login />}/>
-          <Route path='/signup' element={<GetStarted />}/>
-          <Route path='/verify/:token' element={<Verify />} />
           <Route path='/myprofile' element={<MyProfile />} />
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/opportunities' element={<Opportunities/>}/>
@@ -49,6 +46,10 @@ export default function App() {
           <Route path='/browse' element={<Browse />}/>
           {/* TODO: settings page? */}
           <Route path='/settings' element={<Settings />}/>
+
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/verify/:token' element={<Verify />} />
         </Routes>
       </Box>
     </Box>

@@ -49,6 +49,7 @@ export default function TestNavbarLoggedIn() {
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             <Link to='/login'>
               <ThemedButton
+                aria-label='Login page button'
                 startIcon={<PersonIcon />}
                 color={'gray'}
                 variant={'cancel'}
@@ -58,6 +59,7 @@ export default function TestNavbarLoggedIn() {
             </Link>
             <Link to='/signup'>
               <ThemedButton
+                aria-label='Signup page button'
                 color={'yellow'}
                 variant={'gradient'}
                 style={{marginLeft: '1rem'}}
