@@ -24,7 +24,7 @@ import Notification from './Notification';
 import ThemedButton from './ThemedButton';
 import useAuth from '../util/AuthContext';
 import * as Nav from './NavBarComponents';
-import '../stylesheets/Navbar.css';
+import '../stylesheets/NavBar.css';
 
 const LogoutStyling = {
   position: 'absolute',

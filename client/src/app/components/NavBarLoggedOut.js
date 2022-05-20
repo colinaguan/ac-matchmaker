@@ -6,7 +6,7 @@ import ThemedButton from './ThemedButton';
 import PersonIcon from '@mui/icons-material/Person';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import * as Nav from './NavBarComponents';
-import '../stylesheets/Navbar.css';
+import '../stylesheets/NavBar.css';
 
 const BrandStyling = {
   display: 'flex',
@@ -19,12 +19,11 @@ const BrandStyling = {
 /**
  * @return {JSX} NavBar Component
  */
-export default function TestNavbarLoggedIn() {
+export default function NavBarLoggedOut() {
   return (
     <>
       <Nav.AppBarLoggedOut
         position='fixed'
-        open={open}
         sx={{
           boxShadow: '0',
           borderBottom: '0.5px solid #C0C4CB',
