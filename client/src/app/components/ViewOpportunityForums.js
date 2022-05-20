@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import MuiBox from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiPaper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import OpportunityBanner from '../assets/examplecover.png';
 
 const Post = styled((props) => (
@@ -76,6 +77,17 @@ const Input = ({image}, props) => (
       fullWidth
       {...props}
     />
+    <IconButton
+      color='primary'
+      sx={{
+        display: 'flex',
+        height: '38px',
+        width: '38px',
+        padding: 0,
+      }}
+    >
+      <SendRoundedIcon />
+    </IconButton>
   </MuiBox>
 );
 
@@ -182,12 +194,16 @@ export default function ViewOpportunityForums() {
                 <p
                   className='hover-underline'
                   onClick={handleClick}
-                  style={{'cursor': 'pointer'}}
+                  style={{'cursor': 'pointer', 'userSelect': 'none'}}
                 >
-                  Show Comments
+                  {areCommentsShown ? 'Hide Comments' : 'Show Comments'}
                 </p>
-                {!areCommentsShown && <ArrowDropUpRoundedIcon />}
-                {areCommentsShown && <ArrowDropDownRoundedIcon />}
+                <ArrowDropUpRoundedIcon
+                  sx={{
+                    transform: areCommentsShown ? null : 'rotate(180deg)',
+                    transition: 'transform 300ms ease-out',
+                  }}
+                />
               </div>
             )}
             {post.comments && areCommentsShown &&

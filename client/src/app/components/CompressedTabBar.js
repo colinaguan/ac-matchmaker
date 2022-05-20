@@ -22,7 +22,7 @@ export default function CompressedTabBar({data, tab, setTab}) {
     fontWeight: '600',
     fontSize: '0.85rem',
     letterSpacing: '-0.015em',
-    color: 'rgba(108, 110, 114, 0.8)',
+    color: 'var(--text-gray)',
   };
 
   return (

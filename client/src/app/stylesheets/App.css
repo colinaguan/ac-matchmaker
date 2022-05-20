@@ -9,6 +9,10 @@
   --secondary-yellow-light: #FFE03E;
   --secondary-yellow-main: #FFBF22;
   --secondary-yellow-dark: #F9A825;
+  --tertiary-gray-bright: #F0F0F5;
+  --tertiary-gray-light: #C0C4CB;
+  --tertiary-gray-main: #8B95A5;
+  --tertiary-gray-dark: #3C4047;
   --error-red-light: #EF5350;
   --error-red-main: #F44336;
   --error-red-dark: #E53935;
@@ -245,6 +249,10 @@ a, a:hover, a:focus, a:active {
 
 .hover-underline:hover {
   text-decoration: underline;
+}
+
+.hover-highlight:hover {
+  background: var(--tertiary-gray-bright);
 }
 
 .padding-64 {

@@ -49,7 +49,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#7E8694',
-      secondary: '#3C4047',
+      secondary: '#7E8694',
       disabled: '#A4A9AF',
     },
   },

@@ -11,7 +11,6 @@ const Paper = styled((props) => (
 ))(() => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1.5em 2em 1.5em 2em',
   height: 'auto',
   width: 'auto',
   background: 'white',
@@ -21,11 +20,13 @@ const Paper = styled((props) => (
 }));
 
 const Member = styled((props) => (
-  <MuiBox {...props} />
+  <MuiBox className='member' {...props} />
 ))(() => ({
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
+  padding: '0.5em 2em 0.5em 2em',
+  userSelect: 'none',
 }));
 
 const Avatar = ({image}, props) => (
@@ -72,12 +73,18 @@ export default function ViewOpportunityMembers() {
 
   return (
     <Paper>
-      <h4 className='text-dark' style={{paddingBottom: '1.5em'}}>
+      <h4
+        className='text-dark'
+        style={{padding: '1.5em 2em calc(1.5em - 0.5em) 2em'}}
+      >
         Members
       </h4>
-      <div className='flow-small'>
+      <div style={{paddingBottom: 'calc(1.5em - 0.5em)'}}>
         {exampleMemberData.map((member, index) => (
-          <Member key={`member-${index}`}>
+          <Member
+            className='hover-highlight clickable'
+            key={`member-${index}`}
+          >
             <Avatar image={member.avatar} />
             <div>
               <div className='flex-align-center'>
