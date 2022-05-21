@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
 import MuiBox from '@mui/material/Box';
 import CompressedTabBar from '../components/CompressedTabBar';
 import PageHeader from '../components/PageHeader';
 import ThemedButton from '../components/ThemedButton';
-import OpportunityBanner from '../assets/examplecover.png';
 import ViewOpportunityAbout from '../components/ViewOpportunityAbout';
 import ViewOpportunityForums from '../components/ViewOpportunityForums';
 import ViewOpportunityMembers from '../components/ViewOpportunityMembers';
@@ -20,11 +20,71 @@ const Page = styled((props) => (
 }));
 
 /**
+ * Passes fetched data to view opportunity page
+ * @return {JSX}
+ */
+export default function FetchWrapper() {
+  const params = useParams();
+  const [fetchedData, setFetchedData] = useState(null);
+
+  const getOpportunity = () => {
+    fetch(`/api/getOpportunity/${params.opportunityid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setFetchedData(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving selected opportunity');
+        });
+  };
+
+  useEffect(() => {
+    getOpportunity();
+  }, []);
+
+  return (
+    <>
+      {fetchedData && <ViewOpportunity opportunity={fetchedData} />}
+    </>
+  );
+}
+
+/**
  * View opportunity page
  * @return {JSX}
  */
-export default function ViewOpportunity() {
+function ViewOpportunity({opportunity}) {
+  const [creator, setCreator] = useState(null);
   const [tab, setTab] = useState(0);
+
+  const getOpportunityCreator = () => {
+    fetch(`/api/getProfileName/${opportunity.usersponsors.creator}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setCreator(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity creators profile');
+        });
+  };
+
+  useEffect(() => {
+    getOpportunityCreator();
+  }, []);
 
   const viewOpportunityData = {
     startdate: 'Sep 31, 12:00PM',
@@ -97,34 +157,33 @@ export default function ViewOpportunity() {
       name: 'About',
       component:
         <ViewOpportunityAbout
-          description={viewOpportunityData.description}
+          description={opportunity?.description}
           roles={viewOpportunityData.roles}
         />,
     },
-    {
-      name: 'Forums',
-      component:
-        <ViewOpportunityForums />,
-    },
+    {name: 'Forums', component: <ViewOpportunityForums />},
   ];
 
   return (
     <Page>
       <MuiBox sx={{width: '70%', marginRight: '2em'}}>
-        <PageHeader
-          title='2022 CruzHacks'
-          subtitle='Hosted by:'
-          host='John Higgins'
-          avatar={OpportunityBanner}
-          banner={OpportunityBanner}
-          data={viewOpportunityData}
-          rightComponent={
-            <ThemedButton variant='gradient' color='yellow' size='small'>
-              Request to Join
-            </ThemedButton>
-          }
-          tabs={<CompressedTabBar data={tabs} tab={tab} setTab={setTab} />}
-        />
+        {
+          opportunity &&
+          <PageHeader
+            title={opportunity?.eventname}
+            subtitle='Hosted by:'
+            host={`${creator?.firstname} ${creator?.lastname}`}
+            avatar={creator?.profilepicture}
+            banner={opportunity?.eventbanner}
+            data={opportunity}
+            rightComponent={
+              <ThemedButton variant='gradient' color='yellow' size='small'>
+                Request to Join
+              </ThemedButton>
+            }
+            tabs={<CompressedTabBar data={tabs} tab={tab} setTab={setTab} />}
+          />
+        }
         {tabs[tab].component}
       </MuiBox>
       <MuiBox sx={{width: '30%'}}>

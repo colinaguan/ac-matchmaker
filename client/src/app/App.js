@@ -9,7 +9,7 @@ import MyProfile from './pages/MyProfile';
 // import Opportunities from './pages/Opportunities';
 import Dashboard from './pages/Dashboard';
 import Approvals from './pages/Approvals';
-import Opportunity from './pages/Opportunity';
+// import Opportunity from './pages/Opportunity';
 import Profile from './components/Profile';
 import 'react-toastify/dist/ReactToastify.css';
 import './stylesheets/App.css';
@@ -46,14 +46,20 @@ export default function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/approvals' element={<Approvals/>}/>
           {/* <Route path='/opportunities' element={<Opportunities/>}/> */}
-          <Route path='/opportunity/:opportunityid' element={<Opportunity/>}/>
+          {/*
+            <Route path='/opportunity/:opportunityid' element={<Opportunity/>}/>
+          */}
+          <Route
+            path='/opportunity/:opportunityid'
+            element={<ViewOpportunity />}
+          />
           <Route path='/profile/:profileid' element={<Profile />} />
           {/* TODO: delete browse page */}
           <Route path='/browse' element={<Browse />}/>
           {/* TODO: settings page? */}
           <Route path='/settings' element={<Settings />}/>
 
-          <Route path='/opportunities' element={<ViewOpportunity />}/>
+          {/* <Route path='/opportunities' element={<ViewOpportunity />}/> */}
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:token' element={<Verify />} />

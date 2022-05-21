@@ -21,6 +21,8 @@ export default function ViewOpportunityAbout({description, roles}) {
   );
 };
 
+// COMPONENTS FOR ABOUT PAGE DESCRIPTION SECTION -------------------------------
+
 const Description = styled((props) => (
   <MuiPaper elevation={0} {...props} />
 ))(() => ({
@@ -50,6 +52,8 @@ function DescriptionCard({description}) {
     </Description>
   );
 }
+
+// COMPONENTS FOR ABOUT PAGE ROLES SECTION -------------------------------------
 
 const Roles = styled((props) => (
   <MuiPaper elevation={0} {...props} />

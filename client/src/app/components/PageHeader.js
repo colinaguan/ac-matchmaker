@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import MuiAvatar from '@mui/material/Avatar';
@@ -52,6 +52,17 @@ const Details = styled((props) => (
   width: '100%',
 }));
 
+const SubDetails = styled((props) => (
+  <MuiBox {...props} />
+))(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0 3em 1.5em 3em',
+  height: 'auto',
+  width: 'auto',
+}));
+
 const Data = styled((props) => (
   <MuiBox {...props} />
 ))(() => ({
@@ -80,28 +91,74 @@ export default function PageHeader({
   rightComponent,
   tabs,
 }) {
+  const formatDate = (date) => {
+    const dateOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+
+    const timeOptions = {
+      hour: 'numeric',
+      minute: '2-digit',
+    };
+
+    const convertDate = new Date(date).toLocaleDateString([], dateOptions);
+    const convertTime = new Date(date).toLocaleTimeString([], timeOptions);
+
+    return {date: convertDate, time: convertTime};
+  };
+
+  const calculateDuration = (date1, date2) => {
+    const convertDate1 = new Date(date1);
+    const convertDate2 = new Date(date2);
+
+    const difference = Math.abs(convertDate1 - convertDate2);
+
+    const differenceInMinutes = Math.floor(difference / (1000 * 60));
+    const differenceInHours = Math.floor(difference / (1000 * 60 * 60));
+    const differenceInDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+    const returnMinutes =
+      differenceInMinutes && (!differenceInHours && !differenceInDays);
+    const returnHours =
+      differenceInHours && (differenceInMinutes && !differenceInDays);
+    const returnDays =
+      differenceInDays && (differenceInMinutes && differenceInHours);
+
+    if (returnMinutes) return `${differenceInMinutes} Minutes`;
+    if (returnHours) return `${differenceInHours} Hours`;
+    if (returnDays) return `${differenceInDays} Days`;
+    return 'Error calculating dates';
+  };
+
   return (
     <Header>
       {banner && <Banner image={banner} />}
       <Details>
         <div
           className='flex-horizontal flex-align-center flex-flow-large'
-          style={{paddingLeft: '3em'}}
+          style={{paddingInline: '3em'}}
         >
-          {avatar && <Avatar image={avatar} />}
-          <div>
-            <h2 className='text-dark'>{title}</h2>
+          <Avatar image={avatar} />
+          <div className='flex-vertical flex-flow-small'>
+            <h3 className='text-dark' style={{lineHeight: '1.5rem'}}>
+              {title}
+            </h3>
             <p className='text-bold'>
               {`${subtitle}`}
               &nbsp;&nbsp;
-              {host && <span className='text-blue'>{host}</span>}
+              <span className='text-blue'>{host}</span>
             </p>
           </div>
         </div>
-        <div style={{paddingRight: '3em'}}>
-          {rightComponent}
-        </div>
       </Details>
+      {
+        rightComponent &&
+        <SubDetails>
+          {rightComponent}
+        </SubDetails>
+      }
       {!data && <Divider />}
       {data && (
         <Data>
@@ -111,11 +168,26 @@ export default function PageHeader({
           >
             <EventNoteRoundedIcon sx={IconStyling} />
             <p className='text-bold'>
-              {data.startdate}
+              {
+                `
+                  ${formatDate(data?.startdate).date}
+                  ${formatDate(data?.starttime).time}
+                `
+              }
             </p>
             <ArrowForwardRoundedIcon sx={IconStyling} />
             <p className='text-bold'>
-              {data.enddate}
+              {
+                data.enddate ?
+                `
+                  ${formatDate(data?.enddate).date}
+                  ${formatDate(data?.endtime).time}
+                ` :
+                `
+                  ${formatDate(data?.startdate).date}
+                  ${formatDate(data?.starttime).time}
+                `
+              }
             </p>
           </div>
           <div
@@ -124,28 +196,35 @@ export default function PageHeader({
           >
             <TimerOutlinedIcon sx={IconStyling} />
             <p className='text-bold'>
-              {data.duration}
+              {calculateDuration(data?.startdate, data?.enddate)}
             </p>
           </div>
-          {data.location &&
+          {data.locationtype && (
+            data.locationtype === 'in-person' ||
+            data.locationtype === 'hybrid'
+          ) &&
             <div
               className='flex-horizontal flex-flow-large flex-align-center'
               style={{paddingInline: '3em', marginTop: '0.25em'}}
             >
               <FmdGoodOutlinedIcon sx={IconStyling} />
               <p className='text-bold'>
-                {data.location}
+                {`${data.eventlocation.address} ${data.eventlocation.city}, `}
+                {`${data.eventlocation.state} ${data.eventlocation.zip}`}
               </p>
             </div>
           }
-          {data.link &&
+          {data.locationtype && (
+            data.locationtype === 'remote' ||
+            data.locationtype === 'hybrid'
+          ) &&
             <div
               className='flex-horizontal flex-flow-large flex-align-center'
               style={{paddingInline: '3em', marginTop: '0.25em'}}
             >
               <DevicesOutlinedIcon sx={IconStyling} />
               <p className='text-bold'>
-                {data.link}
+                {data.eventzoomlink}
               </p>
             </div>
           }
