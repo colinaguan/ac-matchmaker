@@ -6,7 +6,7 @@ import NavBarLoggedIn from './components/NavBarLoggedIn';
 import NavBarLoggedOut from './components/NavBarLoggedOut';
 import Landing from './pages/Landing';
 import MyProfile from './pages/MyProfile';
-// import Opportunities from './pages/Opportunities';
+import Opportunities from './pages/Opportunities';
 import Dashboard from './pages/Dashboard';
 import Approvals from './pages/Approvals';
 // import Opportunity from './pages/Opportunity';
@@ -45,7 +45,7 @@ export default function App() {
           <Route path='/myprofile' element={<MyProfile />} />
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/approvals' element={<Approvals/>}/>
-          {/* <Route path='/opportunities' element={<Opportunities/>}/> */}
+          <Route path='/opportunities' element={<Opportunities/>}/>
           {/*
             <Route path='/opportunity/:opportunityid' element={<Opportunity/>}/>
           */}

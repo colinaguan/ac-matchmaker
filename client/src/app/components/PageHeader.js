@@ -1,9 +1,12 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiBox from '@mui/material/Box';
 import MuiPaper from '@mui/material/Paper';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
@@ -27,19 +30,46 @@ const Avatar = ({image}, props) => (
   <MuiAvatar sx={{height: '50px', width: '50px'}} src={image} {...props} />
 );
 
-const Banner = ({image}, props) => (
-  <MuiBox sx={{height: '30vh', width: '100%'}} {...props}>
-    <img
-      src={image}
-      style={{
-        height: '100%',
-        width: '100%',
-        objectFit: 'cover',
-        borderRadius: '10px 10px 0 0',
-      }}
-    />
-  </MuiBox>
-);
+const Banner = ({image, back}, props) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(back);
+  };
+
+  return (
+    <MuiBox sx={{height: '30vh', width: '100%'}} {...props}>
+      {
+        back &&
+        <IconButton
+          onClick={handleNavigate}
+          sx={{
+            'position': 'absolute',
+            'margin': '1em',
+            'height': '50px',
+            'width': '50px',
+            'background': 'white',
+            'border': '0.5px solid rgba(0, 0, 0, 0.15)',
+            '&:hover': {
+              background: 'var(--tertiary-gray-bright)',
+            },
+          }}
+        >
+          <ArrowBackRoundedIcon sx={{color: 'var(--text-dark)'}} />
+        </IconButton>
+      }
+      <img
+        src={image}
+        style={{
+          height: '100%',
+          width: '100%',
+          objectFit: 'cover',
+          borderRadius: '10px 10px 0 0',
+        }}
+      />
+    </MuiBox>
+  );
+};
 
 const Details = styled((props) => (
   <MuiBox {...props} />
@@ -82,13 +112,15 @@ const Data = styled((props) => (
  * @return {JSX} Page header
  */
 export default function PageHeader({
+  isCreator,
   title,
   subtitle,
   host,
   avatar,
   banner,
+  backUrl,
   data,
-  rightComponent,
+  components,
   tabs,
 }) {
   const formatDate = (date) => {
@@ -134,7 +166,7 @@ export default function PageHeader({
 
   return (
     <Header>
-      {banner && <Banner image={banner} />}
+      {banner && <Banner image={banner} back={backUrl} />}
       <Details>
         <div
           className='flex-horizontal flex-align-center flex-flow-large'
@@ -154,9 +186,9 @@ export default function PageHeader({
         </div>
       </Details>
       {
-        rightComponent &&
+        components && !isCreator &&
         <SubDetails>
-          {rightComponent}
+          {components}
         </SubDetails>
       }
       {!data && <Divider />}

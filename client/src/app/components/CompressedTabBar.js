@@ -46,9 +46,9 @@ export default function CompressedTabBar({data, tab, setTab}) {
           'width': '100%',
         }}
       >
-        {data.map((object) => (
+        {data.filter(Boolean).map((object) => (
           <Tab
-            key={`tab-${object.name}`}
+            key={`tab-id-${Math.random()}`}
             label={object.name}
             sx={TabStyles}
             disableRipple

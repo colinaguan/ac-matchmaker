@@ -6,8 +6,10 @@ import CompressedTabBar from '../components/CompressedTabBar';
 import PageHeader from '../components/PageHeader';
 import ThemedButton from '../components/ThemedButton';
 import ViewOpportunityAbout from '../components/ViewOpportunityAbout';
+import ViewOpportunityFindPeople from '../components/ViewOpportunityFindPeople';
 import ViewOpportunityForums from '../components/ViewOpportunityForums';
 import ViewOpportunityMembers from '../components/ViewOpportunityMembers';
+import useAuth from '../util/AuthContext';
 
 const Page = styled((props) => (
   <MuiBox {...props} />
@@ -61,8 +63,11 @@ export default function FetchWrapper() {
  * @return {JSX}
  */
 function ViewOpportunity({opportunity}) {
+  const {userProfile} = useAuth();
   const [creator, setCreator] = useState(null);
   const [tab, setTab] = useState(0);
+
+  const isCreator = userProfile?.profileid === opportunity.usersponsors.creator;
 
   const getOpportunityCreator = () => {
     fetch(`/api/getProfileName/${opportunity.usersponsors.creator}`)
@@ -161,34 +166,57 @@ function ViewOpportunity({opportunity}) {
           roles={viewOpportunityData.roles}
         />,
     },
-    {name: 'Forums', component: <ViewOpportunityForums />},
+    {
+      name: 'Forums',
+      component: <ViewOpportunityForums />,
+    },
+    isCreator &&
+    {
+      name: 'Requests',
+      component: <p>Requests</p>,
+    },
+    isCreator &&
+    {
+      name: 'Find People',
+      component: <ViewOpportunityFindPeople />,
+    },
   ];
 
   return (
     <Page>
-      <MuiBox sx={{width: '70%', marginRight: '2em'}}>
-        {
-          opportunity &&
-          <PageHeader
-            title={opportunity?.eventname}
-            subtitle='Hosted by:'
-            host={`${creator?.firstname} ${creator?.lastname}`}
-            avatar={creator?.profilepicture}
-            banner={opportunity?.eventbanner}
-            data={opportunity}
-            rightComponent={
-              <ThemedButton variant='gradient' color='yellow' size='small'>
-                Request to Join
-              </ThemedButton>
-            }
-            tabs={<CompressedTabBar data={tabs} tab={tab} setTab={setTab} />}
-          />
-        }
-        {tabs[tab].component}
-      </MuiBox>
-      <MuiBox sx={{width: '30%'}}>
-        <ViewOpportunityMembers />
-      </MuiBox>
+      {
+        opportunity && creator &&
+        <>
+          <MuiBox sx={{width: '70%', marginRight: '2em'}}>
+            <PageHeader
+              isCreator={isCreator}
+              title={opportunity?.eventname}
+              subtitle='Hosted by:'
+              host={`${creator?.firstname} ${creator?.lastname}`}
+              avatar={creator?.profilepicture}
+              banner={opportunity?.eventbanner}
+              backUrl={'/myprofile'}
+              data={opportunity}
+              components={
+                <ThemedButton variant='gradient' color='yellow' size='small'>
+                  Request to Join
+                </ThemedButton>
+              }
+              tabs={<CompressedTabBar data={tabs} tab={tab} setTab={setTab} />}
+            />
+            {tabs[tab].component}
+          </MuiBox>
+          <MuiBox sx={{width: '30%'}}>
+            <ViewOpportunityMembers
+              owner={{
+                name: `${creator?.firstname} ${creator?.lastname}`,
+                avatar: creator?.profilepicture,
+              }}
+              members={opportunity?.assignedroles}
+            />
+          </MuiBox>
+        </>
+      }
     </Page>
   );
 }
