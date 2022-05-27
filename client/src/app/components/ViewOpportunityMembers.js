@@ -36,7 +36,7 @@ const Avatar = ({image}, props) => (
  * Members section for view opportunity
  * @return {JSX}
  */
-export default function ViewOpportunityMembers({members, owner}) {
+export default function ViewOpportunityMembers({isCreator, owner, members}) {
   const [profiles, setProfiles] = useState([]);
 
   const getProfile = (profileid, role) => {
@@ -72,7 +72,7 @@ export default function ViewOpportunityMembers({members, owner}) {
         className='text-dark'
         style={{padding: '1.5em 2em calc(1.5em - 0.5em) 2em'}}
       >
-        Members
+        {isCreator ? 'Your Members' : 'Members'}
       </h4>
       <div style={{paddingBottom: 'calc(1.5em - 0.5em)'}}>
         <Member className='hover-highlight clickable'>

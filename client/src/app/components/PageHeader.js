@@ -75,11 +75,12 @@ const Details = styled((props) => (
   <MuiBox {...props} />
 ))(() => ({
   display: 'flex',
+  flexDirection: 'column',
   justifyContent: 'space-between',
-  alignItems: 'center',
   paddingBlock: '1.5em',
   height: '25%',
   width: '100%',
+  borderBottom: '0.5px solid rgba(0, 0, 0, 0.12)',
 }));
 
 const SubDetails = styled((props) => (
@@ -88,7 +89,7 @@ const SubDetails = styled((props) => (
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '0 3em 1.5em 3em',
+  padding: '1em 3em 0 3em',
   height: 'auto',
   width: 'auto',
 }));
@@ -99,7 +100,6 @@ const Data = styled((props) => (
   paddingBlock: '1.5em',
   height: 'auto',
   width: '100%',
-  borderTop: '0.5px solid rgba(0, 0, 0, 0.12)',
   borderBottom: '0.5px solid rgba(0, 0, 0, 0.12)',
 }));
 
@@ -122,6 +122,7 @@ export default function PageHeader({
   data,
   components,
   tabs,
+  tabNumber,
 }) {
   const formatDate = (date) => {
     const dateOptions = {
@@ -172,7 +173,7 @@ export default function PageHeader({
           className='flex-horizontal flex-align-center flex-flow-large'
           style={{paddingInline: '3em'}}
         >
-          <Avatar image={avatar} />
+          {avatar && <Avatar image={avatar} />}
           <div className='flex-vertical flex-flow-small'>
             <h3 className='text-dark' style={{lineHeight: '1.5rem'}}>
               {title}
@@ -184,15 +185,15 @@ export default function PageHeader({
             </p>
           </div>
         </div>
+        {
+          components && !isCreator &&
+          <SubDetails>
+            {components}
+          </SubDetails>
+        }
       </Details>
-      {
-        components && !isCreator &&
-        <SubDetails>
-          {components}
-        </SubDetails>
-      }
       {!data && <Divider />}
-      {data && (
+      {data && tabNumber === 0 && (
         <Data>
           <div
             className='flex-horizontal flex-flow-large flex-align-center'

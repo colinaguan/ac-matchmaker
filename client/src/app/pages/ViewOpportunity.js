@@ -9,6 +9,7 @@ import ViewOpportunityAbout from '../components/ViewOpportunityAbout';
 import ViewOpportunityFindPeople from '../components/ViewOpportunityFindPeople';
 import ViewOpportunityForums from '../components/ViewOpportunityForums';
 import ViewOpportunityMembers from '../components/ViewOpportunityMembers';
+import ViewOpportunityRequests from '../components/ViewOpportunityRequests';
 import useAuth from '../util/AuthContext';
 
 const Page = styled((props) => (
@@ -173,7 +174,7 @@ function ViewOpportunity({opportunity}) {
     isCreator &&
     {
       name: 'Requests',
-      component: <p>Requests</p>,
+      component: <ViewOpportunityRequests />,
     },
     isCreator &&
     {
@@ -203,11 +204,13 @@ function ViewOpportunity({opportunity}) {
                 </ThemedButton>
               }
               tabs={<CompressedTabBar data={tabs} tab={tab} setTab={setTab} />}
+              tabNumber={tab}
             />
             {tabs[tab].component}
           </MuiBox>
           <MuiBox sx={{width: '30%'}}>
             <ViewOpportunityMembers
+              isCreator={isCreator}
               owner={{
                 name: `${creator?.firstname} ${creator?.lastname}`,
                 avatar: creator?.profilepicture,
