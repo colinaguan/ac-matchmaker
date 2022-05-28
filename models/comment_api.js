@@ -25,8 +25,8 @@ exports.postComment = async (req, res) => {
  *      postid: "a valid post id"
  * } 
  */
-exports.getComment = async(req,res) =>{
-    const data = await commentModel.getComment({
+exports.getComments = async(req,res) =>{
+    const data = await commentModel.getComments({
         'postid' : req.param.postid,
     });
     res.status(200).send(data);

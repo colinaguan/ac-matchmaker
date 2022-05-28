@@ -195,7 +195,7 @@ app.get('/api/getPosts/:eventid', authApi.check, postApi.getPosts);
 //
 app.post('/api/postComment', authApi.check, commentApi.postComment);
 
-app.get('/api/getComment/:postid', authApi.check, commentApi.getComment);
+app.get('/api/getComments/:postid', authApi.check, commentApi.getComments);
 
 // Major CRUD Operations
 //
