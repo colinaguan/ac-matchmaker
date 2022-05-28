@@ -205,7 +205,7 @@ app.get('/api/getMajors', authApi.check, majorApi.getMajors);
 // Role CRUD operation
 //
 //
-app.get('/api/getRoles', authApi.check, roleApi.getRoles );
+app.get('/api/getRoles/:eventid', authApi.check, roleApi.getRoles );
 
 app.post('/api/postRole', authApi.check, roleApi.postRole );
 

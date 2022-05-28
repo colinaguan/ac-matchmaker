@@ -33,7 +33,6 @@ exports.getRoles = async (data) =>{
  *      tagid:valid majorid,
  *      responsibility: A string description of the role,
  *      isfilled: boolean,
- *      userid: userid ONLY IF FILLED,
  * }
  */
 exports.insertRole = async (data) =>{
