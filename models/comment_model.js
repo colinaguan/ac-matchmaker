@@ -24,7 +24,7 @@ const pool = new Pool();
  * @param {*} data 
  *  
  */
-exports.getComment = async (data) =>{
+exports.getComments = async (data) =>{
     const query = {
         text: `SELECT comment.commentid, comment.postid, comment.userid, comment.content, 
                       profile.major, profile.about, profile.profilepicture, profile.firstname, profile.lastname
