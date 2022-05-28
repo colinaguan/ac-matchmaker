@@ -33,7 +33,9 @@ test(`Insert a role with a JWT,
         'tagid': '2079d724-19e0-44f7-ba8f-bd81429c0ab2', // The computer science FK
         'responsibility': 'Parameterized Get API Route',
         'isfilled': false,
-        'userid': ''
+        'userid': '',
+        'rolename': 'super smart software engineer',
+        'qualifications' : ["Cow level", "Black Sheep Wall", "CWAL"]
     };
 
     // Get all roles for the given opportunity
@@ -52,7 +54,8 @@ test(`Insert a role with a JWT,
     .expect(200)
     .then((response) =>{
         // The most recent inserted row should be at the end of the array
-        expect(response.body[response.body.length - 1].responsibility).toEqual(data.responsibility);
+        console.log(response.body[response.body.length - 1]);
+        expect(response.body[response.body.length - 1].rolename).toEqual(data.rolename);
     });
 
     // Updating the created role with a participant 
