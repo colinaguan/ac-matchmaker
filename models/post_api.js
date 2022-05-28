@@ -28,9 +28,10 @@ exports.postPost = async (req, res) => {
  * 
  */
 exports.getPosts = async (req, res) =>{
+    console.log(req);
     const data = await postModel.getPosts(
         {
-            'opportunityid': req.param.eventid,
+            'opportunityid': req.params.eventid,
         }
     );
     res.status(200).send(data);
