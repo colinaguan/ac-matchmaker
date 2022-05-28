@@ -188,14 +188,14 @@ app.get('/api/getOpportunityTypes', authApi.check, opportunityTypeApi.getOpportu
 // 
 app.post('/api/postPost', authApi.check, postApi.postPost);
 
-app.get('/api/getPost', authApi.check, postApi.getPost);
+app.get('/api/getPosts/:eventid', authApi.check, postApi.getPosts);
 
 // Comment CRUD operation
 //
 //
 app.post('/api/postComment', authApi.check, commentApi.postComment);
 
-app.get('/api/getComment', authApi.check, commentApi.getComment);
+app.get('/api/getComment/:postid', authApi.check, commentApi.getComment);
 
 // Major CRUD Operations
 //

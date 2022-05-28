@@ -22,7 +22,7 @@ exports.insertPost = async (data) => {
 /**
  * Gets all posts for a specific opportunity id
  */
-exports.getPost = async (data) => {
+exports.getPosts = async (data) => {
     const query = {
         text: `
         SELECT post.postid, post.opportunityid, post.userid, post.content,
