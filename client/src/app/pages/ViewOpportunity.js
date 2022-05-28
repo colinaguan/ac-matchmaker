@@ -48,9 +48,38 @@ export default function FetchWrapper() {
         });
   };
 
+  // const getOpportunityRoles = () => {
+  //   fetch(`/api/getRoles/${params.opportunityid}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //       .then((res) => {
+  //         if (!res.ok) {
+  //           throw res;
+  //         }
+  //         return res.json();
+  //       })
+  //       .then((json) => {
+  //         console.log(json);
+  //         setFetchedData((prevData) => ({
+  //           ...prevData,
+  //           opportunityroles: json,
+  //         }));
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         alert('Error retrieving opportunity roles');
+  //       });
+  // };
+
   useEffect(() => {
     getOpportunity();
+    // getOpportunityRoles();
   }, []);
+
+  // console.log(fetchedData && fetchedData);
 
   return (
     <>
@@ -67,6 +96,7 @@ function ViewOpportunity({opportunity}) {
   const {userProfile} = useAuth();
   const [creator, setCreator] = useState(null);
   const [tab, setTab] = useState(0);
+  const [oppRoles, setOppRoles] = useState(null);
 
   const isCreator = userProfile?.profileid === opportunity.usersponsors.creator;
 
@@ -88,83 +118,39 @@ function ViewOpportunity({opportunity}) {
         });
   };
 
+  const getOpportunityRoles = () => {
+    fetch(`/api/getRoles/${opportunity.eventid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setOppRoles(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity roles');
+        });
+  };
+
   useEffect(() => {
     getOpportunityCreator();
+    getOpportunityRoles();
   }, []);
 
-  const viewOpportunityData = {
-    startdate: 'Sep 31, 12:00PM',
-    enddate: 'Sep 31, 4:00PM',
-    duration: '4 Hours',
-    location: 'Exhibition Rd, South Kensington, London SW7 2DD, UK',
-    link: 'www.zoom.com',
-    description:
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-      do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Hac habitasse platea dictumst vestibulum rhoncus est pellentesque.
-      Aliquam sem fringilla ut morbi tincidunt augue interdum velit.
-      Vestibulum mattis ullamcorper velit sed ullamcorper morbi. Orci
-      dapibus ultrices in iaculis nunc sed. Interdum consectetur libero
-      id faucibus nisl tincidunt. Ultrices eros in cursus turpis massa.
-      Mauris vitae ultricies leo integer malesuada nunc. Eros in cursus
-      turpis massa tincidunt dui. Rhoncus dolor purus non enim praesent
-      elementum facilisis. Mauris pellentesque pulvinar pellentesque
-      habitant morbi tristique senectus et netus. In fermentum posuere
-      urna nec tincidunt praesent. Enim sed faucibus turpis in eu mi
-      bibendum neque egestas. At auctor urna nunc id cursus metus aliquam.`,
-    roles: [
-      {
-        name: 'Software Engineer Mentor',
-        tags: [
-          'Computer Engineering',
-          'Computer Science',
-        ],
-        slots: 2,
-        responsibilities: 'This is a description',
-        preferences: [
-          'Understanding of C/C++',
-          'Understanding of Python',
-          'Data structures and algorithms',
-        ],
-      },
-      {
-        name: 'Software Engineer Mentor',
-        tags: [
-          'Computer Engineering',
-          'Computer Science',
-        ],
-        slots: 2,
-        responsibilities: 'This is a description',
-        preferences: [
-          'Understanding of C/C++',
-          'Understanding of Python',
-          'Data structures and algorithms',
-        ],
-      },
-      {
-        name: 'Software Engineer Mentor',
-        tags: [
-          'Computer Engineering',
-          'Computer Science',
-        ],
-        slots: 2,
-        responsibilities: 'This is a description',
-        preferences: [
-          'Understanding of C/C++',
-          'Understanding of Python',
-          'Data structures and algorithms',
-        ],
-      },
-    ],
-  };
+  console.log(oppRoles && oppRoles);
 
   const tabs = [
     {
       name: 'About',
       component:
         <ViewOpportunityAbout
+          isCreator={isCreator && isCreator}
           description={opportunity?.description}
-          roles={viewOpportunityData.roles}
+          roles={opportunity?.roles}
         />,
     },
     {

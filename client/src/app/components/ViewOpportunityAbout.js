@@ -12,11 +12,11 @@ import ThemedButton from './ThemedButton';
  * About tab for view opportunity
  * @return {JSX}
  */
-export default function ViewOpportunityAbout({description, roles}) {
+export default function ViewOpportunityAbout({isCreator, description, roles}) {
   return (
     <>
       <DescriptionCard description={description} />
-      <RolesCard roles={roles} />
+      <RolesCard isCreator={isCreator} roles={roles} />
     </>
   );
 };
@@ -108,12 +108,59 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
  * Opportunity roles card
  * @return {JSX}
  */
-function RolesCard({roles}) {
+function RolesCard({isCreator, roles}) {
   const [expanded, setExpanded] = React.useState(null);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  const roless = [
+    {
+      name: 'Software Engineer Mentor',
+      tags: [
+        'Computer Engineering',
+        'Computer Science',
+      ],
+      slots: 2,
+      responsibilities: 'This is a description',
+      preferences: [
+        'Understanding of C/C++',
+        'Understanding of Python',
+        'Data structures and algorithms',
+      ],
+    },
+    {
+      name: 'Software Engineer Mentor',
+      tags: [
+        'Computer Engineering',
+        'Computer Science',
+      ],
+      slots: 2,
+      responsibilities: 'This is a description',
+      preferences: [
+        'Understanding of C/C++',
+        'Understanding of Python',
+        'Data structures and algorithms',
+      ],
+    },
+    {
+      name: 'Software Engineer Mentor',
+      tags: [
+        'Computer Engineering',
+        'Computer Science',
+      ],
+      slots: 2,
+      responsibilities: 'This is a description',
+      preferences: [
+        'Understanding of C/C++',
+        'Understanding of Python',
+        'Data structures and algorithms',
+      ],
+    },
+  ];
+
+  console.log(roles && roles);
 
   return (
     <Roles>
@@ -122,7 +169,7 @@ function RolesCard({roles}) {
       </h4>
       <Box>
         {
-          roles.map((role, index) => (
+          roless.map((role, index) => (
             <Accordion
               key={`panel${index}`}
               expanded={expanded === `panel${index}`}
@@ -146,13 +193,16 @@ function RolesCard({roles}) {
                     {role.tags.join(', ')}
                   </p>
                 </Box>
-                <ThemedButton
-                  variant='themed'
-                  color='yellow'
-                  size='small'
-                >
-                  Request Role
-                </ThemedButton>
+                {
+                  !isCreator &&
+                  <ThemedButton
+                    variant='themed'
+                    color='yellow'
+                    size='small'
+                  >
+                    Request Role
+                  </ThemedButton>
+                }
               </AccordionSummary>
               <AccordionDetails
                 className='flex-vertical flex-flow-large flow-small'
