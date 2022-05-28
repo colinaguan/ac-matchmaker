@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -8,7 +8,6 @@ import MuiPaper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import OpportunityBanner from '../assets/examplecover.png';
 
 const Post = styled((props) => (
   <MuiPaper elevation={0} {...props} />
@@ -103,121 +102,120 @@ const CommenterAvatar = ({image}, props) => (
  * Forums tab for view opportunity
  * @return {JSX}
  */
-export default function ViewOpportunityForums() {
-  const [areCommentsShown, setAreCommentsShown] = useState(false);
+export default function ViewOpportunityForums({id}) {
+  const [expanded, setExpanded] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState({});
 
-  const handleClick = () => {
-    setAreCommentsShown(!areCommentsShown);
+  const handleClick = (postid, index) => {
+    if (expanded.includes(index)) {
+      setExpanded(expanded.filter((item) => item !== index));
+    } else {
+      setExpanded((prevExpanded) => ([
+        ...prevExpanded,
+        index,
+      ]));
+    }
+    getComments(postid, index);
   };
 
-  const examplePosts = [
-    {
-      name: 'Robert Jamestown',
-      title: 'Are there any positions offered that are remote?',
-      posted: '3h',
-      description:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-        do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Hac habitasse platea dictumst vestibulum rhoncus est pellentesque.
-        Aliquam sem fringilla ut morbi tincidunt augue interdum velit.
-        Vestibulum mattis ullamcorper velit sed ullamcorper morbi. Orci
-        dapibus ultrices in iaculis nunc sed. Interdum consectetur libero
-        id faucibus nisl tincidunt. Ultrices eros in cursus turpis massa.
-        Mauris vitae ultricies leo integer malesuada nunc. Eros in cursus
-        turpis massa tincidunt dui. Rhoncus dolor purus non enim praesent
-        elementum facilisis. Mauris pellentesque pulvinar pellentesque
-        habitant morbi tristique senectus et netus. In fermentum posuere
-        urna nec tincidunt praesent. Enim sed faucibus turpis in eu mi
-        bibendum neque egestas. At auctor urna nunc id cursus metus aliquam.`,
-      comments: [
-        {
-          name: 'Hannah Montana',
-          comment: 'I would also like to know!',
-          avatar: OpportunityBanner,
-        },
-        {
-          name: 'Frederick Douglas',
-          comment: 'Holy moly! You are Hannah Montana!',
-          avatar: OpportunityBanner,
-        },
-        {
-          name: 'Hannah Montana',
-          comment: 'Yah lol.',
-          avatar: OpportunityBanner,
-        },
-        {
-          name: 'Sir Issac Newton',
-          comment: 'Currently in Texas. Would love to know as well!',
-          avatar: OpportunityBanner,
-        },
-        {
-          name: 'Frederick Douglas',
-          comment: 'o.o',
-          avatar: OpportunityBanner,
-        },
-      ],
-    },
-    {
-      name: 'Tom Cruise',
-      title: 'Can anyone pick me up from the airport before the event?',
-      posted: 'Sep 14 at 4:30 PM',
-      description:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-        do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Hac habitasse platea dictumst vestibulum rhoncus est pellentesque.
-        Aliquam sem fringilla ut morbi tincidunt augue interdum velit.
-        Vestibulum mattis ullamcorper velit sed ullamcorper morbi.`,
-      comments: null,
-    },
-  ];
+  const getPosts = () => {
+    fetch(`/api/getPosts/${id}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setPosts(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity posts');
+        });
+  };
+
+  const getComments = (postid, index) => {
+    fetch(`/api/getComments/${postid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setComments((prevComments) => ({
+            ...prevComments,
+            [index]: json,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity comments');
+        });
+  };
+
+  useEffect(() => {
+    if (id) {
+      getPosts();
+    }
+  }, []);
 
   return (
     <>
-      {examplePosts ? (
-        examplePosts.map((post, index) => (
+      {posts ? (
+        posts.map((post, index) => (
           <Post key={`post-${index}`}>
             <Headline>
-              <PosterAvatar image={OpportunityBanner} />
+              <PosterAvatar image={post.profilepicture} />
               <div>
-                <div className='text-bold text-dark'>{post.title}</div>
+                <div className='text-bold text-dark'>{post.content}</div>
                 <p className='text-bold text-blue'>
-                  {post.name}
+                  {`${post.firstname} ${post.lastname}`}
                   <span className='text-normal text-gray'>
-                    {` · ${post.posted}`}
+                    {` · 3hrs ago`}
                   </span>
                 </p>
               </div>
             </Headline>
-            <p>{post.description}</p>
-            {post.comments && (
-              <div className='flex-end flex-align-center'>
-                <p
-                  className='hover-underline'
-                  onClick={handleClick}
-                  style={{'cursor': 'pointer', 'userSelect': 'none'}}
-                >
-                  {areCommentsShown ? 'Hide Comments' : 'Show Comments'}
-                </p>
-                <ArrowDropUpRoundedIcon
-                  sx={{
-                    transform: areCommentsShown ? null : 'rotate(180deg)',
-                    transition: 'transform 300ms ease-out',
-                  }}
-                />
-              </div>
-            )}
-            {post.comments && areCommentsShown &&
+            <p>{post.content}</p>
+            <div className='flex-end flex-align-center'>
+              <p
+                className='hover-underline'
+                onClick={() => handleClick(post.postid, index)}
+                style={{'cursor': 'pointer', 'userSelect': 'none'}}
+              >
+                {expanded.includes(index) ? 'Hide Comments' : 'Show Comments'}
+              </p>
+              <ArrowDropUpRoundedIcon
+                sx={{
+                  transform: expanded.includes(index) ? null : 'rotate(180deg)',
+                  transition: 'transform 300ms ease-out',
+                }}
+              />
+            </div>
+            {
+              expanded.includes(index) && comments.hasOwnProperty(index) &&
               (
                 <>
-                  <Divider
-                    sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}}
-                  />
-                  {post.comments.map((comment, index) => (
-                    <Comment key={`comment-${index}`}>
-                      <CommenterAvatar image={comment.avatar} />
+                  {
+                    comments[index].length > 0 && (
+                      <Divider
+                        sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}}
+                      />
+                    )
+                  }
+                  {comments[index].map((comment, commentIndex) => (
+                    <Comment key={`comment-${commentIndex}`}>
+                      <CommenterAvatar
+                        image={comment.profilepicture}
+                      />
                       <Bubble>
-                        <p className='text-bold text-dark'>{comment.name}</p>
-                        <p>{comment.comment}</p>
+                        <p className='text-bold text-dark'>
+                          {`${comment.firstname} ${comment.lastname}`}
+                        </p>
+                        <p>{comment.content}</p>
                       </Bubble>
                     </Comment>
                   ))}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAccordion from '@mui/material/Accordion';
@@ -110,57 +110,39 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
  */
 function RolesCard({isCreator, roles}) {
   const [expanded, setExpanded] = React.useState(null);
+  const [majors, setMajors] = React.useState([]);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const roless = [
-    {
-      name: 'Software Engineer Mentor',
-      tags: [
-        'Computer Engineering',
-        'Computer Science',
-      ],
-      slots: 2,
-      responsibilities: 'This is a description',
-      preferences: [
-        'Understanding of C/C++',
-        'Understanding of Python',
-        'Data structures and algorithms',
-      ],
-    },
-    {
-      name: 'Software Engineer Mentor',
-      tags: [
-        'Computer Engineering',
-        'Computer Science',
-      ],
-      slots: 2,
-      responsibilities: 'This is a description',
-      preferences: [
-        'Understanding of C/C++',
-        'Understanding of Python',
-        'Data structures and algorithms',
-      ],
-    },
-    {
-      name: 'Software Engineer Mentor',
-      tags: [
-        'Computer Engineering',
-        'Computer Science',
-      ],
-      slots: 2,
-      responsibilities: 'This is a description',
-      preferences: [
-        'Understanding of C/C++',
-        'Understanding of Python',
-        'Data structures and algorithms',
-      ],
-    },
-  ];
+  const getTag = (tagid) => {
+    const tag = majors.filter((major) => major.majorid === tagid);
+    if (tag.length === 0) return 'none';
+    return tag[0].majorname;
+  };
 
-  console.log(roles && roles);
+  const getMajors = () => {
+    fetch(`/api/getMajors`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setMajors(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity majors');
+        });
+  };
+
+  useEffect(() => {
+    getMajors();
+  }, []);
 
   return (
     <Roles>
@@ -169,7 +151,7 @@ function RolesCard({isCreator, roles}) {
       </h4>
       <Box>
         {
-          roless.map((role, index) => (
+          roles && roles.map((role, index) => (
             <Accordion
               key={`panel${index}`}
               expanded={expanded === `panel${index}`}
@@ -187,10 +169,10 @@ function RolesCard({isCreator, roles}) {
               >
                 <Box className='flex-vertical flex-justify-center'>
                   <p className='text-bold text-blue'>
-                    {`${role.name} (${role.slots})`}
+                    {`${role.rolename}`}
                   </p>
                   <p className='text-xsmall text-gray'>
-                    {role.tags.join(', ')}
+                    {getTag(role.tagid)}
                   </p>
                 </Box>
                 {
@@ -210,7 +192,7 @@ function RolesCard({isCreator, roles}) {
                 <div className='flex-vertical'>
                   <p className='text-bold'>Responsibilites</p>
                   <p className='text-xsmall text-gray'>
-                    {role.responsibilities}
+                    {role.responsibility}
                   </p>
                 </div>
                 <div className='flex-vertical'>
@@ -218,14 +200,18 @@ function RolesCard({isCreator, roles}) {
                     Preferred Qualifications
                   </p>
                   <ul style={{padding: 0, margin: 0}}>
-                    {role.preferences.map((preference, index) => (
-                      <p
-                        className='text-xsmall text-gray'
-                        key={`preference-${index}`}
-                      >
-                        {`· ${preference}`}
-                      </p>
-                    ))}
+                    {role.qualifications ?
+                      role.qualifications.map((qualification, index) => (
+                        <p
+                          className='text-xsmall text-gray'
+                          key={`qualification-${index}`}
+                        >
+                          {`· ${qualification}`}
+                        </p>
+                      )) : (
+                        <p className='text-xsmall text-gray'>None</p>
+                      )
+                    }
                   </ul>
                 </div>
               </AccordionDetails>

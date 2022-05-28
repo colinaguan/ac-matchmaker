@@ -48,42 +48,41 @@ export default function FetchWrapper() {
         });
   };
 
-  // const getOpportunityRoles = () => {
-  //   fetch(`/api/getRoles/${params.opportunityid}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //       .then((res) => {
-  //         if (!res.ok) {
-  //           throw res;
-  //         }
-  //         return res.json();
-  //       })
-  //       .then((json) => {
-  //         console.log(json);
-  //         setFetchedData((prevData) => ({
-  //           ...prevData,
-  //           opportunityroles: json,
-  //         }));
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         alert('Error retrieving opportunity roles');
-  //       });
-  // };
+  const getOpportunityRoles = () => {
+    fetch(`/api/getRoles/${params.opportunityid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setFetchedData((prevData) => ({
+            ...prevData,
+            roles: json,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity roles');
+        });
+  };
 
   useEffect(() => {
-    getOpportunity();
-    // getOpportunityRoles();
+    if (params.opportunityid) {
+      getOpportunity();
+      getOpportunityRoles();
+    }
   }, []);
-
-  // console.log(fetchedData && fetchedData);
 
   return (
     <>
-      {fetchedData && <ViewOpportunity opportunity={fetchedData} />}
+      {
+        fetchedData &&
+        fetchedData.usersponsors &&
+        <ViewOpportunity opportunity={fetchedData} />
+      }
     </>
   );
 }
@@ -94,11 +93,62 @@ export default function FetchWrapper() {
  */
 function ViewOpportunity({opportunity}) {
   const {userProfile} = useAuth();
+  const [isCreator, setIsCreator] = useState(false);
   const [creator, setCreator] = useState(null);
   const [tab, setTab] = useState(0);
-  const [oppRoles, setOppRoles] = useState(null);
 
-  const isCreator = userProfile?.profileid === opportunity.usersponsors.creator;
+  const noncreatorTabs = [
+    {
+      name: 'About',
+      component:
+        <ViewOpportunityAbout
+          isCreator={isCreator && isCreator}
+          description={opportunity?.description}
+          roles={opportunity?.roles}
+        />,
+    },
+    {
+      name: 'Forums',
+      component: <ViewOpportunityForums />,
+    },
+  ];
+
+  const creatorTabs = [
+    {
+      name: 'About',
+      component:
+        <ViewOpportunityAbout
+          isCreator={isCreator && isCreator}
+          description={opportunity?.description}
+          roles={opportunity?.roles}
+        />,
+    },
+    {
+      name: 'Forums',
+      component:
+        <ViewOpportunityForums
+          id={opportunity?.eventid}
+        />,
+    },
+    {
+      name: 'Requests',
+      component: <ViewOpportunityRequests />,
+    },
+    {
+      name: 'Find People',
+      component: <ViewOpportunityFindPeople />,
+    },
+  ];
+
+  const handleIsCreator = () => {
+    // BUG: The userProfile should always have some content, but after
+    // refreshing a couple times, the userProfile becomes false, causing
+    // the page to crash. As a temporary fix, I made it so that the
+    // userProfile can be recognized as false (by adding ?). This will
+    // avoid the page from crashing but "check" will not be correct
+    const check = userProfile?.profileid === opportunity.usersponsors.creator;
+    setIsCreator(check);
+  };
 
   const getOpportunityCreator = () => {
     fetch(`/api/getProfileName/${opportunity.usersponsors.creator}`)
@@ -118,56 +168,12 @@ function ViewOpportunity({opportunity}) {
         });
   };
 
-  const getOpportunityRoles = () => {
-    fetch(`/api/getRoles/${opportunity.eventid}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json();
-        })
-        .then((json) => {
-          console.log(json);
-          setOppRoles(json);
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('Error retrieving opportunity roles');
-        });
-  };
-
   useEffect(() => {
-    getOpportunityCreator();
-    getOpportunityRoles();
+    if (opportunity) {
+      getOpportunityCreator();
+      handleIsCreator();
+    }
   }, []);
-
-  console.log(oppRoles && oppRoles);
-
-  const tabs = [
-    {
-      name: 'About',
-      component:
-        <ViewOpportunityAbout
-          isCreator={isCreator && isCreator}
-          description={opportunity?.description}
-          roles={opportunity?.roles}
-        />,
-    },
-    {
-      name: 'Forums',
-      component: <ViewOpportunityForums />,
-    },
-    isCreator &&
-    {
-      name: 'Requests',
-      component: <ViewOpportunityRequests />,
-    },
-    isCreator &&
-    {
-      name: 'Find People',
-      component: <ViewOpportunityFindPeople />,
-    },
-  ];
 
   return (
     <Page>
@@ -189,10 +195,24 @@ function ViewOpportunity({opportunity}) {
                   Request to Join
                 </ThemedButton>
               }
-              tabs={<CompressedTabBar data={tabs} tab={tab} setTab={setTab} />}
+              tabs={isCreator ?
+                <CompressedTabBar
+                  data={creatorTabs}
+                  tab={tab}
+                  setTab={setTab}
+                /> :
+                <CompressedTabBar
+                  data={noncreatorTabs}
+                  tab={tab}
+                  setTab={setTab}
+                />
+              }
               tabNumber={tab}
             />
-            {tabs[tab].component}
+            {isCreator ?
+              creatorTabs[tab].component :
+              noncreatorTabs[tab].component
+            }
           </MuiBox>
           <MuiBox sx={{width: '30%'}}>
             <ViewOpportunityMembers

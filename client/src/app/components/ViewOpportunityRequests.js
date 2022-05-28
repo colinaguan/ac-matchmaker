@@ -287,11 +287,11 @@ export default function ViewOpportunityRequests() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{width: '100%'}}>
+    <Box sx={{width: 'auto'}}>
       <Paper
         elevation={0}
         sx={{
-          width: '100%',
+          width: 'auto',
           mt: '1em',
           boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
           border: '0.5px solid rgba(0, 0, 0, 0.15)',
@@ -300,7 +300,7 @@ export default function ViewOpportunityRequests() {
       >
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
-          <Table sx={{minWidth: 750}} aria-labelledby='tableTitle'>
+          <Table aria-labelledby='tableTitle'>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
