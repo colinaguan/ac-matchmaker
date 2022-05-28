@@ -54,7 +54,7 @@ test(`Insert a role with a JWT,
     .expect(200)
     .then((response) =>{
         // The most recent inserted row should be at the end of the array
-        console.log(response.body[response.body.length - 1]);
+        // console.log(response.body[response.body.length - 1]);
         expect(response.body[response.body.length - 1].rolename).toEqual(data.rolename);
     });
 

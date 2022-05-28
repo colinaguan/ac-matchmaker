@@ -201,7 +201,7 @@ test("insert comment for post and get the comment", async() =>{
         .send(commentdata)
         .expect(201)
         .then((response) =>{
-            // console.log(response.body);
+            console.log(response.body);
             return response.body;
         });
 
@@ -214,7 +214,7 @@ test("insert comment for post and get the comment", async() =>{
         .send(getCommentData)
         .expect(200)
         .then((response) =>{
-            // console.log(response.body);
+            console.log(response.body);
         });
 });
 
