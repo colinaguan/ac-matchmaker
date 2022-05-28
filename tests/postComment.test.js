@@ -153,13 +153,13 @@ test("get posts", async() => {
     }
 
     // Call an authenticated get Posts given opportunityid
-    console.log(data);
+    // console.log(data);
     
     await supertest(app).get(`/api/getPosts/${data.opportunityid}`)
     .set('Cookie', [`accessToken=${logininfo.accessToken}`])
     .expect(200)
     .then((response) =>{
-        console.log(response.body);
+        // console.log(response.body);
     })
 });
 
@@ -201,7 +201,7 @@ test("insert comment for post and get the comment", async() =>{
         .send(commentdata)
         .expect(201)
         .then((response) =>{
-            // console.log(response.body);
+            console.log(response.body);
             return response.body;
         });
 
