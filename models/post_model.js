@@ -9,10 +9,10 @@ const pool = new Pool();
  */
 exports.insertPost = async (data) => {
     const query = {
-        text: `INSERT INTO post(opportunityid, userid, content)
-                VALUES ($1, $2, $3)
-                RETURNING postid`,
-        values: [data.opportunityid, data.userid, data.content],
+        text: `INSERT INTO post(opportunityid, userid, content, title)
+                VALUES ($1, $2, $3, $4)
+                RETURNING *`,
+        values: [data.opportunityid, data.userid, data.content, data.title],
     };
     const {rows} = await pool.query(query);
     // console.log(rows);
@@ -23,7 +23,7 @@ exports.insertPost = async (data) => {
  * Gets all posts for a specific opportunity id
  */
 exports.getPosts = async (data) => {
-    console.log(data);
+    // console.log(data);
     const query = {
         text: `
         SELECT post.postid, post.opportunityid, post.userid, post.content,

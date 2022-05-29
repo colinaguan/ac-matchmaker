@@ -8,6 +8,7 @@ const postModel = require('./post_model');
  *  opportunityid : "a valid opportunity id"
  *  userid : "a user id, hopefully active"
  *  content: "content to be displayed onto the post"
+ *  title: "A meaningful title"
  * }
  * 
  */

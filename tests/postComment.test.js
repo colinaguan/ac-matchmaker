@@ -62,6 +62,7 @@ test("Post post without JWT", async ()=>{
         'opportunityid' : 'c6feb949-9ea4-4a65-9e36-8acc9fac151d',
         'userid' : logininfo.userid,
         'content' : 'THERE IS NO COW LEVEL',
+        'title': 'Instant victory',
     }
     // console.log(data);
 
@@ -71,7 +72,7 @@ test("Post post without JWT", async ()=>{
     .send(data)
     .expect(201)
     .then((response) =>{
-        // console.log(response.body);
+        console.log(response.body);
     });
 });
 
@@ -93,6 +94,7 @@ test("Post post without JWT 2", async ()=>{
         'opportunityid' : '25949134-7fb4-4bbe-832f-ec63ae54fc03',
         'userid' : logininfo.userid,
         'content' : 'BLACK SHEEP WALL',
+        'title': 'Removal of the fog of war'
     }
     // console.log(data);
 
@@ -124,6 +126,7 @@ test("Post post without JWT 3", async ()=>{
         'opportunityid' : 'c6feb949-9ea4-4a65-9e36-8acc9fac151d',
         'userid' : logininfo.userid,
         'content' : 'OPERATION CWAL',
+        'title': 'Extra fast unit production',
     }
     // console.log(data);
 
@@ -177,6 +180,7 @@ test("insert comment for post and get the comment", async() =>{
             'opportunityid' : 'c6feb949-9ea4-4a65-9e36-8acc9fac151d',
             'userid' : logininfo.userid,
             'content' : 'This post should have a comment with it.',
+            'title': 'Post with comment test',
         }
     
         // SET THE JWT COOKIE BEFORE CALLING POSTPOST
@@ -201,7 +205,7 @@ test("insert comment for post and get the comment", async() =>{
         .send(commentdata)
         .expect(201)
         .then((response) =>{
-            console.log(response.body);
+            // console.log(response.body);
             return response.body;
         });
 
@@ -214,7 +218,7 @@ test("insert comment for post and get the comment", async() =>{
         .send(getCommentData)
         .expect(200)
         .then((response) =>{
-            console.log(response.body);
+            // console.log(response.body);
         });
 });
 
