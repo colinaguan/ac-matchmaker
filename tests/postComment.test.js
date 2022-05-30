@@ -45,7 +45,7 @@ test("Post post without JWT", async ()=>{
 // just using a opportunity id from the db. REPLACE LATER
 
 // Posting a post with a JWT
-test("Post post without JWT", async ()=>{
+test("Post post with JWT", async ()=>{
     // GET A JWT FIRST
     const logininfo = await supertest(app).post('/api/login')
     .send(loginData)
@@ -72,12 +72,12 @@ test("Post post without JWT", async ()=>{
     .send(data)
     .expect(201)
     .then((response) =>{
-        console.log(response.body);
+        // console.log(response.body);
     });
 });
 
 // Posting a post with a JWT
-test("Post post without JWT 2", async ()=>{
+test("Post post with JWT 2", async ()=>{
     // GET A JWT FIRST
     const logininfo = await supertest(app).post('/api/login')
     .send(loginData)
@@ -109,7 +109,7 @@ test("Post post without JWT 2", async ()=>{
 });
 
 // Posting a post with a JWT
-test("Post post without JWT 3", async ()=>{
+test("Post post with JWT 3", async ()=>{
     // GET A JWT FIRST
     const logininfo = await supertest(app).post('/api/login')
     .send(loginData)
@@ -136,7 +136,7 @@ test("Post post without JWT 3", async ()=>{
     .send(data)
     .expect(201)
     .then((response) =>{
-        // console.log(response.body);
+        console.log(response.body);
     });
 });
 

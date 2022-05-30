@@ -81,13 +81,11 @@ app.post('/api/login', userApi.userVerifyPost);
 
 app.post('/api/userDeactivation', authApi.check, userApi.userDeactivate);
 
-app.post('/api/userCreation', authApi.check, userApi.userPost);
+app.post('/api/userCreation', userApi.userPost);
 
 app.get('/api/verifyUserSession', authApi.check, userApi.verifyUserSession);
 
 app.get('/api/expireUserSession', authApi.check, userApi.expireUserSession);
-
-app.get('/api/getTestingToken', userApi.getTestingToken);
 
 
 //  Profile CRUD operations
