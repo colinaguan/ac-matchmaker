@@ -92,6 +92,7 @@ export default function FetchWrapper() {
  * @return {JSX}
  */
 function ViewOpportunity({opportunity}) {
+  const params = useParams();
   const {userProfile} = useAuth();
   const [isCreator, setIsCreator] = useState(false);
   const [creator, setCreator] = useState(null);
@@ -109,7 +110,10 @@ function ViewOpportunity({opportunity}) {
     },
     {
       name: 'Forums',
-      component: <ViewOpportunityForums />,
+      component:
+        <ViewOpportunityForums
+          id={opportunity.eventid}
+        />,
     },
   ];
 
@@ -127,7 +131,7 @@ function ViewOpportunity({opportunity}) {
       name: 'Forums',
       component:
         <ViewOpportunityForums
-          id={opportunity?.eventid}
+          id={params.opportunityid}
         />,
     },
     {
@@ -142,10 +146,11 @@ function ViewOpportunity({opportunity}) {
 
   const handleIsCreator = () => {
     // BUG: The userProfile should always have some content, but after
-    // refreshing a couple times, the userProfile becomes false, causing
+    // refreshing a couple times, the userProfile becomes undefined, causing
     // the page to crash. As a temporary fix, I made it so that the
-    // userProfile can be recognized as false (by adding ?). This will
-    // avoid the page from crashing but "check" will not be correct
+    // userProfile can be recognized as undefined (by adding ?). This will
+    // avoid the page from crashing but "check" will not be correct and the
+    // page will not recognize the user as the creator.
     const check = userProfile?.profileid === opportunity.usersponsors.creator;
     setIsCreator(check);
   };

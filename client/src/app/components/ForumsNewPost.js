@@ -75,13 +75,17 @@ const Input = ({
  * New post component
  * @return {JSX}
  */
-export default function ForumsNewPost({posts, setPosts}) {
+export default function ForumsNewPost({postNewPost, getPosts}) {
   const params = useParams();
   const {userProfile} = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const postNewPost = () => {
+  const handleSubmit = (e) => {
+    if (title.length === 0 || content.length === 0) {
+      return alert('Please fill in all fields');
+    }
+
     const data = {
       'opportunityid': params.opportunityid,
       'userid': userProfile.userid,
@@ -89,36 +93,7 @@ export default function ForumsNewPost({posts, setPosts}) {
       'title': title,
     };
 
-    fetch(`/api/postPost`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json();
-        })
-        .then((json) => {
-          console.log(data);
-          console.log(json);
-          setPosts([json, ...posts]);
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('Error retrieving opportunity posts');
-        });
-  };
-
-  const handleSubmit = (e) => {
-    if (title.length === 0 || content.length === 0) {
-      return alert('Please fill in all fields');
-    }
-
-    postNewPost();
+    postNewPost(data);
     setTitle('');
     setContent('');
   };
@@ -150,7 +125,6 @@ export default function ForumsNewPost({posts, setPosts}) {
       <div className='flex-end'>
         <MuiBox sx={{width: 'auto'}}>
           <ThemedButton
-            component='submit'
             color='yellow'
             variant='themed'
             endIcon={<SendRoundedIcon />}

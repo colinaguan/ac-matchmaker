@@ -115,6 +115,7 @@ export default function ViewOpportunityForums({id}) {
           return res.json();
         })
         .then((json) => {
+          console.log(json);
           setPosts(json);
           setIsLoading(false);
         })
@@ -144,15 +145,38 @@ export default function ViewOpportunityForums({id}) {
         });
   };
 
+  const postNewPost = (data) => {
+    fetch(`/api/postPost`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(data);
+          console.log(json);
+          setPosts((prevPosts) => [json, ...prevPosts]);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity posts');
+        });
+  };
+
   useEffect(() => {
-    if (id) {
-      getPosts();
-    }
+    getPosts();
   }, []);
 
   return (
     <>
-      <ForumsNewPost posts={posts} setPosts={setPosts} />
+      <ForumsNewPost postNewPost={postNewPost} />
       {isLoading ? <Loading /> : null}
       {posts ? (
         posts.map((post, index) => (

@@ -38,7 +38,7 @@ export default function ForumsPost({post, expanded, index, handleClick}) {
       <Headline>
         <PosterAvatar image={post.profilepicture} />
         <div>
-          <div className='text-bold text-dark'>{post.content}</div>
+          <div className='text-bold text-dark'>{post.title}</div>
           <p className='text-bold text-blue'>
             {`${post.firstname} ${post.lastname}`}
             <span className='text-normal text-gray'>
