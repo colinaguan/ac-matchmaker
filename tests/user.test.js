@@ -90,11 +90,12 @@ test("User Created", async () =>{
         .then((response) =>{
             // user_model
             console.log(response.body);
+            return response.body
         });
 
     
     // Delete the user
-
+    delete_model.deleteUser(logininfo.userid);
 });
 
 
