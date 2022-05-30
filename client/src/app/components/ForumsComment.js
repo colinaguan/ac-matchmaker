@@ -28,7 +28,7 @@ const CommenterAvatar = ({image}, props) => (
  * @param {Number} index
  * @return {JSX}
  */
-export default function ForumsPost({comment, index}) {
+export default function ForumsComment({comment, index}) {
   return (
     <Comment key={`comment-${index}`}>
       <CommenterAvatar

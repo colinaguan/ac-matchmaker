@@ -75,7 +75,7 @@ const Input = ({
  * New post component
  * @return {JSX}
  */
-export default function ForumsNewPost({postNewPost, getPosts}) {
+export default function ForumsNewPost({postNewPost}) {
   const params = useParams();
   const {userProfile} = useAuth();
   const [title, setTitle] = useState('');
@@ -112,7 +112,7 @@ export default function ForumsNewPost({postNewPost, getPosts}) {
         name='title'
         value={title}
         handleChange={(e) => handleChange(e)}
-        image={userProfile?.profilepicture}
+        image={userProfile.profilepicture}
         placeholder={'Title'}
       />
       <Input

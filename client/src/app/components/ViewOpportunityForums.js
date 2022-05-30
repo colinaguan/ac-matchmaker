@@ -11,6 +11,7 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import ForumsComment from './ForumsComment';
 import ForumsNewPost from './ForumsNewPost';
 import ForumsPost from './ForumsPost';
+import useAuth from '../util/AuthContext';
 
 const Paper = styled((props) => (
   <MuiPaper elevation={0} {...props} />
@@ -41,53 +42,88 @@ const Loading = (props) => (
   </MuiBox>
 );
 
-const Input = ({image}, props) => (
-  <MuiBox
-    sx={{
-      display: 'flex',
-      gap: '10px',
-    }}
-  >
-    <MuiAvatar
-      src={image}
-      sx={{
-        marginBlock: '4px',
-        height: '30px',
-        width: '30px',
-      }}
-    />
-    <TextField
-      placeholder='Write a comment...'
-      size='small'
-      InputProps={{
-        style: {
-          fontSize: '0.9rem',
-          borderRadius: '10px',
-        },
-      }}
-      multiline
-      fullWidth
-      {...props}
-    />
-    <IconButton
-      color='primary'
+const Input = ({
+  postNewComment,
+  name,
+  image,
+  postid,
+}, props) => {
+  const {userProfile} = useAuth();
+  const [content, setContent] = useState('');
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleSubmit = (e, postid) => {
+    if (content.length === 0) {
+      return alert('Comment cannot be empty');
+    }
+
+    const data = {
+      'postid': postid,
+      'userid': userProfile.userid,
+      'content': content,
+    };
+
+    postNewComment(data);
+    setContent('');
+  };
+
+  return (
+    <MuiBox
+      component='form'
       sx={{
         display: 'flex',
-        height: '38px',
-        width: '38px',
-        padding: 0,
+        gap: '10px',
       }}
     >
-      <SendRoundedIcon />
-    </IconButton>
-  </MuiBox>
-);
+      <MuiAvatar
+        src={image}
+        sx={{
+          marginBlock: '4px',
+          height: '30px',
+          width: '30px',
+        }}
+      />
+      <TextField
+        name={name}
+        value={content}
+        onChange={(e) => handleChange(e)}
+        placeholder='Write a comment...'
+        size='small'
+        InputProps={{
+          style: {
+            fontSize: '0.9rem',
+            borderRadius: '10px',
+          },
+        }}
+        multiline
+        fullWidth
+        {...props}
+      />
+      <IconButton
+        onClick={(e) => handleSubmit(e, postid)}
+        color='primary'
+        sx={{
+          display: 'flex',
+          height: '38px',
+          width: '38px',
+          padding: 0,
+        }}
+      >
+        <SendRoundedIcon />
+      </IconButton>
+    </MuiBox>
+  );
+};
 
 /**
  * Forums tab for view opportunity
  * @return {JSX}
  */
 export default function ViewOpportunityForums({id}) {
+  const {userProfile} = useAuth();
   const [expanded, setExpanded] = useState([]);
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState({});
@@ -160,9 +196,33 @@ export default function ViewOpportunityForums({id}) {
           return res.json();
         })
         .then((json) => {
-          console.log(data);
-          console.log(json);
           setPosts((prevPosts) => [json, ...prevPosts]);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving opportunity posts');
+        });
+  };
+
+  const postNewComment = (data) => {
+    fetch(`/api/postComment`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setComments((prevComments) => ({
+            ...prevComments,
+            [Object.keys(comments).length]: [json],
+          }));
         })
         .catch((err) => {
           console.log(err);
@@ -203,7 +263,12 @@ export default function ViewOpportunityForums({id}) {
                 ))}
               </>
             )}
-            <Input />
+            <Input
+              postNewComment={postNewComment}
+              name='content'
+              image={userProfile.profilepicture}
+              postid={post.postid}
+            />
           </Paper>
         ))
       ) : (
