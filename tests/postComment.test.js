@@ -72,7 +72,7 @@ test("Post post without JWT", async ()=>{
     .send(data)
     .expect(201)
     .then((response) =>{
-        console.log(response.body);
+        // console.log(response.body);
     });
 });
 
