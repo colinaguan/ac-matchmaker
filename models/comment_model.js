@@ -10,13 +10,13 @@ const pool = new Pool();
 exports.insertComment = async (data) => {
     const query = {
         text: `WITH insertedComment as (
-            INSERT INTO comment(postid, userid, content)
-            VALUES ($1, $2, $3)
+            INSERT INTO comment(postid, userid, content, createddate)
+            VALUES ($1, $2, $3, $4)
             RETURNING *
             ) SELECT * FROM insertedComment
             JOIN profile ON insertedComment.userid = profile.userid
             `,
-        values: [data.postid, data.userid, data.content],
+        values: [data.postid, data.userid, data.content, data.createddate],
     };
     const { rows } = await pool.query(query);
     // console.log(rows);

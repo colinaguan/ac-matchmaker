@@ -14,13 +14,13 @@ exports.insertPost = async (data) => {
         //         RETURNING *
         //         `,
         text: `WITH insertedPost as (
-            INSERT INTO post(opportunityid, userid, content, title)
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO post(opportunityid, userid, content, title, createddate)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *
         ) SELECT * FROM insertedPost
         JOIN profile ON insertedPost.userid = profile.userid
         `,
-        values: [data.opportunityid, data.userid, data.content, data.title],
+        values: [data.opportunityid, data.userid, data.content, data.title,data.createddate],
     };
     const {rows} = await pool.query(query);
     // console.log(rows);
