@@ -181,10 +181,6 @@ a, a:hover, a:focus, a:active {
   justify-content: flex-end;
 }
 
-.width-300-pixels {
-  width: 300px;
-}
-
 /* Utility */
 
 .text-center {
@@ -212,7 +208,7 @@ a, a:hover, a:focus, a:active {
 }
 
 .text-xbold {
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .text-italic {
@@ -223,12 +219,12 @@ a, a:hover, a:focus, a:active {
   color: var(--text-dark);
 }
 
-.text-gray {
-  color: var(--text-gray);
-}
-
 .text-white {
   color: var(--text-white);
+}
+
+.text-gray {
+  color: var(--text-gray);
 }
 
 .text-blue {
@@ -243,8 +239,24 @@ a, a:hover, a:focus, a:active {
   color: var(--error-red-main);
 }
 
+.text-lineheight-16 {
+  line-height: 1rem;
+}
+
 .text-lineheight-24 {
   line-height: 1.5rem;
+}
+
+.icon-gray {
+  color: var(--tertiary-gray-main);
+}
+
+.icon-blue {
+  color: var(--primary-blue-main);
+}
+
+.icon-yellow {
+  color: var(--secondary-yellow-main);
 }
 
 .ellipsis {
@@ -263,6 +275,10 @@ a, a:hover, a:focus, a:active {
 
 .hover-highlight:hover {
   background: var(--tertiary-gray-bright);
+}
+
+.navbar-height {
+  height: 70px;
 }
 
 .padding-64 {

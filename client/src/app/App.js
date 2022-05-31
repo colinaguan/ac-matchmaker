@@ -23,7 +23,6 @@ import Browse from './pages/Browse';
 // TODO: settings page?
 import Settings from './pages/Settings';
 import Box from '@mui/material/Box';
-import {DrawerHeader} from './components/NavBarComponents';
 
 import ViewOpportunity from './pages/ViewOpportunity';
 
@@ -37,9 +36,8 @@ export default function App() {
   return (
     <Box sx={{display: 'flex'}}>
       <ToastContainer />
-      {userProfile !== null ? <NavBarLoggedIn/> : <NavBarLoggedOut/>}
-      <Box component='main' sx={{flexGrow: 1, p: 3, padding: 0}}>
-        <DrawerHeader />
+      {userProfile !== null ? <NavBarLoggedIn /> : <NavBarLoggedOut/>}
+      <Box component='main' sx={{flexGrow: 1, marginTop: '70px'}}>
         <Routes>
           <Route path='/' element={<Landing />}/>
           <Route path='/myprofile' element={<MyProfile />} />
