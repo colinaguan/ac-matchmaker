@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MuiBox from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiPaper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import ForumsComment from './ForumsComment';
 import ForumsNewPost from './ForumsNewPost';
 import ForumsPost from './ForumsPost';
 import useAuth from '../util/AuthContext';
@@ -66,7 +64,7 @@ const Input = ({
       'content': content,
     };
 
-    postNewComment(data);
+    postNewComment(data, postid);
     setContent('');
   };
 
@@ -124,21 +122,14 @@ const Input = ({
  */
 export default function ViewOpportunityForums({id}) {
   const {userProfile} = useAuth();
-  const [expanded, setExpanded] = useState([]);
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = (postid, index) => {
-    if (expanded.includes(index)) {
-      setExpanded(expanded.filter((item) => item !== index));
-    } else {
-      setExpanded((prevExpanded) => ([
-        ...prevExpanded,
-        index,
-      ]));
-    }
-    getComments(postid, index);
+  const sortByDate = (array) => {
+    return array.sort((a, b) =>
+      new Date(b.createddate).getTime() - new Date(a.createddate).getTime(),
+    );
   };
 
   const getPosts = () => {
@@ -151,7 +142,6 @@ export default function ViewOpportunityForums({id}) {
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           setPosts(json);
           setIsLoading(false);
         })
@@ -161,7 +151,7 @@ export default function ViewOpportunityForums({id}) {
         });
   };
 
-  const getComments = (postid, index) => {
+  const getComments = (postid) => {
     fetch(`/api/getComments/${postid}`)
         .then((res) => {
           if (!res.ok) {
@@ -172,7 +162,7 @@ export default function ViewOpportunityForums({id}) {
         .then((json) => {
           setComments((prevComments) => ({
             ...prevComments,
-            [index]: json,
+            [postid]: json,
           }));
         })
         .catch((err) => {
@@ -196,15 +186,15 @@ export default function ViewOpportunityForums({id}) {
           return res.json();
         })
         .then((json) => {
-          setPosts((prevPosts) => [json, ...prevPosts]);
+          setPosts((prevPosts) => [...prevPosts, json]);
         })
         .catch((err) => {
           console.log(err);
-          alert('Error retrieving opportunity posts');
+          alert('Error posting opportunity post');
         });
   };
 
-  const postNewComment = (data) => {
+  const postNewComment = (data, postid) => {
     fetch(`/api/postComment`, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -219,14 +209,23 @@ export default function ViewOpportunityForums({id}) {
           return res.json();
         })
         .then((json) => {
-          setComments((prevComments) => ({
-            ...prevComments,
-            [Object.keys(comments).length]: [json],
-          }));
+          setComments((prevComments) => {
+            if (prevComments.hasOwnProperty(postid)) {
+              return ({
+                ...prevComments,
+                [postid]: [...prevComments[postid], json],
+              });
+            } else {
+              return ({
+                ...prevComments,
+                [postid]: [json],
+              });
+            }
+          });
         })
         .catch((err) => {
           console.log(err);
-          alert('Error retrieving opportunity posts');
+          alert('Error posting opportunity comment');
         });
   };
 
@@ -239,30 +238,13 @@ export default function ViewOpportunityForums({id}) {
       <ForumsNewPost postNewPost={postNewPost} />
       {isLoading ? <Loading /> : null}
       {posts ? (
-        posts.map((post, index) => (
+        sortByDate(posts).map((post, index) => (
           <Paper key={`post-${index}`}>
             <ForumsPost
               post={post}
-              expanded={expanded}
-              index={index}
-              handleClick={(postid, i) => handleClick(postid, i)}
+              comments={comments}
+              getComments={getComments}
             />
-            {expanded.includes(index) && comments.hasOwnProperty(index) && (
-              <>
-                {comments[index].length > 0 && (
-                  <Divider
-                    sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}}
-                  />
-                )}
-                {comments[index].map((comment, commentIndex) => (
-                  <ForumsComment
-                    key={`comment-${commentIndex}`}
-                    comment={comment}
-                    index={commentIndex}
-                  />
-                ))}
-              </>
-            )}
             <Input
               postNewComment={postNewComment}
               name='content'

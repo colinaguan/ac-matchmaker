@@ -91,6 +91,7 @@ export default function ForumsNewPost({postNewPost}) {
       'userid': userProfile.userid,
       'content': content,
       'title': title,
+      'createddate': new Date().toISOString(),
     };
 
     postNewPost(data);
