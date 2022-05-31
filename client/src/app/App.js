@@ -59,7 +59,7 @@ export default function App() {
           {/* TODO: settings page? */}
           <Route path='/settings' element={<Settings />}/>
 
-          {/* <Route path='/opportunities' element={<ViewOpportunity />}/> */}
+          <Route path='/opportunities' element={<Opportunities />}/>
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:token' element={<Verify />} />

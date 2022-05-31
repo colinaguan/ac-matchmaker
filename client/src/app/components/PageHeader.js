@@ -71,17 +71,22 @@ const Banner = ({image, back}, props) => {
   );
 };
 
-const Details = styled((props) => (
-  <MuiBox {...props} />
-))(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  paddingBlock: '1.5em',
-  height: '25%',
-  width: '100%',
-  borderBottom: '0.5px solid rgba(0, 0, 0, 0.12)',
-}));
+const Details = ({border, children}, props) => (
+  <MuiBox
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      paddingBlock: '1.5em',
+      height: '25%',
+      width: '100%',
+      borderBottom: border ? '0.5px solid rgba(0, 0, 0, 0.12)' : 0,
+    }}
+    {...props}
+  >
+    {children}
+  </MuiBox>
+);
 
 const SubDetails = styled((props) => (
   <MuiBox {...props} />
@@ -168,7 +173,7 @@ export default function PageHeader({
   return (
     <Header>
       {banner && <Banner image={banner} back={backUrl} />}
-      <Details>
+      <Details border={data}>
         <div
           className='flex-horizontal flex-align-center flex-flow-large'
           style={{paddingInline: '3em'}}

@@ -10,7 +10,7 @@ const Paper = styled((props) => (
   display: 'flex',
   flexDirection: 'column',
   height: 'auto',
-  width: 'calc(30% - 8em + 21px)',
+  width: 'calc(30% - 4em + 1em)',
   background: 'white',
   boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
   border: '0.5px solid rgba(0, 0, 0, 0.15)',
@@ -21,7 +21,7 @@ const Paper = styled((props) => (
  * Filters section for view opportunity
  * @return {JSX}
  */
-export default function ViewOpportunityFilters() {
+export default function OpportunityFilters() {
   return (
     <Paper>
       <h4

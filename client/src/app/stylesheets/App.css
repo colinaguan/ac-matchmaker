@@ -235,12 +235,22 @@ a, a:hover, a:focus, a:active {
   color: var(--primary-blue-main);
 }
 
+.text-yellow {
+  color: var(--secondary-yellow-main);
+}
+
 .text-warning {
   color: var(--error-red-main);
 }
 
 .text-lineheight-24 {
   line-height: 1.5rem;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .clickable {

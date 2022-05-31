@@ -15,7 +15,7 @@ import useAuth from '../util/AuthContext';
 const Page = styled((props) => (
   <MuiBox {...props} />
 ))(() => ({
-  margin: '2em 8em 2em 8em',
+  margin: '2em 2em',
   display: 'flex',
   height: 'auto',
   width: 'auto',
