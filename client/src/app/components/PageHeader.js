@@ -22,8 +22,6 @@ const Header = styled((props) => (
 ))(() => ({
   height: 'auto',
   width: 'auto',
-  border: '1px solid rgba(0, 0, 0, 0.15)',
-  borderRadius: '10px',
 }));
 
 const Avatar = ({image}, props) => (
@@ -64,7 +62,6 @@ const Banner = ({image, back}, props) => {
           height: '100%',
           width: '100%',
           objectFit: 'cover',
-          borderRadius: '10px 10px 0 0',
         }}
       />
     </MuiBox>
@@ -75,9 +72,9 @@ const Details = ({border, children}, props) => (
   <MuiBox
     sx={{
       display: 'flex',
-      flexDirection: 'column',
+      // flexDirection: 'column',
       justifyContent: 'space-between',
-      paddingBlock: '1.5em',
+      paddingBlock: '2em',
       height: '25%',
       width: '100%',
       borderBottom: border ? '0.5px solid rgba(0, 0, 0, 0.12)' : 0,
@@ -94,7 +91,7 @@ const SubDetails = styled((props) => (
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '1em 3em 0 3em',
+  padding: '0 3em',
   height: 'auto',
   width: 'auto',
 }));
@@ -179,10 +176,10 @@ export default function PageHeader({
           style={{paddingInline: '3em'}}
         >
           {avatar && <Avatar image={avatar} />}
-          <div className='flex-vertical flex-flow-small'>
-            <h3 className='text-dark' style={{lineHeight: '1.5rem'}}>
+          <div className='flex-vertical flex-flow-small text-lineheight-24'>
+            <h2 className='text-bold text-dark'>
               {title}
-            </h3>
+            </h2>
             <p className='text-bold'>
               {`${subtitle}`}
               &nbsp;&nbsp;

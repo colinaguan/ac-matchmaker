@@ -48,6 +48,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 p,
 figure,
 blockquote,
@@ -227,6 +228,10 @@ a, a:hover, a:focus, a:active {
   color: var(--text-gray);
 }
 
+.text-disabled {
+  color: var(--text-disabled);
+}
+
 .text-blue {
   color: var(--primary-blue-main);
 }
@@ -241,6 +246,10 @@ a, a:hover, a:focus, a:active {
 
 .text-lineheight-16 {
   line-height: 1rem;
+}
+
+.text-lineheight-20 {
+  line-height: 1.25rem;
 }
 
 .text-lineheight-24 {

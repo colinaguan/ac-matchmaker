@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useTheme} from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
@@ -25,13 +25,12 @@ import Notification from './Notification';
 import ThemedButton from './ThemedButton';
 import useAuth from '../util/AuthContext';
 import * as Nav from './NavBarComponents';
-import '../stylesheets/NavBar.css';
 
 const LogoutStyling = {
   position: 'absolute',
   bottom: 0,
   width: '100%',
-  borderTop: '0.5px solid #C0C4CB',
+  borderTop: '0.5px solid rgba(0, 0, 0, 0.15)',
 };
 
 const BrandStyling = {
@@ -71,7 +70,7 @@ export default function NavBarLoggedIn() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(window.location.pathname);
 
   // Pages ---------------------------------------------------------------------
 
@@ -144,6 +143,10 @@ export default function NavBarLoggedIn() {
     setTabIndex(index);
   };
 
+  useEffect(() => {
+    setTabIndex(window.location.pathname);
+  }, [window.location.pathname]);
+
   return (
     <>
       <Nav.AppBarLoggedIn
@@ -151,7 +154,7 @@ export default function NavBarLoggedIn() {
         open={open}
         sx={{
           boxShadow: '0',
-          borderBottom: '0.5px solid #C0C4CB',
+          borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)',
         }}
       >
         <Toolbar className='navbar-height'>
@@ -232,54 +235,68 @@ export default function NavBarLoggedIn() {
           </IconButton>
         </Nav.DrawerHeader>
         <List>
-          {pages.map((arr, index) => {
+          {pages.map((arr) => {
             const [label, route, icon] = arr;
             return (
               <Link key={label} to={route}>
-                <ListItemButton
-                  onClick={() => handleTabClick(index)}
-                  sx={ListButtonStyling}
-                >
-                  <ListItemIcon
-                    sx={{
-                      ...ListIconStyling,
-                      mr: open ? 3 : 'auto',
-                      color: index === tabIndex ? '#7E8694' : '#C0C4CB',
-                    }}
+                <Tooltip title={label} placement='right'>
+                  <ListItemButton
+                    onClick={() => handleTabClick(route)}
+                    sx={ListButtonStyling}
                   >
-                    {icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    sx={{
-                      ...ListTextStyling,
-                      '.MuiTypography-root': {
-                        ...ListTextStyling['.MuiTypography-root'],
-                        'color': index === tabIndex ? '#7E8694' : '#A4A9AF',
-                      },
-                      'opacity': open ? 1 : 0,
-                    }}
-                  >
-                    {label}
-                  </ListItemText>
-                </ListItemButton>
+                    <ListItemIcon
+                      sx={{
+                        ...ListIconStyling,
+                        mr: open ? 3 : 'auto',
+                        color: route === tabIndex ?
+                          'var(--primary-blue-main)' :
+                          'var(--tertiary-gray-main)',
+                      }}
+                    >
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      sx={{
+                        ...ListTextStyling,
+                        '.MuiTypography-root': {
+                          ...ListTextStyling['.MuiTypography-root'],
+                          'color': route === tabIndex ?
+                            'var(--primary-blue-main)' :
+                            'var(--tertiary-gray-main)',
+                        },
+                        'opacity': open ? 1 : 0,
+                      }}
+                    >
+                      {label}
+                    </ListItemText>
+                  </ListItemButton>
+                </Tooltip>
               </Link>
             );
           })}
-          <Box
-            className='indicator'
-            sx={{top: `calc(8px + ${tabIndex*48}px)`}}
-          />
         </List>
         <Box sx={LogoutStyling}>
           <List>
-            <ListItemButton onClick={handleLogout} sx={ListButtonStyling}>
-              <ListItemIcon sx={{...ListIconStyling, mr: open ? 3 : 'auto'}}>
-                <LogoutIcon className='icon-gray' />
-              </ListItemIcon>
-              <ListItemText sx={{...ListTextStyling, 'opacity': open ? 1 : 0}}>
-                Logout
-              </ListItemText>
-            </ListItemButton>
+            <Tooltip title='Logout' placement='right'>
+              <ListItemButton onClick={handleLogout} sx={ListButtonStyling}>
+                <ListItemIcon
+                  sx={{
+                    ...ListIconStyling,
+                    mr: open ? 3 : 'auto',
+                  }}
+                >
+                  <LogoutIcon className='icon-gray' />
+                </ListItemIcon>
+                <ListItemText
+                  sx={{
+                    ...ListTextStyling,
+                    'opacity': open ? 1 : 0,
+                  }}
+                >
+                  Logout
+                </ListItemText>
+              </ListItemButton>
+            </Tooltip>
           </List>
         </Box>
       </Nav.Drawer>

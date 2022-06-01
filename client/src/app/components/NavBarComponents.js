@@ -82,14 +82,14 @@ export const Drawer = styled(MuiDrawer, {
     ...openedMixin(theme),
     '& .MuiDrawer-paper': {
       ...openedMixin(theme),
-      borderRight: '0.5px solid #C0C4CB',
+      borderRight: '0.5px solid rgba(0, 0, 0, 0.15)',
     },
   }),
   ...(!open && {
     ...closedMixin(theme),
     '& .MuiDrawer-paper': {
       ...closedMixin(theme),
-      borderRight: '0.5px solid #C0C4CB',
+      borderRight: '0.5px solid rgba(0, 0, 0, 0.15)',
     },
   }),
 }),

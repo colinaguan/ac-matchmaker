@@ -1,8 +1,0 @@
-.indicator {
-  position: absolute;
-  right: 0;
-  height: 48px;
-  width: 4px;
-  background: var(--primary-blue-main);
-  transition: all 300ms ease-in-out;
-}

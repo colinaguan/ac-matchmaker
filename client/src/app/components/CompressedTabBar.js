@@ -29,9 +29,10 @@ export default function CompressedTabBar({data, tab, setTab}) {
     <div
       className='tab-container'
       style={{
-        height: '4rem',
+        height: '3.5em',
         width: 'auto',
         paddingLeft: '3em',
+        borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)',
       }}
     >
       <Tabs
@@ -40,9 +41,10 @@ export default function CompressedTabBar({data, tab, setTab}) {
         indicatorColor='primary'
         sx={{
           '.MuiTabs-indicator': {
-            height: '3.5px',
+            height: '4px',
+            bottom: '4px',
           },
-          'height': '100%',
+          'height': 'auto',
           'width': '100%',
         }}
       >
