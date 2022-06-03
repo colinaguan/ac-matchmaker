@@ -5,10 +5,11 @@ const postModel = require('./post_model');
  * @param {*} data This data parameter is a json object that requires the following: opportunityid, userid, content.
  * 
  * data = {
- *  opportunityid : "a valid opportunity id"
- *  userid : "a user id, hopefully active"
- *  content: "content to be displayed onto the post"
- *  title: "A meaningful title"
+opportunityid : uuid,
+userid : uuid, 
+content : text,
+title: text,
+createddate : Date().toISOString()
  * }
  * 
  */
