@@ -72,6 +72,7 @@ export default function FetchWrapper() {
   const [createdOpportunities, setCreatedOpportunities] = useState([]);
   const [pastOpportunities, setPastOpportunities] = useState([]);
   const [pendingOpportunities, setPendingOpportunities] = useState([]);
+  const [allOpportunities, setAllOpportunities] = useState([]);
 
   const getJoinedOpportunities = () => {
     fetch(`/api/getJoinedOpportunities/${userProfile.profileid}`)
@@ -141,11 +142,29 @@ export default function FetchWrapper() {
         });
   };
 
+  const getAllOpportunities = () => {
+    fetch(`/api/getOpportunities`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setAllOpportunities(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving all opportunities');
+        });
+  };
+
   useEffect(() => {
     getJoinedOpportunities();
     getCreatedOpportunities();
     getPastOpportunities();
     getPendingOpportunities();
+    getAllOpportunities();
   }, []);
 
   return (
@@ -155,11 +174,13 @@ export default function FetchWrapper() {
         createdOpportunities &&
         pastOpportunities &&
         pendingOpportunities &&
+        allOpportunities &&
           <Opportunities
             joinedOpportunities={joinedOpportunities}
             createdOpportunities={createdOpportunities}
             pastOpportunities={pastOpportunities}
             pendingOpportunities={pendingOpportunities}
+            allOpportunities={allOpportunities}
           />
       }
     </>
@@ -175,8 +196,12 @@ function Opportunities({
   createdOpportunities,
   pastOpportunities,
   pendingOpportunities,
+  allOpportunities,
 }) {
   const [tab, setTab] = useState(0);
+  const [locationFilter, setLocationFilter] = useState([]);
+  const [oppTypeFilter, setOppTypeFilter] = useState([]);
+  const [orgTypeFilter, setOrgTypeFilter] = useState([]);
 
   const tabs = [
     {
@@ -185,7 +210,12 @@ function Opportunities({
         <OpportunitiesList
           key='joined'
           opportunities={joinedOpportunities}
-          tab={tab}
+          locationFilter={locationFilter}
+          setLocationFilter={setLocationFilter}
+          oppTypeFilter={oppTypeFilter}
+          setOppTypeFilter={setOppTypeFilter}
+          orgTypeFilter={orgTypeFilter}
+          setOrgTypeFilter={setOrgTypeFilter}
         />,
     },
     {
@@ -194,7 +224,12 @@ function Opportunities({
         <OpportunitiesList
           key='created'
           opportunities={createdOpportunities}
-          tab={tab}
+          locationFilter={locationFilter}
+          setLocationFilter={setLocationFilter}
+          oppTypeFilter={oppTypeFilter}
+          setOppTypeFilter={setOppTypeFilter}
+          orgTypeFilter={orgTypeFilter}
+          setOrgTypeFilter={setOrgTypeFilter}
         />,
     },
     {
@@ -203,7 +238,12 @@ function Opportunities({
         <OpportunitiesList
           key='pending'
           opportunities={pendingOpportunities}
-          tab={tab}
+          locationFilter={locationFilter}
+          setLocationFilter={setLocationFilter}
+          oppTypeFilter={oppTypeFilter}
+          setOppTypeFilter={setOppTypeFilter}
+          orgTypeFilter={orgTypeFilter}
+          setOrgTypeFilter={setOrgTypeFilter}
         />,
     },
     {
@@ -212,13 +252,36 @@ function Opportunities({
         <OpportunitiesList
           key='completed'
           opportunities={pastOpportunities}
+          locationFilter={locationFilter}
+          setLocationFilter={setLocationFilter}
+          oppTypeFilter={oppTypeFilter}
+          setOppTypeFilter={setOppTypeFilter}
+          orgTypeFilter={orgTypeFilter}
+          setOrgTypeFilter={setOrgTypeFilter}
         />,
     },
     {
       name: 'Browse',
-      component: <OpportunitiesList />,
+      component:
+        <OpportunitiesList
+          key='all'
+          opportunities={allOpportunities}
+          locationFilter={locationFilter}
+          setLocationFilter={setLocationFilter}
+          oppTypeFilter={oppTypeFilter}
+          setOppTypeFilter={setOppTypeFilter}
+          orgTypeFilter={orgTypeFilter}
+          setOrgTypeFilter={setOrgTypeFilter}
+        />,
     },
   ];
+
+  // Reset filters when switching tabs
+  useEffect(() => {
+    setLocationFilter([]);
+    setOppTypeFilter([]);
+    setOrgTypeFilter([]);
+  }, [tab]);
 
   return (
     <Page>

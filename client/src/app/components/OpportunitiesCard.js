@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {Link as RouterLink} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
+import CardActionArea from '@mui/material/CardActionArea';
 import Divider from '@mui/material/Divider';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiBox from '@mui/material/Box';
-import MuiPaper from '@mui/material/Paper';
+import MuiCard from '@mui/material/Card';
+import AccessibilityRoundedIcon from '@mui/icons-material/AccessibilityRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
@@ -16,7 +19,7 @@ const IconStyling = {
 };
 
 const Card = styled((props) => (
-  <MuiPaper elevation={0} {...props} />
+  <MuiCard elevation={0} {...props} />
 ))(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -42,7 +45,7 @@ const Avatar = ({image}, props) => (
 
 const Banner = ({image}, props) => {
   return (
-    <MuiBox sx={{height: '90px', width: '90px'}} {...props}>
+    <MuiBox sx={{height: '130px', width: '130px'}} {...props}>
       <img
         src={image}
         style={{
@@ -104,22 +107,19 @@ export default function OpportunitiesCard({opportunity}) {
     const convertDate1 = new Date(date1);
     const convertDate2 = new Date(date2);
 
-    const difference = Math.abs(convertDate1 - convertDate2);
+    const compare = Math.abs(convertDate1 - convertDate2);
 
-    const differenceInMinutes = Math.floor(difference / (1000 * 60));
-    const differenceInHours = Math.floor(difference / (1000 * 60 * 60));
-    const differenceInDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const compareInMinutes = Math.floor(compare / (1000 * 60));
+    const compareInHours = Math.floor(compare / (1000 * 60 * 60));
+    const compareInDays = Math.floor(compare / (1000 * 60 * 60 * 24));
 
-    const returnMinutes =
-      differenceInMinutes && (!differenceInHours && !differenceInDays);
-    const returnHours =
-      differenceInHours && (differenceInMinutes && !differenceInDays);
-    const returnDays =
-      differenceInDays && (differenceInMinutes && differenceInHours);
+    const minutes = compareInMinutes && (!compareInHours && !compareInDays);
+    const hours = compareInHours && (compareInMinutes && !compareInDays);
+    const days = compareInDays && (compareInMinutes && compareInHours);
 
-    if (returnMinutes) return `${differenceInMinutes} Minutes`;
-    if (returnHours) return `${differenceInHours} Hours`;
-    if (returnDays) return `${differenceInDays} Days`;
+    if (minutes) return `${compareInMinutes} Minutes`;
+    if (hours) return `${compareInHours} Hours`;
+    if (days) return `${compareInDays} Days`;
     return 'Error calculating dates';
   };
 
@@ -148,113 +148,131 @@ export default function OpportunitiesCard({opportunity}) {
     <>
       {opportunity && creator && (
         <Card className='clickable'>
-          <div
-            className='flex-space-between flex-align-center'
-            style={{padding: '1.5em'}}
+          <CardActionArea
+            component={RouterLink}
+            to={`/Opportunity/${opportunity.eventid}`}
           >
-            <MuiBox>
-              <h4 className='text-dark ellipsis'>
-                {opportunity.eventname}
-              </h4>
-              <div className='flex-flow-large flex-align-center'>
-                <Avatar image={creator.profilepicture} />
-                <p className='text-bold text-disabled'>
-                  Hosted by:&nbsp;
-                  <span className='text-blue'>
-                    {`${creator.firstname} ${creator.lastname}`}
-                  </span>
-                </p>
-              </div>
-            </MuiBox>
-            <OutlinedIconButton>
-              <CloseRoundedIcon
-                sx={{
-                  height: '20px',
-                  width: '20px',
-                  stroke: 'var(--error-red-main)',
-                  strokeWidth: '2px',
-                }}
-              />
-            </OutlinedIconButton>
-          </div>
-          <Divider sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}} />
-          <div
-            className='flex-horizontal flex-align-center'
-            style={{padding: '1.5em'}}
-          >
-            <Banner image={opportunity.eventbanner} />
-            <div className='flex-vertical'>
-              <div
-                className='flex-horizontal flex-flow-large flex-align-center'
-                style={{paddingInline: '2em'}}
-              >
-                <EventNoteRoundedIcon sx={IconStyling} />
-                <p className='text-bold ellipsis'>
-                  {formatDate(opportunity.startdate)}
-                </p>
-                <ArrowForwardRoundedIcon sx={IconStyling} />
-                <p className='text-bold ellipsis'>
-                  {formatDate(opportunity.enddate)}
-                </p>
-              </div>
-              <div
-                className='flex-horizontal flex-flow-large flex-align-center'
-                style={{paddingInline: '2em', marginTop: '0.25em'}}
-              >
-                <TimerOutlinedIcon sx={IconStyling} />
-                <p className='text-bold ellipsis'>
-                  {
-                    calculateDuration(
-                        opportunity.startdate, opportunity.enddate,
-                    )
-                  }
-                </p>
-              </div>
-              {
-                opportunity.locationtype && (
-                  opportunity.locationtype === 'in-person' ||
-                  opportunity.locationtype === 'hybrid'
-                ) &&
-                <div
-                  className='
-                    flex-horizontal
-                    flex-flow-large
-                    flex-align-center
-                  '
-                  style={{paddingInline: '2em', marginTop: '0.25em'}}
-                >
-                  <FmdGoodOutlinedIcon sx={IconStyling} />
-                  <p className='text-bold'>
-                    {`
-                      ${opportunity.eventlocation.address}
-                      ${opportunity.eventlocation.city},
-                      ${opportunity.eventlocation.state}
-                      ${opportunity.eventlocation.zip}
-                    `}
+            <div
+              className='flex-space-between flex-align-center'
+              style={{padding: '1.5em'}}
+            >
+              <MuiBox>
+                <h4 className='text-dark ellipsis'>
+                  {opportunity.eventname}
+                </h4>
+                <div className='flex-flow-large flex-align-center'>
+                  <Avatar image={creator.profilepicture} />
+                  <p className='text-bold text-disabled'>
+                    Hosted by:&nbsp;
+                    <span className='text-blue'>
+                      {`${creator.firstname} ${creator.lastname}`}
+                    </span>
                   </p>
                 </div>
-              }
-              {
-                opportunity.locationtype && (
-                  opportunity.locationtype === 'remote' ||
-                  opportunity.locationtype === 'hybrid'
-                ) &&
-                <div
-                  className='
-                    flex-horizontal
-                    flex-flow-large
-                    flex-align-center
-                  '
-                  style={{paddingInline: '2em', marginTop: '0.25em'}}
-                >
-                  <DevicesOutlinedIcon sx={IconStyling} />
-                  <p className='text-bold'>
-                    {opportunity.eventzoomlink}
-                  </p>
-                </div>
-              }
+              </MuiBox>
+              <OutlinedIconButton>
+                <CloseRoundedIcon
+                  sx={{
+                    height: '20px',
+                    width: '20px',
+                    stroke: 'var(--error-red-main)',
+                    strokeWidth: '2px',
+                  }}
+                />
+              </OutlinedIconButton>
             </div>
-          </div>
+            <Divider sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}} />
+            <div
+              className='flex-horizontal flex-align-center'
+              style={{padding: '1.5em'}}
+            >
+              <Banner image={opportunity.eventbanner} />
+              <div className='flex-vertical'>
+                <div
+                  className='flex-horizontal flex-flow-large flex-align-center'
+                  style={{paddingInline: '2em'}}
+                >
+                  <EventNoteRoundedIcon sx={IconStyling} />
+                  <p className='text-bold ellipsis'>
+                    {formatDate(opportunity.startdate)}
+                  </p>
+                  <ArrowForwardRoundedIcon sx={IconStyling} />
+                  <p className='text-bold ellipsis'>
+                    {formatDate(opportunity.enddate)}
+                  </p>
+                </div>
+                <div
+                  className='flex-horizontal flex-flow-large flex-align-center'
+                  style={{paddingInline: '2em', marginTop: '0.25em'}}
+                >
+                  <TimerOutlinedIcon sx={IconStyling} />
+                  <p className='text-bold ellipsis'>
+                    {
+                      calculateDuration(
+                          opportunity.startdate, opportunity.enddate,
+                      )
+                    }
+                  </p>
+                </div>
+                <div
+                  className='flex-horizontal flex-flow-large flex-align-center'
+                  style={{paddingInline: '2em', marginTop: '0.25em'}}
+                >
+                  <AccessibilityRoundedIcon sx={IconStyling} />
+                  <p className='text-bold ellipsis'>
+                    {
+                      opportunity.locationtype
+                          .charAt(0).toUpperCase() +
+                          opportunity.locationtype.slice(1)
+                    }
+                  </p>
+                </div>
+                {
+                  opportunity.locationtype && (
+                    opportunity.locationtype === 'in-person' ||
+                    opportunity.locationtype === 'hybrid'
+                  ) &&
+                  <div
+                    className='
+                      flex-horizontal
+                      flex-flow-large
+                      flex-align-center
+                    '
+                    style={{paddingInline: '2em', marginTop: '0.25em'}}
+                  >
+                    <FmdGoodOutlinedIcon sx={IconStyling} />
+                    <p className='text-bold'>
+                      {`
+                        ${opportunity.eventlocation.address}
+                        ${opportunity.eventlocation.city},
+                        ${opportunity.eventlocation.state}
+                        ${opportunity.eventlocation.zip}
+                      `}
+                    </p>
+                  </div>
+                }
+                {
+                  opportunity.locationtype && (
+                    opportunity.locationtype === 'remote' ||
+                    opportunity.locationtype === 'hybrid'
+                  ) &&
+                  <div
+                    className='
+                      flex-horizontal
+                      flex-flow-large
+                      flex-align-center
+                    '
+                    style={{paddingInline: '2em', marginTop: '0.25em'}}
+                  >
+                    <DevicesOutlinedIcon sx={IconStyling} />
+                    <p className='text-bold'>
+                      {opportunity.eventzoomlink}
+                    </p>
+                  </div>
+                }
+              </div>
+            </div>
+          </CardActionArea>
         </Card>
       )}
     </>

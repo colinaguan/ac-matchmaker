@@ -145,13 +145,7 @@ function ViewOpportunity({opportunity}) {
   ];
 
   const handleIsCreator = () => {
-    // BUG: The userProfile should always have some content, but after
-    // refreshing a couple times, the userProfile becomes undefined, causing
-    // the page to crash. As a temporary fix, I made it so that the
-    // userProfile can be recognized as undefined (by adding ?). This will
-    // avoid the page from crashing but "check" will not be correct and the
-    // page will not recognize the user as the creator.
-    const check = userProfile?.profileid === opportunity.usersponsors.creator;
+    const check = userProfile.profileid === opportunity.usersponsors.creator;
     setIsCreator(check);
   };
 
@@ -187,13 +181,14 @@ function ViewOpportunity({opportunity}) {
         <>
           <MuiBox sx={{width: '70%', marginRight: '2em'}}>
             <PageHeader
+              type='viewopportunity'
               isCreator={isCreator}
               title={opportunity?.eventname}
               subtitle='Hosted by:'
               host={`${creator?.firstname} ${creator?.lastname}`}
               avatar={creator?.profilepicture}
               banner={opportunity?.eventbanner}
-              backUrl={'/myprofile'}
+              backUrl={'/opportunities'}
               data={opportunity}
               components={
                 <ThemedButton variant='gradient' color='yellow' size='small'>
@@ -202,11 +197,13 @@ function ViewOpportunity({opportunity}) {
               }
               tabs={isCreator ?
                 <CompressedTabBar
+                  type='viewopportunity'
                   data={creatorTabs}
                   tab={tab}
                   setTab={setTab}
                 /> :
                 <CompressedTabBar
+                  type='viewopportunity'
                   data={noncreatorTabs}
                   tab={tab}
                   setTab={setTab}

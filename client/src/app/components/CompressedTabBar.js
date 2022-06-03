@@ -10,7 +10,7 @@ import '../stylesheets/MyProfile.css';
  * @param {*} setTab function to switch tab
  * @return {HTML} Tab bar component
  */
-export default function CompressedTabBar({data, tab, setTab}) {
+export default function CompressedTabBar({data, tab, setTab, type}) {
   const handleTabs = (_, value) => {
     setTab(value);
   };
@@ -32,7 +32,8 @@ export default function CompressedTabBar({data, tab, setTab}) {
         height: '3.5em',
         width: 'auto',
         paddingLeft: '3em',
-        borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)',
+        borderBottom: type === 'viewopportunity' ? 0 :
+          '0.5px solid rgba(0, 0, 0, 0.15)',
       }}
     >
       <Tabs

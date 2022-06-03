@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import MuiBox from '@mui/material/Box';
@@ -24,7 +24,65 @@ const Page = styled((props) => (
  * @param {Object} opportunities
  * @return {JSX}
  */
-export default function OpportunitiesList({opportunities, tab}) {
+export default function OpportunitiesList({
+  opportunities,
+  locationFilter,
+  setLocationFilter,
+  oppTypeFilter,
+  setOppTypeFilter,
+  orgTypeFilter,
+  setOrgTypeFilter,
+}) {
+  const [displayOpps, setDisplayOpps] = useState([]);
+
+  // Component first renders
+  useEffect(() => {
+    setDisplayOpps(opportunities);
+  }, [opportunities]);
+
+  // Update displayed opportunities when filters are updated
+  useEffect(() => {
+    applyFilters();
+  }, [locationFilter, oppTypeFilter, orgTypeFilter]);
+
+  const applyFilters = () => {
+    // Set all filters to lowercase for comparison
+    const locationFilterLower = locationFilter.map((filter) => {
+      return filter.toLowerCase();
+    });
+
+    const oppTypeFilterLower = oppTypeFilter.map((filter) => {
+      return filter.toLowerCase();
+    });
+
+    const orgTypeFilterLower = orgTypeFilter.map((filter) => {
+      return filter.toLowerCase();
+    });
+
+    // Filter opportunities and store in displayOpps
+    const copyOpps = opportunities.filter((opp) => {
+      const location = locationFilterLower.length == 0 ?
+        true :
+        opp.locationtype ?
+        locationFilterLower.indexOf(opp.locationtype.toLowerCase()) > -1 :
+        false;
+      const oppType = oppTypeFilter.length == 0 ?
+        true :
+        opp.opportunitytype ?
+        oppTypeFilterLower.indexOf(opp.opportunitytype.toLowerCase()) > -1 :
+        false;
+      const orgType = orgTypeFilter.length == 0 ?
+        true :
+        opp.organizationtype ?
+        orgTypeFilterLower.indexOf(opp.organizationtype.toLowerCase()) > -1 :
+        false;
+
+      return location && oppType && orgType;
+    });
+
+    setDisplayOpps(copyOpps);
+  };
+
   return (
     <Page>
       <MuiBox className='flow-small' sx={{flexGrow: 1}}>
@@ -58,14 +116,21 @@ export default function OpportunitiesList({opportunities, tab}) {
           />
           <ThemedDropdown menuItems={['Recommended', 'Alphabet', 'Major']} />
         </div>
-        {opportunities.map((opportunity, index) => (
+        {displayOpps.map((opportunity, index) => (
           <OpportunitiesCard
             key={`opportunity-${index}`}
             opportunity={opportunity}
           />
         ))}
       </MuiBox>
-      <OpportunitiesFilters />
+      <OpportunitiesFilters
+        locationFilter={locationFilter}
+        setLocationFilter={setLocationFilter}
+        oppTypeFilter={oppTypeFilter}
+        setOppTypeFilter={setOppTypeFilter}
+        orgTypeFilter={orgTypeFilter}
+        setOrgTypeFilter={setOrgTypeFilter}
+      />
     </Page>
   );
 }
