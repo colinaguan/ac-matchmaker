@@ -49,6 +49,18 @@ export default function OpportunityFilters({
   const [collapseOppType, setCollapseOppType] = useState(true);
   const [collapseOrgType, setCollapseOrgType] = useState(true);
 
+  const handleCheckAll = () => {
+    setLocationFilter(locations);
+    setOppTypeFilter(oppTypes);
+    setOrgTypeFilter(orgTypes);
+  };
+
+  const handleCheckNone = () => {
+    setLocationFilter([]);
+    setOppTypeFilter([]);
+    setOrgTypeFilter([]);
+  };
+
   // Handle checkboxes for location
   const handleToggleLocation = (value) => () => {
     const currentIndex = locationFilter.indexOf(value);
@@ -148,11 +160,21 @@ export default function OpportunityFilters({
           <h4 className='text-dark'>
             Filters
           </h4>
-          <p className='text-bold text-blue'>
-            Select All
+          <div className='flex-horizontal flex-align-center text-bold'>
+            <p
+              className='text-blue hover-underline clickable no-highlight'
+              onClick={handleCheckAll}
+            >
+              Select All
+            </p>
             <span className='text-gray'>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-            Clear All
-          </p>
+            <p
+              className='text-blue hover-underline clickable no-highlight'
+              onClick={handleCheckNone}
+            >
+                Clear All
+            </p>
+          </div>
         </div>
         <div
           className='flex-vertical flow-small'
@@ -161,9 +183,13 @@ export default function OpportunityFilters({
           {/* Location Filters */}
           <div className='flex-vertical flow-tiny'>
             <MuiBox
-              className='flex-space-between flex-align-center clickable'
+              className='
+                flex-space-between
+                flex-align-center
+                clickable
+                no-highlight
+              '
               onClick={handleCollapseLocation}
-              sx={{userSelect: 'none'}}
             >
               <h5>Location</h5>
               {collapseLocation ?
@@ -176,6 +202,7 @@ export default function OpportunityFilters({
                 {locations.map((location, index) => (
                   <div key={`location-filter-${index}`}>
                     <FormControlLabel
+                      className='no-highlight'
                       control={
                         <Checkbox
                           color='secondary'
@@ -195,7 +222,6 @@ export default function OpportunityFilters({
                           color: 'var(--text-disabled)',
                         },
                       }}
-                      sx={{userSelect: 'none'}}
                     />
                   </div>
                 ))}
@@ -205,9 +231,13 @@ export default function OpportunityFilters({
           {/* Opportunity Types Filters */}
           <div className='flex-vertical flow-tiny'>
             <MuiBox
-              className='flex-space-between flex-align-center clickable'
+              className='
+                flex-space-between
+                flex-align-center
+                clickable
+                no-highlight
+              '
               onClick={handleCollapseOppType}
-              sx={{userSelect: 'none'}}
             >
               <h5>Opportunity Types</h5>
               {collapseOppType ?
@@ -220,6 +250,7 @@ export default function OpportunityFilters({
                 {oppTypes.map((type, index) => (
                   <div key={`opportunity-type-filter-${index}`}>
                     <FormControlLabel
+                      className='no-highlight'
                       control={
                         <Checkbox
                           color='secondary'
@@ -239,7 +270,6 @@ export default function OpportunityFilters({
                           color: 'var(--text-disabled)',
                         },
                       }}
-                      sx={{userSelect: 'none'}}
                     />
                   </div>
                 ))}
@@ -249,9 +279,13 @@ export default function OpportunityFilters({
           {/* Organization Types Filters */}
           <div className='flex-vertical flow-tiny'>
             <MuiBox
-              className='flex-space-between flex-align-center clickable'
+              className='
+                flex-space-between
+                flex-align-center
+                clickable
+                no-highlight
+              '
               onClick={handleCollapseOrgType}
-              sx={{userSelect: 'none'}}
             >
               <h5>Organization Types</h5>
               {collapseOrgType ?
@@ -264,6 +298,7 @@ export default function OpportunityFilters({
                 {orgTypes.map((type, index) => (
                   <div key={`organization-type-filter-${index}`}>
                     <FormControlLabel
+                      className='no-highlight'
                       control={
                         <Checkbox
                           color='secondary'
@@ -284,7 +319,6 @@ export default function OpportunityFilters({
                           color: 'var(--text-disabled)',
                         },
                       }}
-                      sx={{userSelect: 'none'}}
                     />
                   </div>
                 ))}

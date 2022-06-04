@@ -208,7 +208,8 @@ function Opportunities({
       name: 'Upcoming',
       component:
         <OpportunitiesList
-          key='joined'
+          key='upcoming'
+          type='upcoming'
           opportunities={joinedOpportunities}
           locationFilter={locationFilter}
           setLocationFilter={setLocationFilter}
@@ -223,6 +224,7 @@ function Opportunities({
       component:
         <OpportunitiesList
           key='created'
+          type='created'
           opportunities={createdOpportunities}
           locationFilter={locationFilter}
           setLocationFilter={setLocationFilter}
@@ -237,6 +239,7 @@ function Opportunities({
       component:
         <OpportunitiesList
           key='pending'
+          type='pending'
           opportunities={pendingOpportunities}
           locationFilter={locationFilter}
           setLocationFilter={setLocationFilter}
@@ -251,6 +254,7 @@ function Opportunities({
       component:
         <OpportunitiesList
           key='completed'
+          type='completed'
           opportunities={pastOpportunities}
           locationFilter={locationFilter}
           setLocationFilter={setLocationFilter}
@@ -265,6 +269,7 @@ function Opportunities({
       component:
         <OpportunitiesList
           key='all'
+          type='all'
           opportunities={allOpportunities}
           locationFilter={locationFilter}
           setLocationFilter={setLocationFilter}

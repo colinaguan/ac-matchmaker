@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
+import ButtonBase from '@mui/material/ButtonBase';
 import CardActionArea from '@mui/material/CardActionArea';
 import Divider from '@mui/material/Divider';
 import MuiAvatar from '@mui/material/Avatar';
@@ -10,6 +11,7 @@ import AccessibilityRoundedIcon from '@mui/icons-material/AccessibilityRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
@@ -61,7 +63,15 @@ const Banner = ({image}, props) => {
 };
 
 const OutlinedIconButton = ({children}, props) => (
-  <MuiBox
+  <ButtonBase
+    component='div'
+    onMouseDown={(e) => {
+      e.stopPropagation();
+    }}
+    onClick={(e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    }}
     sx={{
       display: 'flex',
       justifyContent: 'center',
@@ -76,13 +86,40 @@ const OutlinedIconButton = ({children}, props) => (
     {...props}
   >
     {children}
-  </MuiBox>
+  </ButtonBase>
+);
+
+const OutlinedButton = ({children}, props) => (
+  <ButtonBase
+    component='div'
+    onMouseDown={(e) => {
+      e.stopPropagation();
+    }}
+    onClick={(e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    }}
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '40px',
+      width: '80px',
+      padding: 0,
+      background: 'var(--secondary-yellow-main)',
+      border: '0.5px solid rgba(0, 0, 0, 0.15)',
+      borderRadius: '5px',
+    }}
+    {...props}
+  >
+    {children}
+  </ButtonBase>
 );
 
 /**
  * @return {JSX}
  */
-export default function OpportunitiesCard({opportunity}) {
+export default function OpportunitiesCard({type, opportunity}) {
   const [creator, setCreator] = useState('');
 
   const formatDate = (date) => {
@@ -170,16 +207,41 @@ export default function OpportunitiesCard({opportunity}) {
                   </p>
                 </div>
               </MuiBox>
-              <OutlinedIconButton>
-                <CloseRoundedIcon
-                  sx={{
-                    height: '20px',
-                    width: '20px',
-                    stroke: 'var(--error-red-main)',
-                    strokeWidth: '2px',
-                  }}
-                />
-              </OutlinedIconButton>
+              <div className='flex-flow-large' style={{marginLeft: '50px'}}>
+                {(
+                  type === 'upcoming' ||
+                  type === 'created' ||
+                  type === 'pending'
+                ) && (
+                  <OutlinedIconButton>
+                    <CloseRoundedIcon
+                      sx={{
+                        height: '20px',
+                        width: '20px',
+                        color: 'var(--error-red-main)',
+                        stroke: 'var(--error-red-main)',
+                        strokeWidth: '2px',
+                      }}
+                    />
+                  </OutlinedIconButton>
+                )}
+                {type === 'created' && (
+                  <OutlinedIconButton>
+                    <EditRoundedIcon
+                      sx={{
+                        height: '20px',
+                        width: '20px',
+                        color: 'var(--tertiary-gray-main)',
+                      }}
+                    />
+                  </OutlinedIconButton>
+                )}
+                {type === 'all' && (
+                  <OutlinedButton>
+                    <p className='text-xbold text-white'>Apply</p>
+                  </OutlinedButton>
+                )}
+              </div>
             </div>
             <Divider sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}} />
             <div

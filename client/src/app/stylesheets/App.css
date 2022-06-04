@@ -278,6 +278,10 @@ a, a:hover, a:focus, a:active {
   cursor: pointer;
 }
 
+.no-highlight {
+  user-select: none;
+}
+
 .hover-underline:hover {
   text-decoration: underline;
 }

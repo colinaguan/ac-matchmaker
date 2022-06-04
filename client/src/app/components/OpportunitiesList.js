@@ -25,6 +25,7 @@ const Page = styled((props) => (
  * @return {JSX}
  */
 export default function OpportunitiesList({
+  type,
   opportunities,
   locationFilter,
   setLocationFilter,
@@ -119,6 +120,7 @@ export default function OpportunitiesList({
         {displayOpps.map((opportunity, index) => (
           <OpportunitiesCard
             key={`opportunity-${index}`}
+            type={type}
             opportunity={opportunity}
           />
         ))}
