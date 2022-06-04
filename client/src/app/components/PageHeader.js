@@ -94,16 +94,22 @@ const Details = ({border, children}, props) => (
   </MuiBox>
 );
 
-const SubDetails = styled((props) => (
-  <MuiBox {...props} />
-))(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '0 3em',
-  height: 'auto',
-  width: 'auto',
-}));
+const SubDetails = ({type, children}, props) => (
+  <MuiBox
+    sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '0 3em',
+      height: 'inherit',
+      width: 'auto',
+      whiteSpace: type === 'viewopportunity' ? 'nowrap' : 'none',
+    }}
+    {...props}
+  >
+    {children}
+  </MuiBox>
+);
 
 const Data = styled((props) => (
   <MuiBox {...props} />
@@ -200,12 +206,23 @@ export default function PageHeader({
             </p>
           </div>
         </div>
-        {
-          components && !isCreator &&
-          <SubDetails>
-            {components}
-          </SubDetails>
-        }
+        <div
+          style={
+            type === 'viewopportunity' ?
+            {
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: 'center',
+            } : {}
+          }
+        >
+          {
+            components && !isCreator &&
+            <SubDetails type={type}>
+              {components}
+            </SubDetails>
+          }
+        </div>
       </Details>
       {!data && <Divider />}
       {data && tabNumber === 0 && (
