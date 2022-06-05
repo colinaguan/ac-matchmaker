@@ -1,22 +1,31 @@
 import React, {useEffect} from 'react';
-import {styled} from '@mui/material/styles';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiBox from '@mui/material/Box';
 import MuiPaper from '@mui/material/Paper';
 import ThemedButton from './ThemedButton';
 import ExampleCover from '../assets/examplecover.png';
 
-const Item = styled((props) => <MuiPaper elevation={0} {...props} />)(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  height: 'auto',
-  background: 'white',
-  boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
-  border: '0.5px solid rgba(0, 0, 0, 0.15)',
-  borderRadius: '10px',
-  textAlign: 'center',
-}));
+const Item = ({handleCardClick, profileid, children}, props) => (
+  <MuiPaper
+    onClick={() => handleCardClick(profileid)}
+    elevation={0}
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      height: 'auto',
+      background: 'white',
+      boxShadow: '0px 4px 50px -15px rgba(0, 86, 166, 0.15)',
+      border: '0.5px solid rgba(0, 0, 0, 0.15)',
+      borderRadius: '10px',
+      textAlign: 'center',
+      cursor: 'pointer',
+    }}
+    {...props}
+  >
+    {children}
+  </MuiPaper>
+);
 
 const Banner = ({image}, props) => {
   return (
@@ -65,13 +74,14 @@ export default function ViewOpportunityFindPeople({
   profile,
   getProfileInfo,
   profileInfo,
+  handleCardClick,
 }) {
   useEffect(() => {
     getProfileInfo(profile.userid);
   }, []);
 
   return (
-    <Item>
+    <Item handleCardClick={handleCardClick} profileid={profile.profileid}>
       {/* There is no profile banner implemented yet */}
       <Banner image={/* profileInfo.profilebanner */ExampleCover} />
       <Avatar image={profile.profilepicture} />

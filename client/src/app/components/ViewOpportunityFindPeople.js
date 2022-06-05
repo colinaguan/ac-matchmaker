@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import MuiBox from '@mui/material/Box';
@@ -13,9 +14,14 @@ import useAuth from '../util/AuthContext';
  * @return {JSX}
  */
 export default function ViewOpportunityFindPeople() {
+  const navigate = useNavigate();
   const {userProfile} = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [profileInfo, setProfileInfo] = useState({});
+
+  const handleCardClick = (profileid) => {
+    navigate(`/Profile/${profileid}`);
+  };
 
   const getProfiles = () => {
     fetch(`/api/getActiveProfiles`)
@@ -108,6 +114,7 @@ export default function ViewOpportunityFindPeople() {
               profile={profile}
               getProfileInfo={getProfileInfo}
               profileInfo={profileInfo}
+              handleCardClick={handleCardClick}
             />
           </Grid>
         ))}
