@@ -222,6 +222,7 @@ function ViewOpportunity({opportunity}) {
               owner={{
                 name: `${creator?.firstname} ${creator?.lastname}`,
                 avatar: creator?.profilepicture,
+                profileid: creator?.profileid,
               }}
               members={opportunity?.assignedroles}
             />

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useLocation} from 'react-router-dom';
-import TabBar from '../components/TabBar';
+import TabBar from '../components/_OLD_TabBar';
 import Profile from '../components/Profile';
-import Opportunities from '../components/Opportunities';
-import Calendar from '../components/Calendar';
+import Opportunities from '../components/_OLD_Opportunities';
+import Calendar from '../components/_OLD_Calendar';
 
 /**
  * creates the profile page
