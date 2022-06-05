@@ -3,7 +3,7 @@
 ### What is this❓️❓️❓️
 
 Inserts a role into the database.
-### Expected data format📜
+### Expected data input format📜
 ```
     opportunityid : valid opportunity id,
     tagid : valid majorid,

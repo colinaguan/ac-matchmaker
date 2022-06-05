@@ -3,7 +3,7 @@
 ### What is this❓️❓️❓️
 Inserts a post row into the post table. The post table is used for the threads (forums) section of each opportunity.
 
-### Expected data format📜
+### Expected data input format📜
 ```
 {
 opportunityid : uuid,
@@ -17,7 +17,7 @@ createddate : Date().toISOString()
 ## exports.getPosts💭💭💭🤏<br><br>
 ### What is this❓️❓️❓️
 Returns all of the posts for a given opportunityid
-### Expected data format📜
+### Expected data input format📜
 ```
 /api/getPosts/:eventid // replace :eventid with an event id from opportunity table
 ```
