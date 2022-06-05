@@ -8,6 +8,8 @@ import ProfileHeader from '../components/ProfileHeader';
 import ProfileAbout from '../components/ProfileAbout';
 import ProfileWork from '../components/ProfileWork';
 import ProfileVolunteer from '../components/ProfileVolunteer';
+import ThemedButton from './ThemedButton';
+import {Link} from 'react-router-dom';
 
 /**
  * creates Calendar
@@ -90,6 +92,15 @@ export default function Profile() {
         alignItems: 'center',
       }}
     >
+      <Link to='/addprofile'>
+        <ThemedButton
+          color='blue'
+          variant='themed'
+          style={{width: '850px', marginTop: '3rem'}}
+        >
+          Edit Profile
+        </ThemedButton>
+      </Link>
       {profile == null && userProfile && <>
         {userProfile && <ProfileHeader
           data={userProfile} />}

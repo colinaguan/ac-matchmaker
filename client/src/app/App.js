@@ -26,6 +26,7 @@ import Box from '@mui/material/Box';
 import {DrawerHeader} from './components/NavBarComponents';
 
 import ViewOpportunity from './pages/ViewOpportunity';
+import AddEditProfile from './pages/AddEditProfile';
 
 /**
  * returns basic routes and navbar of app
@@ -52,6 +53,7 @@ export default function App() {
           <Route path='/browse' element={<Browse />}/>
           {/* TODO: settings page? */}
           <Route path='/settings' element={<Settings />}/>
+          <Route path='/addprofile' element={<AddEditProfile />}/>
 
           <Route path='/opportunities' element={<ViewOpportunity />}/>
           <Route path='/signup' element={<Signup />} />
