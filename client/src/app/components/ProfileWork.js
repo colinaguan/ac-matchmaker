@@ -27,15 +27,17 @@ export default function ProfileWork({data}) {
     <Work>
       <h4 className='text-dark'>Work Experience</h4>
       <div className='flow-medium'>
-        {data && data.job1 &&
-          <div>
-            <h5>{data.job1.title}</h5>
-            <p className='text-bold text-blue'>{data.job1.company}</p>
-            <p>{data.job1.location}</p>
-            <p>{data.job1.start + ' - ' + data.job1.end}</p>
-            <p style={{marginTop: '0.5em'}}>{data.job1.description}</p>
+        {data ? Object.keys(data).map((job, index) => (
+          <div key={`work-experience-${index}`}>
+            <h5>{data[job].title}</h5>
+            <p className='text-bold text-blue'>{data[job].company}</p>
+            <p>{data[job].location}</p>
+            <p>{data[job].start + ' - ' + data[job].end}</p>
+            <p style={{marginTop: '0.5em'}}>{data[job].description}</p>
           </div>
-        }
+        )) : (
+          <p>None</p>
+        )}
       </div>
     </Work>
   );

@@ -25,7 +25,7 @@ export default function ProfileAbout({data}) {
   return (
     <About>
       <h4 className='text-dark'>About</h4>
-      <p>{data}</p>
+      {data ? <p>{data}</p> : <p>None</p>}
     </About>
   );
 }

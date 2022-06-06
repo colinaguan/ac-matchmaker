@@ -48,16 +48,17 @@ export default function ProfileVolunteer({data}) {
     <Volunteer>
       <h4 className='text-dark'>Volunteer Experience</h4>
       <div className='flow-medium'>
-        {exampleDataArray &&
-          exampleDataArray.map((exampleData, index) => (
-            <div key={`volunteer-experience-${index}`}>
-              <h5>{exampleData.title}</h5>
-              <p className='text-bold text-blue'>{exampleData.company}</p>
-              <p>{exampleData.location}</p>
-              <p>{exampleData.startDate + ' - ' + exampleData.endDate}</p>
-              <p style={{marginTop: '0.5em'}}>{exampleData.description}</p>
-            </div>
-          ))}
+        {data ? exampleDataArray.map((exampleData, index) => (
+          <div key={`volunteer-experience-${index}`}>
+            <h5>{exampleData.title}</h5>
+            <p className='text-bold text-blue'>{exampleData.company}</p>
+            <p>{exampleData.location}</p>
+            <p>{exampleData.startDate + ' - ' + exampleData.endDate}</p>
+            <p style={{marginTop: '0.5em'}}>{exampleData.description}</p>
+          </div>
+        )) : (
+          <p>None</p>
+        )}
       </div>
     </Volunteer>
   );
