@@ -16,7 +16,20 @@ Inserts a role into the database.
 ---
 ## exports.getRoles💼💼💼🤏<br><br>
 ### What is this❓️❓️❓️
-
+Get all roles given the event id
+### Expected data input format📜
+```
+/api/getRoles/:eventid // replace eventid with an eventid from the opportunity table
+```
 ---
 ## exports.updateRoleFill💼📝 <br><br>
 ### What is this❓️❓️❓️
+Updates a role row with new data for userid and isfilled.
+### Expected data input format📜
+```
+{
+    roleid: uuid,
+    userid: uuid,
+    isfilled: boolean,
+}
+```
