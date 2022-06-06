@@ -1,0 +1,16 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    gap: 25px;
+}
+
+.profile-stepper-content {
+    width: 100%;
+}
