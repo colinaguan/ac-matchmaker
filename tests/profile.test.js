@@ -22,9 +22,6 @@ test("Get Profile with JWT", async () => {
   .send(loginData)
   .expect(200)
   .then((response) => {
-    // console.log(response.body);
-    // jwt = response.body.accessToken;
-    // console.log(jwt);
     return response.body;
   });
   
