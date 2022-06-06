@@ -123,7 +123,6 @@ exports.updateProfile= async (userProfile) => {
   };
 
   const {rows} = await pool.query(query);
-  console.log('profile name = ' + rows[0].firstname + ' ' + rows[0].lastname[0] + '.');
   return rows[0];
 };
 
