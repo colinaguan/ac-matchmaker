@@ -81,13 +81,11 @@ app.post('/api/login', userApi.userVerifyPost);
 
 app.post('/api/userDeactivation', authApi.check, userApi.userDeactivate);
 
-app.post('/api/userCreation', authApi.check, userApi.userPost);
+app.post('/api/userCreation', userApi.userPost);
 
 app.get('/api/verifyUserSession', authApi.check, userApi.verifyUserSession);
 
 app.get('/api/expireUserSession', authApi.check, userApi.expireUserSession);
-
-app.get('/api/getTestingToken', userApi.getTestingToken);
 
 
 //  Profile CRUD operations
@@ -111,6 +109,7 @@ app.post('/api/changeProfileStatus', authApi.check, profileApi.changeProfileStat
 
 app.post('/api/changeProfileStatusForRequest', authApi.check, profileApi.changeProfileStatusForRequest);
 
+app.post('/api/changeProfileRequestResponse', authApi.check, profileApi.changeProfileRequestResponse);
 //  Opportunity CRUD operations
 //
 //
@@ -188,14 +187,14 @@ app.get('/api/getOpportunityTypes', authApi.check, opportunityTypeApi.getOpportu
 // 
 app.post('/api/postPost', authApi.check, postApi.postPost);
 
-app.get('/api/getPost', authApi.check, postApi.getPost);
+app.get('/api/getPosts/:eventid', authApi.check, postApi.getPosts);
 
 // Comment CRUD operation
 //
 //
 app.post('/api/postComment', authApi.check, commentApi.postComment);
 
-app.get('/api/getComment', authApi.check, commentApi.getComment);
+app.get('/api/getComments/:postid', authApi.check, commentApi.getComments);
 
 // Major CRUD Operations
 //
@@ -205,7 +204,7 @@ app.get('/api/getMajors', authApi.check, majorApi.getMajors);
 // Role CRUD operation
 //
 //
-app.get('/api/getRoles', authApi.check, roleApi.getRoles );
+app.get('/api/getRoles/:eventid', authApi.check, roleApi.getRoles );
 
 app.post('/api/postRole', authApi.check, roleApi.postRole );
 
