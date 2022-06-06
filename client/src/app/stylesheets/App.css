@@ -106,6 +106,10 @@ a, a:hover, a:focus, a:active {
   margin-top: var(--flow-large-spacer, 2.5em);
 }
 
+.flow-medium > :where(:not(:first-child)) {
+  margin-top: var(--flow-small-spacer, 1.5em);
+}
+
 .flow-small > :where(:not(:first-child)) {
   margin-top: var(--flow-small-spacer, 1em);
 }

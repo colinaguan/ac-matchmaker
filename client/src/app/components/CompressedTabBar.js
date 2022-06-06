@@ -1,7 +1,6 @@
 // import React, {useState} from 'react';
 import React from 'react';
 import {Tabs, Tab} from '@mui/material';
-import '../stylesheets/MyProfile.css';
 
 /**
  * Creates reusable tab bar
@@ -27,8 +26,10 @@ export default function CompressedTabBar({data, tab, setTab, type}) {
 
   return (
     <div
-      className='tab-container'
       style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         height: '3.5em',
         width: 'auto',
         paddingLeft: '3em',

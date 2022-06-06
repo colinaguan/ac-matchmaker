@@ -14,7 +14,7 @@ import Approvals from './pages/Approvals';
 import Opportunities from './pages/Opportunities';
 import Settings from './pages/Settings';
 import ViewOpportunity from './pages/ViewOpportunity';
-import Profile from './components/Profile';
+import ViewProfile from './pages/ViewProfile';
 import Browse from './pages/_OLD_Browse';
 import useAuth from './util/AuthContext';
 import 'react-toastify/dist/ReactToastify.css';
@@ -49,7 +49,7 @@ export default function App() {
             path='/opportunity/:opportunityid'
             element={<ViewOpportunity />}
           />
-          <Route path='/profile/:profileid' element={<Profile />} />
+          <Route path='/profile/:profileid' element={<ViewProfile />} />
 
           {/* Reimplemented - This is still here for reference */}
           <Route path='/browse' element={<Browse />}/>
