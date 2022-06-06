@@ -60,7 +60,7 @@ const Input = ({
 
     const data = {
       'postid': postid,
-      'userid': userProfile.userid,
+      'userid': userProfile?.userid,
       'content': content,
     };
 
@@ -248,7 +248,7 @@ export default function ViewOpportunityForums({id}) {
             <Input
               postNewComment={postNewComment}
               name='content'
-              image={userProfile.profilepicture}
+              image={userProfile?.profilepicture}
               postid={post.postid}
             />
           </Paper>

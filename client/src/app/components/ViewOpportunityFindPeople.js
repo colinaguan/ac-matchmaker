@@ -55,7 +55,7 @@ export default function ViewOpportunityFindPeople() {
         })
         .catch((err) => {
           console.log(err);
-          alert('Error retrieving selected profile');
+          // alert('Error retrieving selected profile');
         });
   };
 
@@ -101,7 +101,7 @@ export default function ViewOpportunityFindPeople() {
         columns={{xs: 4, sm: 8, md: 8, lg: 12, xl: 12}}
       >
         {profiles && profiles.filter((p) =>
-          p.profileid !== userProfile.profileid).map((profile, index) => (
+          p.profileid !== userProfile?.profileid).map((profile, index) => (
           <Grid
             key={`profile-${index}`}
             item
