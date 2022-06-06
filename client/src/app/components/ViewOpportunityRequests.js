@@ -1,10 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import {visuallyHidden} from '@mui/utils';
 import {alpha} from '@mui/material/styles';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import MuiAvatar from '@mui/material/Avatar';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -20,10 +20,8 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ThemedButton from './ThemedButton';
-
-const Avatar = ({image}, props) => (
-  <MuiAvatar sx={{height: '30px', width: '30px'}} src={image} {...props} />
-);
+import ViewOpportunityRequestCard from './ViewOpportunityRequestCard';
+import useAuth from '../util/AuthContext';
 
 /**
  * Create request data
@@ -226,15 +224,109 @@ EnhancedTableToolbar.propTypes = {
 };
 
 /**
+ * @return {JSX}
+ */
+export default function FetchWrapper() {
+  const params = useParams();
+  const {userProfile} = useAuth();
+  const [requests, setRequests] = useState([]);
+
+  const getPendingRequestsReceived = () => {
+    fetch(`/api/getPendingRequestsReceived/` +
+    `${userProfile.profileid}/${params.opportunityid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          if (json.length > 0) {
+            json.map((request) => request.status = 'Pending'),
+            setRequests((prevRequests) => ([
+              ...prevRequests,
+              ...json,
+            ]));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
+
+  const getApprovedRequests = () => {
+    fetch(`/api/getApprovedRequests/` +
+    `${userProfile.profileid}/${params.opportunityid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          if (json.length > 0) {
+            json.map((request) => request.status = 'Approved'),
+            setRequests((prevRequests) => ([
+              ...prevRequests,
+              ...json,
+            ]));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
+
+  const getRejectedRequests = () => {
+    fetch(`/api/getRejectedRequests/` +
+    `${userProfile.profileid}/${params.opportunityid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          if (json.length > 0) {
+            json.map((request) => request.status = 'Denied'),
+            setRequests((prevRequests) => ([
+              ...prevRequests,
+              ...json,
+            ]));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
+
+  useEffect(() => {
+    getPendingRequestsReceived();
+    getApprovedRequests();
+    getRejectedRequests();
+  }, []);
+
+  return (
+    <>
+      {requests && <ViewOpportunityRequests requests={requests} />}
+    </>
+  );
+}
+
+/**
  * Enhanced table
  * @return {JSX}
  */
-export default function ViewOpportunityRequests() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+function ViewOpportunityRequests({requests}) {
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('calories');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [requester, setRequester] = useState(null);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -286,6 +378,25 @@ export default function ViewOpportunityRequests() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+
+  const getRequester = (requester) => {
+    fetch(`/api/getProfileByProfileId/${requester}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          setRequester(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error retrieving requester profile, please try again');
+        });
+  };
+
   return (
     <Box sx={{width: 'auto'}}>
       <Paper
@@ -307,92 +418,27 @@ export default function ViewOpportunityRequests() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={requests.length}
             />
             <TableBody>
-              {rows
+              {requests
                   .slice()
                   .sort(getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                  .map((request, index) => {
+                    const isItemSelected = isSelected(request.requester);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, row.name)}
-                        role='checkbox'
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.name}
-                        selected={isItemSelected}
-                      >
-                        <TableCell padding='checkbox'>
-                          <Checkbox
-                            color='primary'
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': labelId,
-                            }}
-                          />
-                        </TableCell>
-                        <TableCell
-                          component='th'
-                          id={labelId}
-                          scope='row'
-                          padding='none'
-                        >
-                          <div
-                            className={`
-                              flex-horizontal flex-align-center flex-flow-large
-                            `}
-                          >
-                            <Avatar />
-                            <p>{row.name}</p>
-                          </div>
-                        </TableCell>
-                        <TableCell align='left'>
-                          <p>{row.role}</p>
-                        </TableCell>
-                        <TableCell align='left'>
-                          <p>{row.dateOfRequest}</p>
-                        </TableCell>
-                        <TableCell align='left'>
-                          <Chip
-                            label={row.status}
-                            variant='outlined'
-                            color={
-                              row.status === 'approved' ?
-                              'success' :
-                              row.status === 'denied' ?
-                              'error' :
-                              row.status === 'pending' ?
-                              'secondary' :
-                              'tertiary'
-                            }
-                            size='small'
-                            icon={
-                              <Box
-                                style={{
-                                  marginLeft: '10px',
-                                  height: '6px',
-                                  width: '6px',
-                                  background:
-                                    row.status === 'approved' ?
-                                    '#4caf50' :
-                                    row.status === 'denied' ?
-                                    '#f44336' :
-                                    row.status === 'pending' ?
-                                    '#FFBF22' :
-                                    '#8B95A5',
-                                  borderRadius: '50%',
-                                }}
-                              />
-                            }
-                          />
-                        </TableCell>
-                      </TableRow>
+                      <ViewOpportunityRequestCard
+                        key={`request-${index}`}
+                        request={request}
+                        requester={requester}
+                        getRequester={getRequester}
+                        isItemSelected={isItemSelected}
+                        labelId={labelId}
+                        handleClick={handleClick}
+                      />
                     );
                   })}
               {emptyRows > 0 && (
@@ -406,7 +452,7 @@ export default function ViewOpportunityRequests() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
-          count={rows.length}
+          count={requests.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

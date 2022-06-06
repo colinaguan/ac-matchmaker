@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
 import MuiBox from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
@@ -18,15 +19,22 @@ const Paper = styled((props) => (
   borderRadius: '10px',
 }));
 
-const Member = styled((props) => (
-  <MuiBox className='member' {...props} />
-))(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  padding: '0.5em 2em 0.5em 2em',
-  userSelect: 'none',
-}));
+const Member = ({handleClick, profileid, children}, props) => (
+  <MuiBox
+    className='hover-highlight clickable'
+    onClick={() => handleClick(profileid)}
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      padding: '0.5em 2em 0.5em 2em',
+      userSelect: 'none',
+    }}
+    {...props}
+  >
+    {children}
+  </MuiBox>
+);
 
 const Avatar = ({image}, props) => (
   <MuiAvatar sx={{height: '30px', width: '30px'}} src={image} {...props} />
@@ -37,8 +45,12 @@ const Avatar = ({image}, props) => (
  * @return {JSX}
  */
 export default function ViewOpportunityMembers({isCreator, owner, members}) {
+  const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
 
+  const handleClick = (profileid) => {
+    navigate(`/Profile/${profileid}`);
+  };
   const getProfile = (profileid, role) => {
     fetch(`/api/getProfileByProfileId/${profileid}`)
         .then((res) => {
@@ -75,7 +87,7 @@ export default function ViewOpportunityMembers({isCreator, owner, members}) {
         {isCreator ? 'Your Members' : 'Members'}
       </h4>
       <div style={{paddingBottom: 'calc(1.5em - 0.5em)'}}>
-        <Member className='hover-highlight clickable'>
+        <Member handleClick={handleClick} profileid={owner.profileid}>
           <Avatar image={owner.avatar} />
           <div>
             <div className='flex-align-center'>
@@ -95,8 +107,9 @@ export default function ViewOpportunityMembers({isCreator, owner, members}) {
         </Member>
         {profiles && profiles.map((profile, index) => (
           <Member
-            className='hover-highlight clickable'
             key={`member-${index}`}
+            handleClick={handleClick}
+            profileid={profile.profileid}
           >
             <Avatar image={profile.profilepicture} />
             <div>

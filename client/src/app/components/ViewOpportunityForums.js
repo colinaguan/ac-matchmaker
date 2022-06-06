@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Divider from '@mui/material/Divider';
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import MuiBox from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import MuiPaper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import ForumsNewPost from './ForumsNewPost';
+import ForumsPost from './ForumsPost';
+import useAuth from '../util/AuthContext';
 
-const Post = styled((props) => (
+const Paper = styled((props) => (
   <MuiPaper elevation={0} {...props} />
 ))(() => ({
   display: 'flex',
@@ -25,101 +27,113 @@ const Post = styled((props) => (
   borderRadius: '10px',
 }));
 
-const Headline = styled((props) => (
-  <MuiBox {...props} />
-))(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-}));
-
-const Comment = styled((props) => (
-  <MuiBox {...props} />
-))(() => ({
-  display: 'flex',
-  gap: '10px',
-}));
-
-const Bubble = styled((props) => (
-  <MuiBox {...props} />
-))(({theme}) => ({
-  padding: '0.75em',
-  borderRadius: '10px',
-  background: theme.palette.tertiary.bright,
-}));
-
-const Input = ({image}, props) => (
+const Loading = (props) => (
   <MuiBox
     sx={{
       display: 'flex',
-      gap: '10px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '25%',
     }}
   >
-    <MuiAvatar
-      src={image}
-      sx={{
-        marginBlock: '4px',
-        height: '30px',
-        width: '30px',
-      }}
-    />
-    <TextField
-      placeholder='Write a comment...'
-      size='small'
-      InputProps={{
-        style: {
-          fontSize: '0.9rem',
-          borderRadius: '10px',
-        },
-      }}
-      multiline
-      fullWidth
-      {...props}
-    />
-    <IconButton
-      color='primary'
-      sx={{
-        display: 'flex',
-        height: '38px',
-        width: '38px',
-        padding: 0,
-      }}
-    >
-      <SendRoundedIcon />
-    </IconButton>
+    <CircularProgress {...props} />
   </MuiBox>
 );
 
-const PosterAvatar = ({image}, props) => (
-  <MuiAvatar sx={{height: '40px', width: '40px'}} src={image} {...props} />
-);
+const Input = ({
+  postNewComment,
+  name,
+  image,
+  postid,
+}, props) => {
+  const {userProfile} = useAuth();
+  const [content, setContent] = useState('');
 
-const CommenterAvatar = ({image}, props) => (
-  <MuiAvatar sx={{height: '30px', width: '30px'}} src={image} {...props} />
-);
+  const handleChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleSubmit = (e, postid) => {
+    if (content.length === 0) {
+      return alert('Comment cannot be empty');
+    }
+
+    const data = {
+      'postid': postid,
+      'userid': userProfile?.userid,
+      'content': content,
+    };
+
+    postNewComment(data, postid);
+    setContent('');
+  };
+
+  return (
+    <MuiBox
+      component='form'
+      sx={{
+        display: 'flex',
+        gap: '10px',
+      }}
+    >
+      <MuiAvatar
+        src={image}
+        sx={{
+          marginBlock: '4px',
+          height: '30px',
+          width: '30px',
+        }}
+      />
+      <TextField
+        name={name}
+        value={content}
+        onChange={(e) => handleChange(e)}
+        placeholder='Write a comment...'
+        size='small'
+        InputProps={{
+          style: {
+            fontSize: '0.9rem',
+            borderRadius: '10px',
+          },
+        }}
+        multiline
+        fullWidth
+        {...props}
+      />
+      <IconButton
+        onClick={(e) => handleSubmit(e, postid)}
+        color='primary'
+        sx={{
+          display: 'flex',
+          height: '38px',
+          width: '38px',
+          padding: 0,
+        }}
+      >
+        <SendRoundedIcon />
+      </IconButton>
+    </MuiBox>
+  );
+};
 
 /**
  * Forums tab for view opportunity
  * @return {JSX}
  */
 export default function ViewOpportunityForums({id}) {
-  const [expanded, setExpanded] = useState([]);
+  const {userProfile} = useAuth();
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = (postid, index) => {
-    if (expanded.includes(index)) {
-      setExpanded(expanded.filter((item) => item !== index));
-    } else {
-      setExpanded((prevExpanded) => ([
-        ...prevExpanded,
-        index,
-      ]));
-    }
-    getComments(postid, index);
+  const sortByDate = (array) => {
+    return array.sort((a, b) =>
+      new Date(b.createddate).getTime() - new Date(a.createddate).getTime(),
+    );
   };
 
   const getPosts = () => {
+    setIsLoading(true);
     fetch(`/api/getPosts/${id}`)
         .then((res) => {
           if (!res.ok) {
@@ -129,6 +143,7 @@ export default function ViewOpportunityForums({id}) {
         })
         .then((json) => {
           setPosts(json);
+          setIsLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -136,7 +151,7 @@ export default function ViewOpportunityForums({id}) {
         });
   };
 
-  const getComments = (postid, index) => {
+  const getComments = (postid) => {
     fetch(`/api/getComments/${postid}`)
         .then((res) => {
           if (!res.ok) {
@@ -147,7 +162,7 @@ export default function ViewOpportunityForums({id}) {
         .then((json) => {
           setComments((prevComments) => ({
             ...prevComments,
-            [index]: json,
+            [postid]: json,
           }));
         })
         .catch((err) => {
@@ -156,74 +171,87 @@ export default function ViewOpportunityForums({id}) {
         });
   };
 
+  const postNewPost = (data) => {
+    fetch(`/api/postPost`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setPosts((prevPosts) => [...prevPosts, json]);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error posting opportunity post');
+        });
+  };
+
+  const postNewComment = (data, postid) => {
+    fetch(`/api/postComment`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setComments((prevComments) => {
+            if (prevComments.hasOwnProperty(postid)) {
+              return ({
+                ...prevComments,
+                [postid]: [...prevComments[postid], json],
+              });
+            } else {
+              return ({
+                ...prevComments,
+                [postid]: [json],
+              });
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error posting opportunity comment');
+        });
+  };
+
   useEffect(() => {
-    if (id) {
-      getPosts();
-    }
+    getPosts();
   }, []);
 
   return (
     <>
+      <ForumsNewPost postNewPost={postNewPost} />
+      {isLoading ? <Loading /> : null}
       {posts ? (
-        posts.map((post, index) => (
-          <Post key={`post-${index}`}>
-            <Headline>
-              <PosterAvatar image={post.profilepicture} />
-              <div>
-                <div className='text-bold text-dark'>{post.content}</div>
-                <p className='text-bold text-blue'>
-                  {`${post.firstname} ${post.lastname}`}
-                  <span className='text-normal text-gray'>
-                    {` · 3hrs ago`}
-                  </span>
-                </p>
-              </div>
-            </Headline>
-            <p>{post.content}</p>
-            <div className='flex-end flex-align-center'>
-              <p
-                className='hover-underline'
-                onClick={() => handleClick(post.postid, index)}
-                style={{'cursor': 'pointer', 'userSelect': 'none'}}
-              >
-                {expanded.includes(index) ? 'Hide Comments' : 'Show Comments'}
-              </p>
-              <ArrowDropUpRoundedIcon
-                sx={{
-                  transform: expanded.includes(index) ? null : 'rotate(180deg)',
-                  transition: 'transform 300ms ease-out',
-                }}
-              />
-            </div>
-            {
-              expanded.includes(index) && comments.hasOwnProperty(index) &&
-              (
-                <>
-                  {
-                    comments[index].length > 0 && (
-                      <Divider
-                        sx={{borderBottom: '0.5px solid rgba(0, 0, 0, 0.15)'}}
-                      />
-                    )
-                  }
-                  {comments[index].map((comment, commentIndex) => (
-                    <Comment key={`comment-${commentIndex}`}>
-                      <CommenterAvatar
-                        image={comment.profilepicture}
-                      />
-                      <Bubble>
-                        <p className='text-bold text-dark'>
-                          {`${comment.firstname} ${comment.lastname}`}
-                        </p>
-                        <p>{comment.content}</p>
-                      </Bubble>
-                    </Comment>
-                  ))}
-                </>
-              )
-            }
-            <Input />
-          </Post>
+        sortByDate(posts).map((post, index) => (
+          <Paper key={`post-${index}`}>
+            <ForumsPost
+              post={post}
+              comments={comments}
+              getComments={getComments}
+            />
+            <Input
+              postNewComment={postNewComment}
+              name='content'
+              image={userProfile?.profilepicture}
+              postid={post.postid}
+            />
+          </Paper>
         ))
       ) : (
         <p>There are no posts</p>

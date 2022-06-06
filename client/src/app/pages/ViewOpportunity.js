@@ -15,7 +15,7 @@ import useAuth from '../util/AuthContext';
 const Page = styled((props) => (
   <MuiBox {...props} />
 ))(() => ({
-  margin: '2em 8em 2em 8em',
+  margin: '2em 2em',
   display: 'flex',
   height: 'auto',
   width: 'auto',
@@ -92,6 +92,8 @@ export default function FetchWrapper() {
  * @return {JSX}
  */
 function ViewOpportunity({opportunity}) {
+
+  const params = useParams();
   const {userProfile} = useAuth();
   const [isCreator, setIsCreator] = useState(false);
   const [creator, setCreator] = useState(null);
@@ -109,7 +111,10 @@ function ViewOpportunity({opportunity}) {
     },
     {
       name: 'Forums',
-      component: <ViewOpportunityForums />,
+      component:
+        <ViewOpportunityForums
+          id={opportunity.eventid}
+        />,
     },
   ];
 
@@ -127,7 +132,7 @@ function ViewOpportunity({opportunity}) {
       name: 'Forums',
       component:
         <ViewOpportunityForums
-          id={opportunity?.eventid}
+          id={params.opportunityid}
         />,
     },
     {
@@ -141,12 +146,7 @@ function ViewOpportunity({opportunity}) {
   ];
 
   const handleIsCreator = () => {
-    // BUG: The userProfile should always have some content, but after
-    // refreshing a couple times, the userProfile becomes false, causing
-    // the page to crash. As a temporary fix, I made it so that the
-    // userProfile can be recognized as false (by adding ?). This will
-    // avoid the page from crashing but "check" will not be correct
-    const check = userProfile?.profileid === opportunity.usersponsors.creator;
+    const check = userProfile.profileid === opportunity.usersponsors.creator;
     setIsCreator(check);
   };
 
@@ -182,13 +182,14 @@ function ViewOpportunity({opportunity}) {
         <>
           <MuiBox sx={{width: '70%', marginRight: '2em'}}>
             <PageHeader
+              type='viewopportunity'
               isCreator={isCreator}
               title={opportunity?.eventname}
               subtitle='Hosted by:'
               host={`${creator?.firstname} ${creator?.lastname}`}
               avatar={creator?.profilepicture}
               banner={opportunity?.eventbanner}
-              backUrl={'/myprofile'}
+              backUrl={'/opportunities'}
               data={opportunity}
               components={
                 <ThemedButton variant='gradient' color='yellow' size='small'>
@@ -197,11 +198,13 @@ function ViewOpportunity({opportunity}) {
               }
               tabs={isCreator ?
                 <CompressedTabBar
+                  type='viewopportunity'
                   data={creatorTabs}
                   tab={tab}
                   setTab={setTab}
                 /> :
                 <CompressedTabBar
+                  type='viewopportunity'
                   data={noncreatorTabs}
                   tab={tab}
                   setTab={setTab}
@@ -220,6 +223,7 @@ function ViewOpportunity({opportunity}) {
               owner={{
                 name: `${creator?.firstname} ${creator?.lastname}`,
                 avatar: creator?.profilepicture,
+                profileid: creator?.profileid,
               }}
               members={opportunity?.assignedroles}
             />

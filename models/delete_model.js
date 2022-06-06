@@ -15,6 +15,7 @@ const pool = new Pool();
  * Deletes a user from the user table
  * @param {*} data 
  */
+
 exports.deleteUser = async (id) =>{
     const query = {
         text: `DELETE FROM account
@@ -23,8 +24,6 @@ exports.deleteUser = async (id) =>{
       };
     const {rows} = await pool.query(query);
 }
-
-
 
 /**
  * Deletes a comment from the comment table
@@ -64,3 +63,4 @@ exports.deleteUser = async (id) =>{
     };
   const {rows} = await pool.query(query);
 }
+
