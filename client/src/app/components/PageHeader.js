@@ -163,7 +163,6 @@ export default function PageHeader({
   const calculateDuration = (date1, date2) => {
     const convertDate1 = new Date(date1);
     const convertDate2 = new Date(date2);
-
     const compare = Math.abs(convertDate1 - convertDate2);
 
     const compareInMinutes = Math.floor(compare / (1000 * 60));

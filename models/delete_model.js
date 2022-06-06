@@ -15,12 +15,64 @@ const pool = new Pool();
  * Deletes a user from the user table
  * @param {*} data 
  */
-exports.deleteUser = async (userid) =>{
+
+exports.deleteUser = async (id) =>{
     const query = {
         text: `DELETE FROM account
                 WHERE userid = ($1)`,
-        values: [userid],
+        values: [id],
       };
     const {rows} = await pool.query(query);
 }
 
+/**
+ * Deletes a comment from the comment table
+ * @param {*} data 
+ */
+ exports.deleteComment = async (id) =>{
+  const query = {
+      text: `DELETE FROM comment
+              WHERE commentid = ($1)`,
+      values: [id],
+    };
+  const {rows} = await pool.query(query);
+}
+
+/**
+ * Deletes a post from the post table
+ * @param {*} data 
+ */
+ exports.deletePost = async (id) =>{
+  const query = {
+      text: `DELETE FROM post
+              WHERE postid = ($1)`,
+      values: [id],
+    };
+  const {rows} = await pool.query(query);
+}
+
+/**
+ * Deletes a role from the role table
+ * @param {*} data 
+ */
+ exports.deleteRole = async (id) =>{
+  const query = {
+      text: `DELETE FROM role
+              WHERE roleid = ($1)`,
+      values: [id],
+    };
+  const {rows} = await pool.query(query);
+}
+
+// /**
+//  * Deletes a post from the post table
+//  * @param {*} data 
+//  */
+//  exports.deleteOpportunity = async (id) =>{
+//   const query = {
+//       text: `DELETE FROM opportunity
+//               WHERE eventid = ($1)`,
+//       values: [id],
+//     };
+//   const {rows} = await pool.query(query);
+// }

@@ -1,5 +1,6 @@
 const app = require("../index");
 const supertest = require("supertest");
+const delete_model = require('../models/delete_model');
 
 afterEach(async() => { 
     await app.close();
@@ -57,9 +58,40 @@ test("Post post with JWT", async ()=>{
        return response.body;
     });
 
+    // const opportuntiydata={
+    //     'usersponsors': '',
+    //     'locationtype': '',
+    //     'eventlocation': '',
+    //     'eventzoomlink': '',
+    //     'eventlocation': '',
+    //     'organization': '',
+    //     'description': '',
+    //     'preferences': '',
+    //     'eventdata': '',
+    //     'startdate': '',
+    //     'enddate': '',
+    //     'eventbanner': '',
+    //     'eventname': '',
+    //     'userparticipants': '',
+    //     'organizationtype':'',
+    //     'opportunitytype':'',
+    //     'roles':'',
+    //     'starttime':'',
+    //     'endtime' :'',
+    //     'subject':'',
+    //     'assignedroles':'',
+    // }
+    // const opportunityid = await supertest(app).post('/api/postOpportunity')
+    // .set('Cookie', [`accessToken=${logininfo.accessToken}`])
+    // .send(opportuntiydata)
+    // .expect(201)
+    // .then((response) =>{
+    //     return response.body;
+    // });
+
     // console.log(logininfo);
     const data = {
-        'opportunityid' : 'c6feb949-9ea4-4a65-9e36-8acc9fac151d',
+        'opportunityid' : '25949134-7fb4-4bbe-832f-ec63ae54fc03',
         'userid' : logininfo.userid,
         'content' : 'THERE IS NO COW LEVEL',
         'title': 'Instant victory',
@@ -73,7 +105,8 @@ test("Post post with JWT", async ()=>{
     .send(data)
     .expect(201)
     .then((response) =>{
-        console.log(response.body);
+        // console.log(response.body);
+        delete_model.deletePost(response.body.postid);
     });
 });
 
@@ -107,7 +140,11 @@ test("Post post with JWT 2", async ()=>{
     .expect(201)
     .then((response) =>{
         // console.log(response.body);
+
+        // Delete the post
+        delete_model.deletePost(response.body.postid);
     });
+    
 });
 
 // Posting a post with a JWT
@@ -140,6 +177,7 @@ test("Post post with JWT 3", async ()=>{
     .expect(201)
     .then((response) =>{
         // console.log(response.body);
+        delete_model.deletePost(response.body.postid);
     });
 });
 
@@ -223,8 +261,15 @@ test("insert comment for post and get the comment", async() =>{
         .send(getCommentData)
         .expect(200)
         .then((response) =>{
-            // console.log(response.body);
-        });
+            console.log(response.body);
+
+
+            // CLEAN UP CODE
+            delete_model.deleteComment(response.body[response.body.length - 1].commentid).then(()=>{
+                delete_model.deletePost(response.body[response.body.length - 1].postid);
+            });
+            
+        }); 
 });
 
 

@@ -1,5 +1,6 @@
 const app = require("../index");
 const supertest = require("supertest");
+const delete_model = require('../models/delete_model');
 
 afterEach(async() => { 
     await app.close();
@@ -53,9 +54,6 @@ test(`Insert a role with a JWT,
     .set('Cookie', [`accessToken=${logininfo.accessToken}`])
     .expect(200)
     .then((response) =>{
-        // The most recent inserted row should be at the end of the array
-        // console.log(response.body[response.body.length - 1]);
-        expect(response.body[response.body.length - 1].rolename).toEqual(data.rolename);
     });
 
     // Updating the created role with a participant 
@@ -68,7 +66,7 @@ test(`Insert a role with a JWT,
     })
     .expect(200)
     .then((response) =>{
-        // console.log(response.body);
+        delete_model.deleteRole(roleid);
     });
 });
 

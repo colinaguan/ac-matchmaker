@@ -51,7 +51,6 @@ export default function ViewOpportunityMembers({isCreator, owner, members}) {
   const handleClick = (profileid) => {
     navigate(`/Profile/${profileid}`);
   };
-
   const getProfile = (profileid, role) => {
     fetch(`/api/getProfileByProfileId/${profileid}`)
         .then((res) => {

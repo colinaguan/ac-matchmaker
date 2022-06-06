@@ -35,7 +35,6 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Landing />}/>
           <Route path='/myprofile' element={<MyProfile />} />
-
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:token' element={<Verify />} />

@@ -92,6 +92,7 @@ export default function FetchWrapper() {
  * @return {JSX}
  */
 function ViewOpportunity({opportunity}) {
+
   const params = useParams();
   const {userProfile} = useAuth();
   const [isCreator, setIsCreator] = useState(false);

@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {visuallyHidden} from '@mui/utils';
@@ -376,6 +377,7 @@ function ViewOpportunityRequests({requests}) {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
 
   const getRequester = (requester) => {
     fetch(`/api/getProfileByProfileId/${requester}`)

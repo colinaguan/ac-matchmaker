@@ -41,6 +41,7 @@ export default function ViewOpportunityFindPeople() {
         });
   };
 
+
   const getProfileInfo = (profileid) => {
     fetch(`/api/getProfile/${profileid}`)
         .then((res) => {
