@@ -5,6 +5,7 @@ import {styled} from '@mui/material';
 import Button from '@mui/material/Button';
 import MuiBox from '@mui/material/Box';
 import useAuth from '../util/AuthContext';
+import ProfileAlert from '../components/ProfileAlert';
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileAbout from '../components/ProfileAbout';
 import ProfileWork from '../components/ProfileWork';
@@ -69,6 +70,14 @@ export default function Profile() {
     <Page>
       {userProfile && (
         <>
+          <ProfileAlert
+            data={{
+              'profileid': userProfile.profileid,
+              'status': userProfile.status,
+              'requestinfo': userProfile.requestinfo,
+              'requestresponse': userProfile.requestresponse,
+            }}
+          />
           <ProfileHeader data={userProfile} />
           <ProfileAbout data={userProfile?.about}/>
           <ProfileWork data={userProfile?.experience} />

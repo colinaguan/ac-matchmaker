@@ -45,6 +45,7 @@ export default function ViewProfile() {
 
   useEffect(() => {
     getProfile();
+    getStatus();
   }, []);
 
   return (
