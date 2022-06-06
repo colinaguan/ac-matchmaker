@@ -92,7 +92,7 @@ const pool = new Pool();
     values: [newUUID, opportunityInfo.usersponsors, opportunityInfo.locationtype, opportunityInfo.eventlocation, opportunityInfo.eventzoomlink, opportunityInfo.organization, opportunityInfo.description, opportunityInfo.preferences, opportunityInfo.eventdata, opportunityInfo.startdate, opportunityInfo.enddate, true, opportunityInfo.eventbanner, opportunityInfo.eventname, opportunityInfo.userparticipants, opportunityInfo.organizationtype, opportunityInfo.opportunitytype, opportunityInfo.roles, opportunityInfo.starttime, opportunityInfo.endtime, opportunityInfo.subject, opportunityInfo.assignedroles],
   };
   const {rows} = await pool.query(query);
-  console.log(rows);
+  // console.log(rows);
   return rows[0].eventid;
 };
 

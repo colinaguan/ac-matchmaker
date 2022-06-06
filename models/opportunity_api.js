@@ -76,15 +76,15 @@ const uuid = require('uuid');
  exports.postOpportunity = async (req, res) => {
   // console.log(req.body);
   const newUUID = uuid.v4();
-  // try {
+  try {
     const opportunityId = await opportunityModel.postOpportunity(req.body, newUUID);
     // console.log(opportunityId);
     res.status(201).send(opportunityId);
-  // }
-  // catch (error) {
+  }
+  catch (error) {
     // console.log(error);
-    // res.status(500).send('error creating opportunity')
-  // }
+    res.status(500).send('error creating opportunity')
+  }
   
 };
 

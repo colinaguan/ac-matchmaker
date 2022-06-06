@@ -64,3 +64,15 @@ exports.deleteUser = async (id) =>{
   const {rows} = await pool.query(query);
 }
 
+// /**
+//  * Deletes a post from the post table
+//  * @param {*} data 
+//  */
+//  exports.deleteOpportunity = async (id) =>{
+//   const query = {
+//       text: `DELETE FROM opportunity
+//               WHERE eventid = ($1)`,
+//       values: [id],
+//     };
+//   const {rows} = await pool.query(query);
+// }
