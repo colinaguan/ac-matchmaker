@@ -58,37 +58,6 @@ test("Post post with JWT", async ()=>{
        return response.body;
     });
 
-    // const opportuntiydata={
-    //     'usersponsors': '',
-    //     'locationtype': '',
-    //     'eventlocation': '',
-    //     'eventzoomlink': '',
-    //     'eventlocation': '',
-    //     'organization': '',
-    //     'description': '',
-    //     'preferences': '',
-    //     'eventdata': '',
-    //     'startdate': '',
-    //     'enddate': '',
-    //     'eventbanner': '',
-    //     'eventname': '',
-    //     'userparticipants': '',
-    //     'organizationtype':'',
-    //     'opportunitytype':'',
-    //     'roles':'',
-    //     'starttime':'',
-    //     'endtime' :'',
-    //     'subject':'',
-    //     'assignedroles':'',
-    // }
-    // const opportunityid = await supertest(app).post('/api/postOpportunity')
-    // .set('Cookie', [`accessToken=${logininfo.accessToken}`])
-    // .send(opportuntiydata)
-    // .expect(201)
-    // .then((response) =>{
-    //     return response.body;
-    // });
-
     // console.log(logininfo);
     const data = {
         'opportunityid' : '25949134-7fb4-4bbe-832f-ec63ae54fc03',
